@@ -1,0 +1,18 @@
+baseURL: "https://calebdelbrugge.com/"
+title: Caleb Delbrugge
+theme: "PaperMod"
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 10
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 20
+
+params:
+  showtoc: true
+  tocopen: false
