@@ -1,0 +1,8 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Tags - Tag - Route Your Network</title>
+    <link>https://routeyour.net/tags/</link>
+    <description>Tags - Tag - Route Your Network</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>caleb.delbrugge@gmail.com (Caleb Delbrugge)</managingEditor>
+      <webMaster>caleb.delbrugge@gmail.com (Caleb Delbrugge)</webMaster><atom:link href="https://routeyour.net/tags/" rel="self" type="application/rss+xml" /></channel>
+</rss>

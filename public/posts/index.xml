@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>All Posts - Route Your Network</title>
+    <link>https://routeyour.net/posts/</link>
+    <description>All Posts | Route Your Network</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>caleb.delbrugge@gmail.com (Caleb Delbrugge)</managingEditor>
+      <webMaster>caleb.delbrugge@gmail.com (Caleb Delbrugge)</webMaster><lastBuildDate>Sun, 30 Apr 2023 20:14:22 &#43;0800</lastBuildDate><atom:link href="https://routeyour.net/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>F5 301b Study Guide</title>
+  <link>https://routeyour.net/posts/301b_study_guide/</link>
+  <pubDate>Sun, 30 Apr 2023 20:14:22 &#43;0800</pubDate>
+  <author>Caleb Delbrugge</author>
+  <guid>https://routeyour.net/posts/301b_study_guide/</guid>
+  <description><![CDATA[Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a scenario, determine the appropriate profile setting modifications SSL K13385: Overview of the Proxy SSL feature
+Proxy SSL does NOT terminate SSL on the load balancer. Use it to optimize the SSL connection.
+Use Proxy SSL in an SSL profile to forward a client cert to a server for certification authentication
+Stream Profile Overview of the Stream Profile]]></description>
+</item>
+</channel>
+</rss>
