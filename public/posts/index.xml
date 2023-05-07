@@ -10,10 +10,9 @@
   <pubDate>Sun, 30 Apr 2023 20:14:22 &#43;0800</pubDate>
   <author>Caleb Delbrugge</author>
   <guid>https://routeyour.net/posts/301b_study_guide/</guid>
-  <description><![CDATA[Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a scenario, determine the appropriate profile setting modifications SSL K13385: Overview of the Proxy SSL feature
-Proxy SSL does NOT terminate SSL on the load balancer. Use it to optimize the SSL connection.
-Use Proxy SSL in an SSL profile to forward a client cert to a server for certification authentication
-Stream Profile Overview of the Stream Profile]]></description>
+  <description><![CDATA[Introduction Hey all,
+This is the study guide I&rsquo;ve been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I&rsquo;ve sourced the material from solution articles, experience, and manuals.
+Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a scenario, determine the appropriate profile setting modifications SSL K13385: Overview of the Proxy SSL feature]]></description>
 </item>
 </channel>
 </rss>

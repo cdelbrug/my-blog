@@ -2,19 +2,18 @@
 title: "F5 301b Study Guide"
 date: 2023-04-30T20:14:22+08:00
 ---
-# Introduction  
+
+# Introduction
 
 Hey all,
 
-This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.        
-
+This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.
 
 ## Section 1 - Maintain Application and LTM Device Health
 
 ## Objective 1.01 Given a scenario, determine the appropriate profile setting modifications
 
-
-## SSL
+### SSL
 
 [K13385: Overview of the Proxy SSL feature](https://support.f5.com/csp/article/K13385)
 
@@ -22,10 +21,9 @@ Proxy SSL does NOT terminate SSL on the load balancer. Use it to optimize the SS
 
 Use Proxy SSL in an SSL profile to forward a client cert to a server for certification authentication
 
+### Stream Profile
 
-## Stream Profile
-
-[Overview of the Stream Profile](https://support.f5.com/csp/article/K39394712) 
+[Overview of the Stream Profile](https://support.f5.com/csp/article/K39394712)
 
 [Article: K7027 - Replacing multiple strings using a Stream profile](https://support.f5.com/csp/article/K7027)
 
@@ -41,15 +39,13 @@ If HTTP profile is applied, search is done in HTTP payload only (not headers) in
 
 Compatible with HTTP Profile Chunking
 
-
-### Parameters
+#### Parameters
 
 Source: What to look for in the content
 
 Target: What to replace the content with
 
-
-### Replace Multiple Sets of Strings
+#### Replace Multiple Sets of Strings
 
 Leave ‘source’ in profile blank
 
@@ -59,43 +55,37 @@ Don’t put &lt; > unless you want to literally.
 
 **@**&lt;search string1>**@**&lt;replacement string1>**@** **@**&lt;search string2>**@**&lt;replacement string2>**@**
 
-Note: The first character in the field defines the delimiter bounding each field for this replacement and must not appear anywhere else in the target string. In certain versions, the delimiter can be a period (.), asterisk (\*), forward slash (/), dash (-), colon (:), underscore (\_), question mark (?), equals (=), at (@), comma (,), or ampersand (&) character. 
+Note: The first character in the field defines the delimiter bounding each field for this replacement and must not appear anywhere else in the target string. In certain versions, the delimiter can be a period (.), asterisk (\*), forward slash (/), dash (-), colon (:), underscore (\_), question mark (?), equals (=), at (@), comma (,), or ampersand (&) character.
 
 **Example:**
 
-ltm profile stream h1_marquee { 
-
-app-service none 
-
-defaults-from stream 
-
-source &lt;h1>Sunshine&lt;/h1> 
-
-target &lt;marquee>&lt;h1>Moon&lt;/h1>&lt;/marquee> 
-
+```
+ltm profile stream h1_marquee {
+ app-service none
+ defaults-from stream
+ source &lt;h1>Sunshine&lt;/h1>
+ target &lt;marquee>&lt;h1>Moon&lt;/h1>&lt;/marquee>
 }
+```
 
 You don’t need to use an iRule
 
+```
 when HTTP_RESPONSE {
-
-STREAM::expression "**@**123**@**456**@** **@**abc**@**xyz**@**"
-
-STREAM::enable
-
+ STREAM::expression "@123@456@ @abc@xyz@"
+ STREAM::enable
 }
+```
 
-
-### Recommendations
+#### Recommendations
 
 - Restrict rewrites to Content-Type: text\*/
 - A stream profile must be on VIP before using the STREAM command in an iRule. The default Stream profile may be used with all parameters blank
 - Data is changed once per operation
-- A compression profile is required to rewrite compressed data 
+- A compression profile is required to rewrite compressed data
 - Source and Target are case-sensitive unless you use RegEx
 
-
-## HTTP
+### HTTP
 
 [Choosing appropriate profiles for HTTP traffic](https://support.f5.com/csp/article/K4707?sr=46615374)
 
@@ -105,8 +95,7 @@ STREAM::enable
 
 **Drawbacks** - Uses CPU, more memory utilized for compression/caching
 
-
-### Options
+#### Options
 
 - Request Header Insert
 
@@ -129,7 +118,6 @@ STREAM::enable
 - Strict Transport Security (HSTS)
 
   - Protect against stripping attacks by downgrading to HTTP. Force all content in a page to use HTTPS. The F5 inserts a header in the response to the client.
-
 
 #### Redirect Rewrite Options
 
@@ -155,8 +143,7 @@ Nodes - Change the redirect containing the node’s IP to the VIP
 
 All - Rewrites all HTTP 301, 302, 303, 305, or 307 redirects to HTTPS
 
-
-## HTTP Compression
+### HTTP Compression
 
 Profiles > Services > HTTP Compression
 
@@ -171,8 +158,7 @@ Inserts **Content-Encoding** header in response from Server, and specifies clien
 
 Depending on load, gzip compression level will automatically go down.
 
-
-## Web Acceleration (Cache)
+### Web Acceleration (Cache)
 
 Profiles > Services > Web Acceleration
 
@@ -203,22 +189,19 @@ Cannot cache - HEAD, PUT, DELETE, TRACE, CONNECT by default
 
 Objects that are cached continue to be served even if the pool member is offline, until the object expires. This is by design. Create an iRule if you want this changed.
 
-
-### Show and Delete Entries
+#### Show and Delete Entries
 
 **show ltm profile ramcache** &lt;profile_name> **\[ host** &lt;vip_address:port> **max-response** &lt;how_many_entries_to_display> **]**
 
 **delete ltm profile ramcache** &lt;profile_name> **\[ host** &lt;vip_address:port> **uri /**&lt;object_name> **]**
 
-**delete ltm profile ramcache** &lt;profile_name> ****- Deletes all entries
+**delete ltm profile ramcache** &lt;profile_name> \*\*\*\*- Deletes all entries
 
-
-## XML
+### XML
 
 Route to pools, pool members, or VIP based on content in XML file. Specify content in profile and reference in iRule.
 
-
-## OneConnect
+### OneConnect
 
 - Re-use server-side connections using Keep-Alive.
 - Use an HTTP profile with it or it could do funny things.
@@ -244,23 +227,20 @@ Maximum Age - How long to reuse server connection before deleting it
 
 Idle Timeout Override - Override idle timeout in TCP profile
 
-
 #### Troubleshooting
 
 - Fast servers may have fewer open connections and more idle connections than slow servers because they finish connections quicker.
 - Persistence can offset if slow servers do not respond quickly enough and more connections go to faster servers.
 
+## - 1.01a - Given a scenario of client or server side buffer issues, packet loss, or congestion, select the appropriate TCP or UDP profile to correct the issue
 
-# - 1.01a - Given a scenario of client or server side buffer issues, packet loss, or congestion, select the appropriate TCP or UDP profile to correct the issue
+### TCP Profile
 
-
-## TCP Profile
-
-**Proxy Buffer (Content spool)**: 
+**Proxy Buffer (Content spool)**:
 
 The F5 buffers data from the server if the client has not acknowledged data quick enough. This allows the server to focus on other requests.
 
-(Airport analogy - Bags are offloaded to the metal rollers to allow people to rest and do other things.) 
+(Airport analogy - Bags are offloaded to the metal rollers to allow people to rest and do other things.)
 
 May want to increase this with clients that have packet loss or are latent. Keeping both the same and high is optimal so data is buffered as soon as the client ACKs content in the send buffer.
 
@@ -274,7 +254,7 @@ Send Buffer**:** Data that was sent but not yet acknowledged - kept just in case
 
 Receive Window: How much to send the F5 that can be outstanding/unacknowledged
 
-Congestion Control**:** Use Woodside if some clients are wireless 
+Congestion Control**:** Use Woodside if some clients are wireless
 
 **tcp-mobile-optimized**
 
@@ -295,8 +275,7 @@ Congestion Control**:** Use Woodside if some clients are wireless 
 - Nagle - Disabled: Nagle may hold data, when its not needed
 - Acknowledge on Push: Enabled: Helpful for Windows and MacOS with small send buffers.
 
-
-## TCP
+### TCP
 
 **Stream-oriented** - TCP will send a continuous stream of data and divide up packets to fit into IP datagrams.
 
@@ -308,12 +287,11 @@ _Send Window_**:** Amount of data that can be sent and be outstanding/unacknowle
 - Take the unscaled Window, multiply it by 2^(0-14)
 - Example - 65535 \* (2^14) = 1,073,725,440 bytes (a gigabyte)
 
-Maximum Segment Size (MSS) - The maximum segment size the local host _will_ accept. It usually is 40 bytes less than the MTU size. 
+Maximum Segment Size (MSS) - The maximum segment size the local host _will_ accept. It usually is 40 bytes less than the MTU size.
 
 Default is 536 bytes, 40 bytes less than default IP MTU
 
-
-# - 1.01b - Given a scenario determine when an application would benefit from HTTP Compression and/or Web Acceleration profile
+## - 1.01b - Given a scenario determine when an application would benefit from HTTP Compression and/or Web Acceleration profile
 
 Compression - Good for WAN clients with low bandwidth or latency
 
@@ -324,13 +302,11 @@ Caching
 
 Objective 1.02 Given a subset of an LTM configuration, determine which objects to remove or consolidate to simplify the LTM configuration
 
+### Virtual Server
 
-## Virtual Server
+#### Matching Order
 
-
-### Matching Order
-
-Most Specific > Least specific 
+Most Specific > Least specific
 
 - Destination
 - Source
@@ -363,8 +339,7 @@ Types
 
 **Rewrite Profile** - Content Rewrite profile for HTML web application rewrites [K99872325: Modifying HTML tag attributes using an HTML profile](https://support.f5.com/csp/article/K99872325)
 
-
-# - 1.02a - Evaluate which iRules can be replaced with a profile or policy setting
+## - 1.02a - Evaluate which iRules can be replaced with a profile or policy setting
 
 Use built in things over iRules.
 
@@ -372,34 +347,29 @@ LTM Policies override iRules
 
 HTTP Profile
 
-
-# - 1.02b - Evaluate which host virtual servers would be better consolidated into a network virtual server
+## - 1.02b - Evaluate which host virtual servers would be better consolidated into a network virtual server
 
 If you wanted to direct clients destined to a network to a pool of firewalls.
 
 Objective 1.03 Given a set of LTM device statistics, determine which objects to remove or consolidate to simplify the LTM configuration
 
-
-# - 1.03a - Identify redundant and/or unused objects
+## - 1.03a - Identify redundant and/or unused objects
 
 HTTP profile on VIP without iRule or HTTP inspect/modification requirements.
 
-
-# - 1.03b - Identify unnecessary monitoring
+## - 1.03b - Identify unnecessary monitoring
 
 ICMP and TCP is unnecessary
 
 Same monitors applied to the pool member and the pool
 
-
-# - 1.03c - Interpret configuration and performance statistics
+## - 1.03c - Interpret configuration and performance statistics
 
 **show ltm pool**
 
 **show ltm virtual**
 
-
-# - 1.03d - Explain the effect of removing functions from the LTM device configuration
+## - 1.03d - Explain the effect of removing functions from the LTM device configuration
 
 SSL profiles and certificates
 
@@ -410,22 +380,17 @@ HTTP profiles
 
 SNAT
 
+### Removing a Pool member from a pool
 
-## Removing a Pool member from a pool
-
-Removes existing persistence entries. 
+Removes existing persistence entries.
 
 If the cookie pool member is not available, the F5 makes a new load balancing decision.
 
 Existing connections remain until idle timeout or client close.
 
-  
-
-
 Objective 1.04 Given a scenario, determine the appropriate upgrade and recovery steps required to restore functionality to LTM devices
 
-
-## Increase disk space
+### Increase disk space
 
 [K14952: Extending disk space on BIG-IP VE](https://support.f5.com/csp/article/K14952)
 
@@ -444,8 +409,7 @@ Verify - **show sys disk directory**
 
 **reboot**
 
-
-## Console
+### Console
 
 Bits - 19200  
 Data bits - 8  
@@ -453,26 +417,23 @@ Parity - N
 Stop bit - 1  
 Flow control - N
 
-
-## Management IP Config
+### Management IP Config
 
 GUI:  System -> Platform
 
 TMSH: **modify sys management-**
 
-
-## GUI Issues
+### GUI Issues
 
 Check or restart **httpd** and **tomcat**
 
 **bigstart restart httpd tomcat**
 
-
-## Daemons
+### Daemons
 
 **restart sys service &lt;name>**
 
-The **mcpd** daemon is the Master Control Program. Allows two-way communication between userland (applications outside the kernel) processes and TMM processes. 
+The **mcpd** daemon is the Master Control Program. Allows two-way communication between userland (applications outside the kernel) processes and TMM processes.
 
 If this is down, traffic management does not function and nothing can be configured. Other daemons will also not function correctly.
 
@@ -487,8 +448,7 @@ MCP is responsible for health checks
 - Last Configuration Load Status  full-config-load-succeed
 - End Platform ID received:           true
 
-
-## MOS (Maintenance Operating System)
+### MOS (Maintenance Operating System)
 
 [Article: K14245 - Overview of the recovery tasks performed from the MOS (11.x - 15.x)](https://support.f5.com/csp/article/K14245)
 
@@ -498,17 +458,17 @@ Boot into it using Console:
 
 Select TMOS Maintenance from grub boot menu:
 
-   GNU GRUB  version 0.97  (619K LOWER / 3653927K UPPER MEMORY)
+GNU GRUB  version 0.97  (619K LOWER / 3653927K UPPER MEMORY)
 
- \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
- \* BIG-IP 12.1.3.7 Build 0.0.2 - drive sda.1                      \*
+\* BIG-IP 12.1.3.7 Build 0.0.2 - drive sda.1                      \*
 
- \* TMOS maintenance                                               \*
+\* TMOS maintenance                                               \*
 
- \*                                                                \*
+\*                                                                \*
 
- \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
 You will be logged in as root automatically
 
@@ -520,17 +480,15 @@ Capabilities:
 - Transfer files
 - Install IOS using **image2disk**
 
-
-## e2fsck
+### e2fsck
 
 For ext2/ext3/ext4 filesystems
 
-
-### Error on boot about HDD
+#### Error on boot about HDD
 
 \[/sbin/fsck.ext3 (1) -- /shared] fsck.ext3 -a /dev/mapper/vg--db--sda-dat.share.1 dat.share.1 contains a file system with errors, check forced.
 
- Error reading block 5259469 (Attempt to read block from filesystem resulted in short read) while reading indirect blocks of inode 2622816.
+Error reading block 5259469 (Attempt to read block from filesystem resulted in short read) while reading indirect blocks of inode 2622816.
 
 **e2fsck -yf** /dev/mapper/vg--db--sda-dat.share.1
 
@@ -538,8 +496,7 @@ For ext2/ext3/ext4 filesystems
 
 \-f : Force check even if it seems clean
 
-
-## fsck
+### fsck
 
 [Article: K73827442 - Forcing a file system check on the next system reboot (12.x - 15.x)](https://support.f5.com/csp/article/K73827442)
 
@@ -549,8 +506,7 @@ For ext2/ext3/ext4 filesystems
 
 [K61521075: BIG-IP VE failed to boot after outage with console message: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY.](https://support.f5.com/csp/article/K61521075) - May not be on test
 
-
-### Run on next reboot
+#### Run on next reboot
 
 **touch /forcefsck**
 
@@ -558,10 +514,9 @@ For ext2/ext3/ext4 filesystems
 
 OR
 
-**shutdown -r****F** **now**
+**shutdown -r\*\***F\*\* **now**
 
-
-### Error on boot about HDD
+#### Error on boot about HDD
 
 set.1./var contains a file system with errors, check forced
 
@@ -585,17 +540,13 @@ Give root password for maintenance
 
 (or type Control-D to continue)
 
-  
-
-
 **CTRL + D**
 
 \*login\*
 
 **fsck -y** Automatically attempt to fix any filesystem corruption errors automagically.
 
-
-## Replace down device
+### Replace down device
 
 Only a couple steps that might be on the test:
 
@@ -606,8 +557,7 @@ Update Master Key on the new device to what the old device had, so that the UCS 
 - Retrieve key from failed device - **f5mku -K**
 - Replace master key on new unit **f5mku -r &lt;key>**
 
-
-## Reload Configuration
+### Reload Configuration
 
 [Article: K13030 - Forcing the mcpd process to reload the BIG-IP configuration](https://support.f5.com/csp/article/K13030)
 
@@ -623,8 +573,7 @@ The configuration DB has been initialized with 26130560 bytes of memory
 
 Configuration restored from binary image.
 
-
-## Single Configuration File
+### Single Configuration File
 
 Single Configuration File (SCF) - Used to configure everything, in one file
 
@@ -641,8 +590,7 @@ SCF files are intended to help configure additional BIG-IP systems; SCFs are not
 - You want to replicate a configuration across multiple BIG-IP systems.
 - You want to migrate a configuration from one platform type to another (for example, from BIG-IP VE to a hardware platform).
 
-
-### Saving an SCF file
+#### Saving an SCF file
 
 Save the running configuration to an SCF
 
@@ -658,8 +606,7 @@ The SCF file and the TAR file are saved to the **/var/local/scf/** directory.
 
 Files referenced \[keys, external monitor files and external data group files] in config are saved in **/var/local/scf/&lt;name>.tar**
 
-
-### Loading a SCF
+#### Loading a SCF
 
 When loading a SCF file, the current config is backed up in **/var/local/scf/backup.scf**
 
@@ -673,13 +620,11 @@ To load the unencrypted configuration with a TAR file that has a custom name:
 
 - **load sys config file** &lt;SCF_filename> **tar-file** &lt;TAR-FILE_filename>
 
-
 ### Diff SCF files
 
 **show sys config-diff** &lt;SCF_filename> \[SCF_filename_or_blank_for_running_config]
 
-
-## UCS Contents & Info
+### UCS Contents & Info
 
 - BIG-IP Config files
 - Product licenses. New system should have a base license already. Use the -no-license flag. Or contact F5 to associate license with new F5 system
@@ -689,22 +634,21 @@ To load the unencrypted configuration with a TAR file that has a custom name:
 - Allows restoring config to newer versions (10.x to 11.x)
 - Hardware must be the same or do **no-platform-check**
 - Restoring configuration for an unlicensed module will error.
-- You can restore a configuration without the master key matching, but it won’t decrypt encrypted passphrases. 
+- You can restore a configuration without the master key matching, but it won’t decrypt encrypted passphrases.
 
 root@(bigip1)(cfg-sync Standalone)(Active)(/Common)(tmos)# **load sys ucs test.ucs** ?
 
 Options:
 
-  **no-license**         This option mostly is for RMA use. It loads full configuration from a UCS file except the license file.
+**no-license**         This option mostly is for RMA use. It loads full configuration from a UCS file except the license file.
 
-  **no-platform-check**  Bypass platform check.
+**no-platform-check**  Bypass platform check.
 
-  **passphrase**         Passphrase for (un)encrypting UCS.
+**passphrase**         Passphrase for (un)encrypting UCS.
 
-  **platform-migrate**   Don't load or modify some objects specific to a particular device.
+**platform-migrate**   Don't load or modify some objects specific to a particular device.
 
-  **reset-trust**        Reset device and trust domain certificates and keys when loading a UCS.
-
+**reset-trust**        Reset device and trust domain certificates and keys when loading a UCS.
 
 ### Restore without passphrase
 
@@ -712,16 +656,13 @@ Options:
 
 Restore the UCS and then replace the encrypted passphrases with the unencrypted ones in the bigip.conf file
 
+## - 1.04a - Identify the appropriate methods for a clean install
 
-# - 1.04a - Identify the appropriate methods for a clean install
+### Clean Install
 
+All mass-storage devices are wiped. Useful if the device no longer boots from any volumes.
 
-## Clean Install
-
-All mass-storage devices are wiped. Useful if the device no longer boots from any volumes. 
-
-
-### Bootable USB
+#### Bootable USB
 
 Must be done on a Linux workstation
 
@@ -733,7 +674,6 @@ Dependencies
 - Perl 5.8 or later
 - **cpio** - Manages CPIO archive files
 
-
 - **mke2fs - Creates Linux ext2 file system**
 - **extlinux - Lightweight bootloader that starts computers with the Linux kernel**
 
@@ -741,56 +681,46 @@ Unmount, plug into BIG-IP and reboot: **umount /mnt/&lt;directory>**
 
 You will be in MOS and prompted to perform an **automatic** **clean** **install**, just hit **\[Enter]**
 
-
-### USB DVD-ROM Drive - Recommended
+#### USB DVD-ROM Drive - Recommended
 
 Burn .iso image file to DVD.
 
 You will be in MOS and prompted to perform an **automatic** **clean** **install**, just hit **\[Enter]**
 
+#### PXE Boot
 
-### PXE Boot
+Can be used to install when physical access is not available and to multiple systems simultaneously.
 
-Can be used to install when physical access is not available and to multiple systems simultaneously. 
+The server providing the image must be on the same network as the management port and provide HTTP, TFTP and DHCP services.
 
-The server providing the image must be on the same network as the management port and provide HTTP, TFTP and DHCP services. 
-
-
-# - 1.04b - Identify the TMSH sys software install options required to install a new version
+## - 1.04b - Identify the TMSH sys software install options required to install a new version
 
 **install sys software** { **hotfix** \| **image** } &lt;filename> (**create-volume**)  **volume** &lt;HDx.x>
 
+## - 1.04c - Identify the steps required to upgrade the LTM device such as: license renewal, validation of upgrade path, review release notes, etc.
 
-# - 1.04c - Identify the steps required to upgrade the LTM device such as: license renewal, validation of upgrade path, review release notes, etc.
+### Upgrade Code
 
-
-## Upgrade Code
-
-
-### Preparation
+#### Preparation
 
 Make sure there’s enough space on the hard drive. Use “df -h” - 50GB required
 
-
-### Download code
+#### Download code
 
 - **/shared/images**
 - GUI - System > Software Management > Image List > Import...
 
-
-### Verify image
+#### Verify image
 
 - **md5sum** /shared/images/&lt;name>.iso
 
-
-### List available images for installation
+#### List available images for installation
 
 **list sys software image**
 
 System > Software Management > Image | Hotfix List
 
-
-### Install to inactive volume
+#### Install to inactive volume
 
 **install sys software** { **hotfix** \| **image** } &lt;iso> \[**create-volume**]  **volume** &lt;HDx.x>
 
@@ -798,8 +728,7 @@ System > Software Management > Image | Hotfix List
 
 Delete volume: **delete sys software volume** HD1.&lt;x>
 
-
-### Reactivate the license (Traffic impacting)
+#### Reactivate the license (Traffic impacting)
 
 If you fail to do this, Reboot into the old volume and reactivate.
 
@@ -822,13 +751,11 @@ System > License > Re-activate… > Automatic selected > Next
 
 01070427:5: Initialization complete. The MCP is up and running
 
-
-### Confirm Current Config will Load Upon Reboot
+#### Confirm Current Config will Load Upon Reboot
 
 load sys config verify
 
-
-### Copy configuration to new volume and reboot into it
+#### Copy configuration to new volume and reboot into it
 
 TMSH
 
@@ -837,37 +764,29 @@ TMSH
 
 GUI - System > Software Management > Boot Locations > HDx.x > Install Configuration \[yes] > Activate
 
-
-# - 1.04d - Identify how to copy a config to a previously installed boot location/slot
+## - 1.04d - Identify how to copy a config to a previously installed boot location/slot
 
 **cpcfg --source=HD**x.x **HD**x.x
 
 GUI - System > Software Management > Boot Locations > HDx.x > **Install Configuration \[yes]** > Activate
 
-
-# - 1.04e - Identify valid rollback steps for a given upgrade scenario
+## - 1.04e - Identify valid rollback steps for a given upgrade scenario
 
 Reboot into the old volume
 
 - **reboot volume HD**x.x - OR - **switchboot**
 
-  
-
-
 Objective 1.05 Given a scenario, determine the appropriate upgrade steps required to minimize application outages
 
-
-# - 1.05a - Explain how to upgrade an LTM device from the GUI
+## - 1.05a - Explain how to upgrade an LTM device from the GUI
 
 See above
 
-
-# - 1.05b - Describe the effect of performing an upgrade in an environment with device groups and traffic groups
+## - 1.05b - Describe the effect of performing an upgrade in an environment with device groups and traffic groups
 
 Move traffic groups to the active unit before upgrading the standby
 
-
-# - 1.05c - Explain how to perform an upgrade in a high availability group
+## - 1.05c - Explain how to perform an upgrade in a high availability group
 
 Upgrade secondary / standby first
 
@@ -877,15 +796,13 @@ Upgrade primary / standby
 
 Objective 1.06 Describe the benefits of custom alerting within an LTM environment
 
-
-# - 1.06a - Describe how to specify the OIDs for alerting
+## - 1.06a - Describe how to specify the OIDs for alerting
 
 alert &lt;name> “&lt;message>” {  
 snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;**300 - 999>**”  
 }
 
-
-# - 1.06b - Explain how to log different levels of local traffic message logs
+## - 1.06b - Explain how to log different levels of local traffic message logs
 
 TMSH - **modify sys db &lt;name>.level value &lt;log-level-string>**
 
@@ -895,22 +812,19 @@ The severity level is in between the colons
 
 Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:80 monitor status forced down.
 
-
 ### Modify Linux host syslog levels
 
 - **list sys syslog all-properties**
 - **modify sys syslog &lt;function>-from &lt;function>-to &lt;level>**
 - **modify sys syslog daemon-from warning daemon-to emerg**
 
+## - 1.06c - Explain how to trigger custom alerts for testing purposes
 
-# - 1.06c - Explain how to trigger custom alerts for testing purposes
-
-
-## Built-in Alerts
+### Built-in Alerts
 
 1. Find trap in **/etc/alertd/alert.conf**
 
-2. Grep for that alert for the full logging info- 
+2. Grep for that alert for the full logging info-
 
    1. **cd /etc/alertd/**
    2. **grep &lt;alert name> \*.h**
@@ -927,23 +841,19 @@ Use **logger** to generate an alert - **logger -p local0.notice “**01070640:5:
 
 Objective 1.07 Describe how to set up custom alerting for an LTM device
 
+## - 1.07a - List and describe custom alerts: SNMP, email and Remote Syslog
 
-# - 1.07a - List and describe custom alerts: SNMP, email and Remote Syslog
-
-
-## Configure Syslog
+### Configure Syslog
 
 System > Logs > Configuration > Remote Logging
 
-
-## SNMP
+### SNMP
 
 Place custom MIB files in **/config/snmp/&lt;name>.tcl**
 
 Default MIBs under **/usr/share/snmp/mibs**
 
-
-### Traps
+#### Traps
 
 Default SNMP Traps - **/etc/alertd/alert.conf** (Don’t add or remove traps from here)  
 User-defined SNMP Traps - **/config/user_alert.conf**
@@ -952,8 +862,7 @@ System > SNMP > Traps > Destination
 
 System > SNMP > Traps > Configuration
 
-
-### Custom Traps
+#### Custom Traps
 
 1. Create backup of **/config/user_alert.conf**
 2. Open and add new SNMP traps in proper format
@@ -966,8 +875,7 @@ snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;**300 - 999**>”
 4. 300 - 999 - A unique OID, don’t use ones that are in F5-BIGIP-COMMON-MIB.txt file
 5. The **user_alert.conf** file is appended to the **alertd.conf** file upon service start, so may need to restart **snmpd** service to take effect
 
-
-## Email SNMP traps
+### Email SNMP traps
 
 **ssmtp** is the process for emailing
 
@@ -992,13 +900,11 @@ Restart alertd and snmpd - **restart sys service alertd, restart sys service snm
 
 **echo “**ssmtp test mail**” | mail -vs “**Test email for SOL13180**”** myemail@mydomain.com
 
-
-# - 1.07b - Identify the location of custom alert configuration files
+## - 1.07b - Identify the location of custom alert configuration files
 
 /config/user_alert.conf
 
-
-# - 1.07c - Identify the available levels for local traffic logging
+## - 1.07c - Identify the available levels for local traffic logging
 
 local0 - /var/log/ltm
 
@@ -1026,8 +932,7 @@ Section 2 - Identify and Resolve Application Issues
 
 Objective 2.01 Determine which iRule to use to resolve an application issue
 
-
-# - 2.01a - Determine which iRule events and commands to use
+## - 2.01a - Determine which iRule events and commands to use
 
 CLIENT_ACCEPTED - Connection entry added 3-way handshake completes for Standard VIP, initial SYN for Performance L4.
 
@@ -1037,28 +942,23 @@ HTTP_REQUEST - Client request headers
 
 HTTP_RESPONSE - Server response
 
+## - 2.01b - Given a specific iRule event determine what commands are available
 
-# - 2.01b - Given a specific iRule event determine what commands are available
+### Events
 
-
-## Events
-
-
-### LB_SELECTED
+#### LB_SELECTED
 
 active_members
 
 active_members -list: Determine how many members are currently **available** in a pool by returning IP and port numbers.
 
-
-## Operators
+### Operators
 
 Relational: contains, equals, starts_with
 
 Logical: and, if, else
 
-
-## Commands
+### Commands
 
 Statement: **pool, node, virtual**
 
@@ -1072,8 +972,7 @@ HTTP&#x3A;:method
 
 HTTP&#x3A;:request
 
-
-### HTTP&#x3A;:header
+#### HTTP&#x3A;:header
 
 HTTP&#x3A;:header value &lt;header-name> - Returns value from header name
 
@@ -1091,13 +990,11 @@ HTTP&#x3A;:header replace &lt;header-name> \[&lt;new-header-value>]
 
 HTTP&#x3A;:header remove &lt;header-name>
 
-
-### HTTP&#x3A;:uri
+#### HTTP&#x3A;:uri
 
 Full URI including query
 
-
-### HTTP&#x3A;:path
+#### HTTP&#x3A;:path
 
 HTTP_REQUEST, SERVER_CONNECTED & more
 
@@ -1105,8 +1002,7 @@ HTTP_REQUEST, SERVER_CONNECTED & more
 
 Does not include the query (?test.xml)
 
-
-### HTTP&#x3A;:query
+#### HTTP&#x3A;:query
 
 Objective 2.02 Explain the functionality of a simple iRule
 
@@ -1120,8 +1016,7 @@ HTTP&#x3A;:redirect takes precedence over pool command
 
 **&lt;Insert iRules here that direct to pools or nodes based on URI, host header, or IP address that even do snat as well. Use switch, if, elseif, starts_with, contains>**
 
-
-# - 2.02a - Interpret information in iRule logs to determine the iRule and iRule events where they occurred
+## - 2.02a - Interpret information in iRule logs to determine the iRule and iRule events where they occurred
 
 Logging in an iRule
 
@@ -1138,8 +1033,7 @@ Levels
 - info
 - debug
 
-
-# - 2.02b - Describe the results of iRule errors
+## - 2.02b - Describe the results of iRule errors
 
 Error Message: 01220001:3: TCL error
 
@@ -1156,7 +1050,7 @@ Objective 2.03 Given specific traffic and configuration containing a simple iRul
 
 [class](https://clouddocs.f5.com/api/irules/class.html)
 
-The \* in front of a URL will make it so only the URL with stuff in front of that asterisk will match. If there is nothing in front, then that entry won’t be matched. Example, \*default.com, make sure to add “default.com” to the rule. 
+The \* in front of a URL will make it so only the URL with stuff in front of that asterisk will match. If there is nothing in front, then that entry won’t be matched. Example, \*default.com, make sure to add “default.com” to the rule.
 
 An asterisk afterwards works as ‘contains’
 
@@ -1168,7 +1062,7 @@ A “;” semicolon will let you have two commands on one line
 
 - Will it only work if there’s one event in the iRule?
 
-return - Exit from current event in the _current_ iRule. 
+return - Exit from current event in the _current_ iRule.
 
 event disable \[all] - Stop going through the current event in all iRules, Stop going through all iRule events on this connection
 
@@ -1176,7 +1070,7 @@ event disable \[all] - Stop going through the current event in all iRules, Stop 
 
 “” = Blank value
 
-The "switch -glob" and "string match" commands use a "glob style" matching that is a small subset of regular expressions, but allows for wildcards and sets of strings. 
+The "switch -glob" and "string match" commands use a "glob style" matching that is a small subset of regular expressions, but allows for wildcards and sets of strings.
 
 Make use of the "equals", "contains", "starts_with", and "ends_with" iRule operators, or the glob matching mentioned above.  They perform significantly faster, and do the exact same thing as regex. Regular expressions are very CPU intensive and should only be used when there are no other options
 
@@ -1200,76 +1094,71 @@ class - Allows querying of data-groups
 
 class match - Sees if item matches in the data-group
 
-
 ### Example iRules
 
 when HTTP_REQUEST {
 
-    switch -glob \[string tolower \[HTTP&#x3A;:uri]] {
+switch -glob \[string tolower \[HTTP&#x3A;:uri]] {
 
-        \# only match ‘/example/blah’ and not ‘/example/’
+\# only match ‘/example/blah’ and not ‘/example/’
 
-        "/example/\*" { 
+"/example/\*" {
 
-            pool server4
+pool server4
 
-            snat 10.0.0.1 
+snat 10.0.0.1
 
-        }
+}
 
-        \# only match literal URI with nothing after it
+\# only match literal URI with nothing after it
 
-        "/example4" { 
+"/example4" {
 
-            pool server3
+pool server3
 
-            snat 10.0.0.2 
+snat 10.0.0.2
 
-        }
+}
 
-        default { 
+default {
 
-            pool default_pool 
+pool default_pool
 
-        }
+}
 
-    }
+}
 
 }
 
 when HTTP_REQUEST {
 
-    if { \[class match \[IP::client_addr] equals "localusers_dg" ] } {
+if { \[class match \[IP::client_addr] equals "localusers_dg" ] } {
 
-        pool server2
-
-    }
-
-    elseif { \[class match \[IP::client_addr] equals "remote_users_dg"] } {
-
-        pool remote_pool
-
-        snat 10.2.2.2
-
-    elseif { \[string match \[IP::client_addr] equals "1.1.1.1"] } {
-
-        drop
-
-    else
-
-      drop
-
-    }
+pool server2
 
 }
 
+elseif { \[class match \[IP::client_addr] equals "remote_users_dg"] } {
 
+pool remote_pool
 
+snat 10.2.2.2
 
-# - 2.03a - Use an iRule to resolve application issues related to traffic steering and/or application data
+elseif { \[string match \[IP::client_addr] equals "1.1.1.1"] } {
 
+drop
 
-## Insecure Content on Page
+else
+
+drop
+
+}
+
+}
+
+## - 2.03a - Use an iRule to resolve application issues related to traffic steering and/or application data
+
+### Insecure Content on Page
 
 Webpages/HTML responses contain links to http pages. You can use a Stream profile or/and iRule to replace http with https in the text of the HTML response page.
 
@@ -1279,40 +1168,39 @@ Do this in HTTP_RESPONSE
 
 when HTTP_REQUEST {
 
-   \# Disable the stream filter for all requests
+\# Disable the stream filter for all requests
 
-   STREAM::disable
+STREAM::disable
 
-   \# LTM does not decompress response content, so if the server has compression enabled
+\# LTM does not decompress response content, so if the server has compression enabled
 
-   \# and it cannot be disabled on the server, we can prevent the server from
+\# and it cannot be disabled on the server, we can prevent the server from
 
-   \# sending a compressed response by removing the compression offerings from the client
+\# sending a compressed response by removing the compression offerings from the client
 
-   HTTP&#x3A;:header remove "Accept-Encoding"
+HTTP&#x3A;:header remove "Accept-Encoding"
 
 }
 
 when HTTP_RESPONSE {
 
-   \# Check if response type is text
+\# Check if response type is text
 
-      if {\[HTTP&#x3A;:header value Content-Type] contains "text"}{
+if {\[HTTP&#x3A;:header value Content-Type] contains "text"}{
 
-      \# Replace http&#x3A;// with https&#x3A;//
+\# Replace http&#x3A;// with https&#x3A;//
 
-      STREAM::expression {@http&#x3A;//@https&#x3A;//@}
+STREAM::expression {@http&#x3A;//@https&#x3A;//@}
 
-      \# Enable the stream filter for this response only
+\# Enable the stream filter for this response only
 
-      STREAM::enable
-
-      }
+STREAM::enable
 
 }
 
+}
 
-## Allow Internet Explorer to download files through SSL
+### Allow Internet Explorer to download files through SSL
 
 [Article: K8093 - Using iRules to modify Cache-control headers to allow Internet Explorer to download files through SSL](https://support.f5.com/csp/article/K8093)
 
@@ -1324,45 +1212,43 @@ Use this to fix the problem and allow the files to be downloaded:
 
 when HTTP_RESPONSE {
 
-   if { \[HTTP&#x3A;:header value Content-Type] contains "application/pdf" } {
+if { \[HTTP&#x3A;:header value Content-Type] contains "application/pdf" } {
 
-      HTTP&#x3A;:header replace Pragma public
+HTTP&#x3A;:header replace Pragma public
 
-      HTTP&#x3A;:header replace Cache-Control public
+HTTP&#x3A;:header replace Cache-Control public
 
-   }
+}
 
-   elseif { \[HTTP&#x3A;:header value Content-Type] contains "application/vnd.ms-excel" } {
+elseif { \[HTTP&#x3A;:header value Content-Type] contains "application/vnd.ms-excel" } {
 
-      HTTP&#x3A;:header replace Pragma public
+HTTP&#x3A;:header replace Pragma public
 
-      HTTP&#x3A;:header replace Cache-Control public
+HTTP&#x3A;:header replace Cache-Control public
 
-   }
+}
 
-   elseif { \[HTTP&#x3A;:header value Content-Type] contains "application/msword" } {
+elseif { \[HTTP&#x3A;:header value Content-Type] contains "application/msword" } {
 
-      HTTP&#x3A;:header replace Pragma public
+HTTP&#x3A;:header replace Pragma public
 
-      HTTP&#x3A;:header replace Cache-Control public }
+HTTP&#x3A;:header replace Cache-Control public }
 
-   else {
+else {
 
-      return
+return
 
-   }
+}
 
 }
 
 Objective 2.04 Interpret AVR information to identify performance issues or application attacks
 
-
-# - 2.04a - Explain how to modify profile settings using information from the AVR 
+## - 2.04a - Explain how to modify profile settings using information from the AVR 
 
 Maybe you could increase the buffers on the TCP profile
 
-
-# - 2.04b - Explain how to use advanced filters to narrow output data from AVR 
+## - 2.04b - Explain how to use advanced filters to narrow output data from AVR 
 
 Statistics > Analytics > HTTP > Custom Page > Add Widget
 
@@ -1384,8 +1270,7 @@ Choose capture filters
 - Client IP
 - Requests and/or Responses strings
 
-
-# - 2.04c - Identify potential latency increases within an application
+## - 2.04c - Identify potential latency increases within an application
 
 See if the latency goes up
 
@@ -1393,8 +1278,7 @@ Objective 2.05 Interpret AVR information to identify LTM device misconfiguration
 
 How can AVR project misconfiguration?
 
-
-# - 2.05a - Explain how to use AVR to trace application traffic 
+## - 2.05a - Explain how to use AVR to trace application traffic 
 
 Statistics > Analytics > HTTP > Overview
 
@@ -1408,7 +1292,7 @@ Page Load Time analytics works on browsers that meet the following requirements:
 
 Transaction Sampling (Default profile)
 
-- Sampling improves system performance. 
+- Sampling improves system performance.
 - F5 recommends that you enable sampling if you generally use more than 50 percent of the system CPU resources, or if you have at least 100 transactions in 5 minutes for each entity.
 - Cannot Capture traffic if Enabled.
 
@@ -1420,8 +1304,7 @@ Transaction Sampling (Default profile)
 - SNMP - Sys > SNMP > Traps > Destination (Auto sets up syslog)
 - E-mail - SMTP under analytics profile
 
-
-# - 2.05b - Explain how latency trends identify application tier bottlenecks
+## - 2.05b - Explain how latency trends identify application tier bottlenecks
 
 If the latency gets higher, see if pool members have been failing which results in others taking more load.
 
@@ -1438,7 +1321,6 @@ Objective 2.06 Given a set of headers or traces, determine the root cause of an 
 
 - Introduced media
 
-
 - One request per connection
 - Backwards compatible with HTTP/0.9
 - Only 1 domain per IP, cannot specify Host
@@ -1454,17 +1336,16 @@ Improvements (Mostly performance)
 - **Persistent Connections: Multiple requests per TCP connection**
 - **Cache and Proxy Support**
 
-
-# - 2.06a - Explain how to interpret response codes
+## - 2.06a - Explain how to interpret response codes
 
 |                        |                           |                                                                                                                                               |
 | :--------------------: | :-----------------------: | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Status Code Format** |        **Meaning**        | **Description**                                                                                                                               |
-|         **1xx**        | **Informational Message** | Provides general information; does not indicate success or failure of a request.                                                              |
-|         **2xx**        |        **Success**        | The method was received, understood and accepted by the server.                                                                               |
-|         **3xx**        |      **Redirection**      | The request did not fail outright, but additional action is needed before it can be successfully completed.                                   |
-|         **4xx**        |      **Client Error**     | The request was invalid, contains bad syntax or could not be completed for some other reason that the server believes was the client's fault. |
-|         **5xx**        |      **Server Error**     | The request was valid but the server was unable to complete it due to a problem of its own.                                                   |
+|        **1xx**         | **Informational Message** | Provides general information; does not indicate success or failure of a request.                                                              |
+|        **2xx**         |        **Success**        | The method was received, understood and accepted by the server.                                                                               |
+|        **3xx**         |      **Redirection**      | The request did not fail outright, but additional action is needed before it can be successfully completed.                                   |
+|        **4xx**         |     **Client Error**      | The request was invalid, contains bad syntax or could not be completed for some other reason that the server believes was the client's fault. |
+|        **5xx**         |     **Server Error**      | The request was valid but the server was unable to complete it due to a problem of its own.                                                   |
 
 If the code received is not understood by the client, like 491 for example, a 400 code is displayed. The x00 codes are generic.
 
@@ -1480,8 +1361,7 @@ If the code received is not understood by the client, like 491 for example, a 40
 | **503** |  Service Unavailable  | The server is temporarily unable to fulfill the request for internal reasons. This is often returned when a server is overloaded or down for maintenance. |
 | **504** |    Gateway Timeout    | The server, while acting as a gateway or proxy, timed out while waiting for a response from another server it tried to access on the client's behalf.     |
 
-
-# - 2.06b - Explain the function of HTTP headers within different HTTP applications (Cookies, Cache Control, Vary, Content Type & Host) / - 2.07c - Predict the browser caching behavior when application data is received (headers and HTML)
+## - 2.06b - Explain the function of HTTP headers within different HTTP applications (Cookies, Cache Control, Vary, Content Type & Host) / - 2.07c - Predict the browser caching behavior when application data is received (headers and HTML)
 
 **_Cache-Control_** _-_ Directions to cache or not, a response or request.
 
@@ -1491,37 +1371,34 @@ If the code received is not understood by the client, like 491 for example, a 40
 |                             |                       |                                                                                                                                                                                                                                                                                                                                                  |
 | :-------------------------: | :-------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Cache-Control Directive** | **HTTP Message Type** | **Description**                                                                                                                                                                                                                                                                                                                                  |
-|        **_no-cache_**       | _Request or Response_ | The cache must check with the server to ensure that the cached data is still valid.                                                                                                                                                                                                                                                              |
-|         **_public_**        |       _Response_      | May be cached by any cache, including a shared one (a cache used by many clients).                                                                                                                                                                                                                                                               |
-|        **_private_**        |       _Response_      | Intended for only a particular user and should not be placed into a shared cache.                                                                                                                                                                                                                                                                |
-|        **_no-store_**       | _Request or Response_ | Should not be stored in a cache. (a malicious cache operator could simply ignore the directive.)                                                                                                                                                                                                                                                 |
+|       **_no-cache_**        | _Request or Response_ | The cache must check with the server to ensure that the cached data is still valid.                                                                                                                                                                                                                                                              |
+|        **_public_**         |      _Response_       | May be cached by any cache, including a shared one (a cache used by many clients).                                                                                                                                                                                                                                                               |
+|        **_private_**        |      _Response_       | Intended for only a particular user and should not be placed into a shared cache.                                                                                                                                                                                                                                                                |
+|       **_no-store_**        | _Request or Response_ | Should not be stored in a cache. (a malicious cache operator could simply ignore the directive.)                                                                                                                                                                                                                                                 |
 |        **_max-age_**        | _Request or Response_ | In a request, indicates that the client is willing to accept a response whose age is no greater than the value specified. In a response, indicates the maximum age of the response before it is considered “stale”—this is an alternative to the use of the _Expires_ header, which can fall victim to clock skew, and takes precedence over it. |
 |       **_min-fresh_**       |       _Request_       | Specifies that the client wants a response that is not only not stale at the time the request is received, but that will remain “fresh” for the specified number of seconds.                                                                                                                                                                     |
 |       **_max-stale_**       |       _Request_       | If sent without a parameter, indicates that the client is willing to accept a stale reply (one that has expired). If a numeric parameter is included, it indicates how stale, in seconds, the response may be.                                                                                                                                   |
 
 **_If-Match_**: Tells the server to respond if the ETags match
 
-**_If-Modified-Since_****_:_** Return the requested entity only if the resource was modified since &lt;date/time>. Server will respond with “304 Not Modified” if it hasn’t been.
+**_If-Modified-Since_\*\***_:_\*\* Return the requested entity only if the resource was modified since &lt;date/time>. Server will respond with “304 Not Modified” if it hasn’t been.
 
-**_If-None-Match_****_:_** Respond only if the ETag does **_not_** match.
+**_If-None-Match_\*\***_:_** Respond only if the ETag does **_not_\*\* match.
 
 **_Content-Type:_** Media type and subtype
 
-
 ### META Headers
 
-Included in an HTML file. “HTTP-EQUIV” meta tags are just like HTTP headers and take precedence. 
+Included in an HTML file. “HTTP-EQUIV” meta tags are just like HTTP headers and take precedence.
 
 Most problematic:
 
 - **_no-cache_**: Forces a refresh even if it hasn’t changed
 - **_refresh_**: Used to mimic a 302 redirect, but causes the browser to revalidate all objects referenced by the tag.
 
-
 ### ETag
 
 An identifier for a resource. If resource changes, ETag must change. Helps with caching.
-
 
 ### HTTP Vary Header and Caching
 
@@ -1529,25 +1406,21 @@ An identifier for a resource. If resource changes, ETag must change. Helps with 
 
 [CACHE::userkey](https://clouddocs.f5.com/api/irules/CACHE__userkey.html)
 
-**Vary**: Prevent duplicate cache entries. A header that the originating web server sends, intended for the caching device to read. 
+**Vary**: Prevent duplicate cache entries. A header that the originating web server sends, intended for the caching device to read.
 
-It contains things like User-Agent, if a client requests the same resource twice, with the same User-Agent, then don’t validate it 
+It contains things like User-Agent, if a client requests the same resource twice, with the same User-Agent, then don’t validate it
 
 with me and just serve them the cached resource. This can cause duplicate entries of the same resource if the two users have different User-Agent strings.
 
 - Only **User-Agent** and **Accept-Encoding** are recognized
 
-  
-
-
 iRule commands to help with this issue:
 
 - **CACHE::userkey &lt;keystring> - Creates a user-defined caching group. Overrides _Vary_ header.**
 - **CACHE::useragent - Can specify a group of _User-Agents_ to serve cached content to for the same request**
-- **CACHE::acceptencoding - Can specify a group of _Accept-Encoding_ headers __to serve cached content to for the same request, like gzip and deflate would be the same cached entry instead of separate (duplicate)**
+- **CACHE::acceptencoding - Can specify a group of _Accept-Encoding_ headers \_\_to serve cached content to for the same request, like gzip and deflate would be the same cached entry instead of separate (duplicate)**
 
 You can also use those commands even if the _Vary_ header isn’t present.
-
 
 ### Caching Commands - Show and Delete Entries
 
@@ -1557,15 +1430,13 @@ You can also use those commands even if the _Vary_ header isn’t present.
 
 **delete ltm profile ramcache** &lt;profile_name> **host** &lt;vip_address:port> **uri /&lt;object_name>**
 
-**delete ltm profile ramcache** &lt;profile_name> ****- Deletes all entries
+**delete ltm profile ramcache** &lt;profile_name> \*\*\*\*- Deletes all entries
 
+## - 2.06c - Explain HTTP methods (GET, POST, etc.)
 
-# - 2.06c - Explain HTTP methods (GET, POST, etc.)
+### HTTP Methods
 
-
-## HTTP Methods
-
-**GET:** Proxy servers can intercept this and serve the data for you via caching. Conditions can be sent that require certain things, like _If-Modified-Since_ or _If-Match_. The server will only reply if those conditions are 
+**GET:** Proxy servers can intercept this and serve the data for you via caching. Conditions can be sent that require certain things, like _If-Modified-Since_ or _If-Match_. The server will only reply if those conditions are
 
 then met. This is called a _conditional_ GET. You can also request certain parts of a large file with a _partial_ GET, which will have the _Range_ header inserted.
 
@@ -1585,17 +1456,15 @@ _where the store the file._
 
 **_Idempotent Methods:_** _Requests that have the same result no matter how many times they are issued. Usually GET and HEAD._
 
+## - 2.06d - Explain how to decode POST data.
 
-# - 2.06d - Explain how to decode POST data.
-
-
-## Decode POST Data
+### Decode POST Data
 
 POST has the query string sent in the Body of the submission of POST, instead of the header like GET does. The ‘? is not included.
 
 - user=joe+and+bob&food=burger
 
-URL’s must be ASCII, characters not in ASCII must be encoded into such. Encoded will be % followed by two hexadecimal digits. 
+URL’s must be ASCII, characters not in ASCII must be encoded into such. Encoded will be % followed by two hexadecimal digits.
 
 Spaces cannot be in the URL
 
@@ -1605,14 +1474,11 @@ Spaces cannot be in the URL
 
 **URI::decode** Is a function used to decode a URI, under HTTP_REQUEST
 
+## ~~- 2.07a - Investigate the cause of a specific response code~~
 
-# ~~- 2.07a - Investigate the cause of a specific response code~~
+## - 2.07b - Investigate the cause of an SSL Handshake failure
 
-
-# - 2.07b - Investigate the cause of an SSL Handshake failure
-
-
-## Handshake Failures
+### Handshake Failures
 
 Date/time incorrect on either side causes conflicts in certificate validity.
 
@@ -1623,8 +1489,7 @@ The protocol versions are identified as follows
 - TLS1.1 - 3.2
 - TLS1.2 - 3.3
 
-
-## SSLDUMP failure examples
+### SSLDUMP failure examples
 
 - Server rejects client’s protocol version
 
@@ -1632,27 +1497,25 @@ The protocol versions are identified as follows
   - level fatal
   - value handshake_failure
 
-
 - Server rejects client’s cipher suites
 
   - C>SV3.2 Handshake
   - ClientHello
   - Version 3.2
   - TLS\_&lt;ciphers>
-  -  
+  -
   - S>CV3.2 Alert
   - level fatal
   - value handshake_failure
-
 
 - Device does not accept SSL
 
   - C>SV3.1 Handshake
   - ClientHello
   - Version3.2
-  -  
+  -
   - _period of waiting_
-  - _ _
+  - \_ \_
   - C>S TCP FIN
 
 Enable SSL debug in /var/log/ltm -  **modify sys db log.ssl.level value debug** (Default is Warning)
@@ -1673,13 +1536,11 @@ Objective 2.09 Given a direct trace, a trace through the LTM device, and other r
 
 ~~- 2.09a - Investigate the cause of an SSL Handshake failure ~~
 
-
-# - 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration
+## - 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration
 
 Packet Process Order: Packet filter > Connection table > Virtual Server > NAT > SNAT > Self IP
 
-
-## Auto Last Hop
+### Auto Last Hop
 
 Global Setting under: System > Configuration > Local Traffic > General > Auto Last Hop \[ X ]
 
@@ -1687,8 +1548,7 @@ Send the response back to the MAC of the client requestor, overrides the routing
 
 Can be overridden locally with Enabled, Disabled, or Default (inherit global) on VIPs, and SNATs
 
-
-## Failed Request Captures
+### Failed Request Captures
 
 Pictures of Wireshark or TCPDUMP traces that show these issues
 
@@ -1697,8 +1557,7 @@ Pictures of Wireshark or TCPDUMP traces that show these issues
 3. Server needs configured with SSL - ClientHello sent, no response, timeout after 300 seconds, C>S FIN
 4. SNAT needs enabled - S, S, S, R
 
-
-## Persistence
+### Persistence
 
 **show ltm persistence persist-records**
 
@@ -1710,8 +1569,7 @@ An iRule can override a persistence profile decision
 
 SSL Persistence - Verifies SSL session ID, when there is no client SSL profile applied. IP changes can happen and not affect this. If client SSL applied, use iRule
 
-
-### Cookie
+#### Cookie
 
 Insert, Rewrite, and Passive are resistant to persistence mirroring, and failover. Everything needed is in the cookie.
 
@@ -1719,30 +1577,25 @@ Expiration
 
 - Session (Default) – Valid until the browser is closed
 
-
 - Time-based
 
 Override Connection Limit: Pool member limits overridden. Virtual Server ones are not.
 
-
-#### Insert (Default) 
+##### Insert (Default) 
 
 **BIGipServer&lt;pool_name>** cookie is inserted. The server port and address are encoded. Unable to maintain persistence across virtual servers (HTTP/HTTPS) if pool member ports are different.
 
+##### Rewrite
 
-#### Rewrite
-
-Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer&lt;pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats). 
+Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer&lt;pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).
 
 Use over passive mode whenever possible
 
-
-#### Passive 
+##### Passive 
 
 Cookie read from the server to determine how to persist based on the encoded address of the pool member and timeout. Not recommended if rewrite is an option.
 
-
-#### Hash
+##### Hash
 
 Web server generates a cookie and LTM creates a hash of it to determine where to send it. Must specify a timeout in seconds
 
@@ -1754,8 +1607,7 @@ Persistence can be ignored for Cookie, Universal and Hash if different persisten
 
 Fallback persistence - source IP only
 
-
-### Source Address 
+#### Source Address 
 
 Timeout: Default 180 seconds
 
@@ -1767,20 +1619,17 @@ Mask
 
 Override Connection Limit
 
-
-### Destination Address
+#### Destination Address
 
 Good for caching servers
 
-
-### Hash
+#### Hash
 
 Uses data from iRule (persist HTTP header)
 
 Two algorithms, Default and CARP
 
-
-### Universal Persistence
+#### Universal Persistence
 
 [Overview of universal persistence (f5.com)](https://support.f5.com/csp/article/K7392)
 
@@ -1789,8 +1638,7 @@ Two algorithms, Default and CARP
 - **persist uie** - persist off of HTTP_REQUEST client-side request
 - **persist add uie** - used on HTTP_RESPONSE lookup of text to persist from
 
-
-### Matching Across Options
+#### Matching Across Options
 
 Pools with different node IPs or pools with multiple members with the same node IP may cause issues
 
@@ -1814,35 +1662,31 @@ Match Across Pools - Once a pool and member is selected, always return to that p
 - Useful if you have one VIP redirecting to multiple pools using an iRule
 - Beware if the same client connects to another VIP that has Match Across Pools enabled, they will get directed to the same pool behind the other VIP
 
-
-## _Packet Filters_
+### _Packet Filters_
 
 - _Applies to incoming traffic only_
 - _Expressions are written in [libpcap ](http://www.tcpdump.org/manpages/pcap-filter.7.html)syntax like tcpdump commands - “src host and src host”_
 - _Can be applied to all VLANs to evaluate traffic coming into the BIG-IP from everywhere_
 - _Must Enable, default it is disabled_
 
-
-### _Criteria_
+#### _Criteria_
 
 - _Source IP_
 - _Destination IP and port_
 - _Protocol_
 - _VLAN_
 
-
-### _Options_
+#### _Options_
 
 **_Unhandled Packet Action_** _- Accept, Discard, or Reject are the options. Default is to Accept_
 
 **_Filter established connections_** _- Default disabled. Checking this can degrade performance and does not improve security_
 
-**_Send ICMP error on packet reject_** _- Default disabled. When enabled, BIG-IP sends an ICMP type 3 (destination unreachable), code 13 (administratively prohibited) packet when one is rejected._ 
+**_Send ICMP error on packet reject_** _- Default disabled. When enabled, BIG-IP sends an ICMP type 3 (destination unreachable), code 13 (administratively prohibited) packet when one is rejected._
 
 _When disabled, sends ICMP reject that is protocol-dependent (TCP reset?)_
 
-
-#### _Exemptions_ 
+##### *Exemptions* 
 
 _VLANs - Default is None_
 
@@ -1850,22 +1694,19 @@ _Protocols_
 
 - _ARP (default accepted)_
 
-
 - _Important ICMP (default accept)_
 
 _MAC addresses - Default is None (subject to packet filtering)_
 
 _IP Addresses_
 
-
-#### _Actions_
+##### _Actions_
 
 - _Accept, Discard - Stops processing down the rules_
 - _Reject - Sends reject packet - Depends on **Send ICMP error on packet reject** option_
 - _Continue - Acknowledges packet for logging/statistical purposes and continues_
 
-
-## SNAT
+### SNAT
 
 Local Traffic > Address Translation
 
@@ -1875,12 +1716,11 @@ Local Traffic > Address Translation
 
 - Well known ports are usable as source ports
 - Can use more than one floating self IP in automap
-- Each SNAT address can have more than 65,535 translations  
+- Each SNAT address can have more than 65,535 translations
   - Source/Dest IP and Port numbers create unique translation
 - Maximize SNAT IP use - Adjust TCP/UDP idle timeout - 60 seconds for HTTP, 120 - 300 seconds for FTP (Control port will remain idle while data is transferring)
 
-
-### Pools
+#### Pools
 
 - Avoids port exhaustion
 - Improve performance for FastHTTP VIP
@@ -1890,8 +1730,7 @@ Local Traffic > Address Translation
 
 Automap - Uses the self-IPs that egresses to the destination server according to the route table. Uses floating IP if HA.
 
-
-### SNAT List
+#### SNAT List
 
 A global configuration for SNAT
 
@@ -1910,8 +1749,7 @@ VLAN
 Stateful Failover Mirror \[   ]  
 Auto last hop \[ Default | Enabled | Disabled  ]
 
-
-### SNAT Translation List
+#### SNAT Translation List
 
 SNATs will appear here that you configured, such as a pool.
 
@@ -1919,13 +1757,11 @@ Can only configure these options from this menu
 
 - TCP/UDP/IP Idle timeout (Defaults Indefinite)
 
-
 - Connection Limit
 - ARP toggle
 - Traffic group selection
 
-
-## FastL4 Profile
+### FastL4 Profile
 
 [K01155812: Overview of the Performance (Layer 4) virtual server](https://support.f5.com/csp/article/K01155812)
 
@@ -1953,8 +1789,7 @@ Assigned to the following VIP Types
 - No VIP authentication
 - No HTTP Pipelining
 
-
-## FastHTTP Profile
+### FastHTTP Profile
 
 Assign to a Performance (HTTP) VIP Type
 
@@ -1999,23 +1834,19 @@ Request Header Insert
 
 XFF Insert
 
-  
-
-
 Objective 2.10 Given a scenario, determine which protocol analyzer tool and its options are required to resolve an application issue
 
 HTTPWatch
 
 Fiddler
 
-
-## ssldump
+### ssldump
 
 Best to capture traffic with tcpdump, then decrypt with ssldump. It is possible to decrypt live traffic with ssldump though.
 
 Flags
 
-- \-i - Interface 
+- \-i - Interface
 
 - \-r - Read pcap
 
@@ -2031,8 +1862,7 @@ Flags
 
 - \-k - Specify private key file path
 
-
-## TCPDUMP
+### TCPDUMP
 
 [Packet trace analysis](https://support.f5.com/csp/article/K1893)
 
@@ -2088,18 +1918,15 @@ Flags
 
 \-Z - User
 
-
-### Operators
+#### Operators
 
 and | or | not
 
-
-### Filters
+#### Filters
 
 **src | dst \[ net | host | &lt;ip> ]**
 
-
-### Output
+#### Output
 
 **IPv4**
 
@@ -2126,54 +1953,44 @@ IP Src, Dst, and flags are always present, others are conditional.
 
 16:09:37.343607 IP 10.128.10.1.55945 > 10.128.10.50.80: Flags \[SEW], seq 1505695674, win 65535, options \[mss 1460,nop,wscale 5,nop,nop,TS val 226908491 ecr 0,sackOK,eol], length 0
 
-
-# - 2.10a - Identify application issues based on a protocol analyzer trace and determine solution
+## - 2.10a - Identify application issues based on a protocol analyzer trace and determine solution
 
 Virtual Host: Apache setting to allow another host header binding.
 
-
-## No Response
+### No Response
 
 - SNAT
 
   - Source and Destination pool member in same subnet
   - Pool member doesn’t have LB as gateway
 
+## - 2.10b - Explain how to follow a conversation from client side and server side traces
 
-# - 2.10b - Explain how to follow a conversation from client side and server side traces
-
-
-## Following a Trace
+### Following a Trace
 
 - Use 0.0:p (loopback interface) and specify source and destination IPs
 - Match timestamps on both sides (client and server)
 - Match source port number
 
-
-## Following a Trace in Wireshark
+### Following a Trace in Wireshark
 
 - In the F5 ETH trailer, the flow ID and peer ID can be used to follow a full trace of the connection. Copy them as a Filter and put ‘or’ in it. This will catch both sides of the connection.
 
+## - 2.10c - Explain how SNAT and OneConnect affect protocol analyzer traces
 
-# - 2.10c - Explain how SNAT and OneConnect affect protocol analyzer traces
-
-
-## SNAT
+### SNAT
 
 Automap will use floating self-IP of interface - will preserve the source port by default
 
-
-## OneConnect
+### OneConnect
 
 tcpdump won’t show 3 way handshake on the server-side and will show multiple HTTP requests on server side over the same connection, while the client side will show multiple connections from multiple clients.
 
-
-# - 2.10d - Explain how to decrypt SSL traffic for protocol analysis (v11.5)
+## - 2.10d - Explain how to decrypt SSL traffic for protocol analysis (v11.5)
 
 [K10209: Overview of packet tracing with the ssldump utility](https://support.f5.com/csp/article/K10209)
 
-
-## Read application data - Symmetric keys
+### Read application data - Symmetric keys
 
 1. Disable ECDHE in the SSL profile
 2. Capture traffic with tcpdump
@@ -2183,15 +2000,13 @@ tcpdump won’t show 3 way handshake on the server-side and will show multiple H
 
 The output of the pre-master-secret log file can now be loaded into Wireshark. (Edit > Preferences > Protocols > SSL > PMS key log filename.
 
-
-# - 2.10e - Explain how to recognize the different causes of slow traffic (e.g., drops, RSTs, retransmits, ICMP errors, demotion from CMP)
+## - 2.10e - Explain how to recognize the different causes of slow traffic (e.g., drops, RSTs, retransmits, ICMP errors, demotion from CMP)
 
 ICMP Errors - Packet filter being used and sending ICMP error on Reject
 
 ICMP destination unreachable - can be multiple things, like the destination host cannot be reached by the gateway. Or there isn’t a route that the gateway has to the destination
 
-
-## Drops
+### Drops
 
 - No SNAT
 
@@ -2210,8 +2025,7 @@ ICMP destination unreachable - can be multiple things, like the destination host
 
   - Too many resets are being sent, _silently drop_
 
-
-## Resets
+### Resets
 
 **show net rst-cause**
 
@@ -2264,45 +2078,37 @@ iRule - **reject** command
 
 Packet filter - **reject** action
 
-
-## Duplicate ACKs
+### Duplicate ACKs
 
 - Packet loss
 - Resource Exhaustion
 - Extreme increase in latency
 
-
-## Slow Traffic
+### Slow Traffic
 
 **Dropped packets**
 
 - Duplicate ACKs
 - Duplicate SEQ
 
-
-## CMP - Cluster Multiprocessing
+### CMP - Cluster Multiprocessing
 
 Creates separate TMM processes per CPU to share the load across all.
 
 Demotion - iRule with Global variable, **set::** or **$::** demotes CMP to single.
 
-**show ltm virtual &lt;vs-name>** 
+**show ltm virtual &lt;vs-name>**
 
 - CMP - **enabled/disabled**
 - CMP Mode - **all-cpus**, **single, none**, **disabled**
 
-  
-
-
 Objective 2.14 Given a trace, identify monitor issues
 
-
-# - 2.14a - Explain how to capture and interpret monitor traffic using protocol analyzer
+## - 2.14a - Explain how to capture and interpret monitor traffic using protocol analyzer
 
 Capture traffic from non-floating self-IP to pool member
 
-
-# - 2.14b - Explain how to obtain needed input and output data to create the monitors
+## - 2.14b - Explain how to obtain needed input and output data to create the monitors
 
 Retrieve a health check file and response from cURL or use openssl, telnet, or ncat.
 
@@ -2318,8 +2124,7 @@ openss s_client -connect 10.128.10.10:443
 
 Objective 2.15 Given a monitor issue, determine an appropriate solution
 
-
-# - 2.15a - Determine appropriate monitor and monitor timing based on application and server limitations
+## - 2.15a - Determine appropriate monitor and monitor timing based on application and server limitations
 
 [Troubleshooting Health Monitors](https://support.f5.com/csp/article/K12531)
 
@@ -2339,17 +2144,14 @@ Timeout should be 3 times the interval + 1.
 
 The appropriate monitor should be TCP, or HTTP for most apps. ICMP should not be used.
 
+### Types
 
-## Types
-
-
-### Active
+#### Active
 
 - Extended Content Verification (ECV) - Verify content - status.html - ONLINE
 - Extended Application Verification (EAV) - Verify path or service - Port 443, or HEAD /
 
-
-### Passive
+#### Passive
 
 - Passively monitors traffic, does not generate any
 
@@ -2375,17 +2177,15 @@ The appropriate monitor should be TCP, or HTTP for most apps. ICMP should not be
 
   - ~~The Interval set will be used when its down~~
 
-
-## Pools
+### Pools
 
 [K47726919: FQDN ephemeral nodes on the BIG-IP system do not repopulate after configuration load](https://support.f5.com/csp/article/K47726919)
 
-
-### Options
+#### Options
 
 **FQDN** - Queries DNS, adds all results as members.
 
-Members will show as a separate node and display as “nodename-10.1.1.100” (11.x) or  “\_auto_10.1.1.100” (12.+) 
+Members will show as a separate node and display as “nodename-10.1.1.100” (11.x) or  “\_auto_10.1.1.100” (12.+)
 
 **Auto Populate** - Remove and add members as DNS record changes (checks every hour by default or can use the TTL). You can restart **bigd** to force a lookup.
 
@@ -2402,8 +2202,7 @@ Members will show as a separate node and display as “nodename-10.1.1.100” (1
 
 **TCP Request Queue** - Queue connection if connection limit is reached.
 
-
-#### Action on Service Down
+##### Action on Service Down
 
 What happens when a pool member is marked down.
 
@@ -2420,25 +2219,23 @@ Reselect - Moves client connection without tearing it down.
 - UDP VS
 - If you did this on a TCP VS, the server would send a RST (no existing connection)
 
-
-### Members
+#### Members
 
 **Down:** Persistence record is removed, no new connections will be directed to that member.
 
 **Disabled:** Receive new connections from persistent connections. No new connections allowed from clients without a persistence record
 
-**Forced Offline:** Persistence record is removed, no new connections will be directed to that member. 
+**Forced Offline:** Persistence record is removed, no new connections will be directed to that member.
 
 Existing connections can end gracefully and will receive an ICMP Echo Unreachable or TCP RST if the idle timeout is reached.
 
 **Connection Rate Limit** - Optimal 300 - 5000 connections per second. Max is 100000.
 
-
-#### Priority Groups
+##### Priority Groups
 
 Backup Servers will be placed in lower priority than others.
 
-Priority Group Activation**:** Disabled,  Less than.. 
+Priority Group Activation**:** Disabled,  Less than..
 
 - Less than **0** members - Disables it
 
@@ -2449,10 +2246,7 @@ Members
 - If the Less than… is exceeded, the next highest priority group is activated (Less than 3.. Two left > Next highest activated )
 - Connection limits do not mark them down and does not activate another group
 
-
-
-
-## FTP
+### FTP
 
 [ftpd man page](https://linux.die.net/man/8/ftpd)
 
@@ -2464,8 +2258,7 @@ Members
 
 Logs in, downloads file to /var/tmp
 
-
-## External
+### External
 
 [Requirements for external monitor output](https://support.f5.com/csp/article/K7444)
 
@@ -2473,13 +2266,11 @@ Any output from an external monitor to **stdout** will result in a member being 
 
 Writing to stdout - ‘**echo** &lt;string>’
 
-
-# - 2.15b - Describe how to modify monitor settings to resolve monitor problems
+## - 2.15b - Describe how to modify monitor settings to resolve monitor problems
 
 Default setting for multiple monitors on a pool is for All to pass.
 
-
-## HTTP
+### HTTP
 
 [Content length limits for HTTP(S) monitors](https://support.f5.com/csp/article/K3451)
 
@@ -2491,10 +2282,9 @@ Limit of length to search - ~5k bytes - F5 will send a reset after it receives t
 **Interval** - How often to check, if node is up or down  
 **Time until Up** - How long to wait after successful check before marking up
 
-**Send String** 
+**Send String**
 
 - HTTP version differences
-
 
 - 0.9 - GET /\\n or GET /\\r\\n
 
@@ -2520,13 +2310,11 @@ Section 3 - Identify and Resolve LTM Device Issues
 
 Objective 3.01 Interpret log file messages and/or command line output to identify LTM device issues
 
-
-## LCD Messages
+### LCD Messages
 
 [Manual Chapter: The 4000 Series Platform](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/b4000-platform/2.html#c_reuse_led_about)
 
-
-### Alert lights
+#### Alert lights
 
 |                 |           |
 | --------------- | --------- |
@@ -2541,8 +2329,7 @@ Status LED
 - Solid Green - Active
 - Solid yellow - Standby
 
-
-## Alert conditions
+### Alert conditions
 
 **Blinking red** - PSU, Bad HDD
 
@@ -2550,21 +2337,17 @@ Status LED
 
 **Warning** - Unit going standby/active
 
-
-# - 3.01a - Interpret log file messages to identify LTM device issues
+## - 3.01a - Interpret log file messages to identify LTM device issues
 
 Covered already under 3.02a/b
 
-
-# - 3.01b - Interpret the qkview heuristic results
+## - 3.01b - Interpret the qkview heuristic results
 
 Not sure how to study for this
 
+## - 3.01c - Identify appropriate methods to troubleshoot NTP
 
-# - 3.01c - Identify appropriate methods to troubleshoot NTP
-
-
-## Prefer NTP server
+### Prefer NTP server
 
 tmsh edit sys ntp all-properties
 
@@ -2574,8 +2357,7 @@ include “server &lt;ip> prefer”
 
 list sys ntp servers
 
-
-## Troubleshooting
+### Troubleshooting
 
 [NTP's REFID](https://www.nwtime.org/ntps-refid/)
 
@@ -2593,50 +2375,55 @@ ntpd (pid  25898) is running…
 
 \-p    Print peers - required for below output or else enters interactive mode
 
+### Output
 
-## Output
+|              |                                                                                                                                                                         |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Variable** | **Description**                                                                                                                                                         |
+| \[tally]     | **\*** =  \*\*\*\*Preferred server\+ = Next available serverspace, x, period (.), dash (-), or pound (#)  = Peer not used - unavailable, not needed, requirements unmet |
+| remote       | Peer address                                                                                                                                                            |
+| refied       | Reference ID.CMDA..GPS.                                                                                                                                                 |
+| st           | Stratum ID0 = invalid/unspecified1 = primary / reference clock (GPS/CMDA, etc.)2-15 = secondary source, refid changes to remote clock’s peer IP16+ = unsynchronized     |
+|              |                                                                                                                                                                         |
+| t            | u: unicast address, b: broadcast, l: local address                                                                                                                      |
+|              |                                                                                                                                                                         |
+|              |                                                                                                                                                                         |
+| reach        | 0 = server not reached                                                                                                                                                  |
 
-|              |                                                                                                                                                                     |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Variable** | **Description**                                                                                                                                                     |
-| \[tally]     | **\*** =  ****Preferred server\+ = Next available serverspace, x, period (.), dash (-), or pound (#)  = Peer not used - unavailable, not needed, requirements unmet |
-| remote       | Peer address                                                                                                                                                        |
-| refied       | Reference ID.CMDA..GPS.                                                                                                                                             |
-| st           | Stratum ID0 = invalid/unspecified1 = primary / reference clock (GPS/CMDA, etc.)2-15 = secondary source, refid changes to remote clock’s peer IP16+ = unsynchronized |
-|              |                                                                                                                                                                     |
-| t            | u: unicast address, b: broadcast, l: local address                                                                                                                  |
-|              |                                                                                                                                                                     |
-|              |                                                                                                                                                                     |
-| reach        | 0 = server not reached                                                                                                                                              |
+#### Failed
 
+```
+remote       refid  st t when   poll reach delay offset jitter
+==============================================================================
+172.28.4.133 .INIT. 16 u 64     0    0.000 0.000 0000.00
+```
 
-### Failed
+**st 16 =** inoperative NTP server or not viable  
+**refid .INIT** = Initializing request to server, not reached.  
+  
+```
+remote       refid        st t when poll reach delay offset  jitter
+==============================================================================
+172.28.4.133 10.10.10.251 4  u 482  1024 377   0.815 -10.010 0.345
+```
 
-remote            **refid** **st** t when poll reach  delay offset jitter  
-==============================================================================  
-172.28.4.133 **.INIT.** **16** u 64     0    0.000  0.000 0000.00
+#### Normal
+Example 1
+```
+remote         refid        st t when poll reach delay offset  jitter
+==============================================================================
+*172.16.24.120 10.30.40.251 4  u 482  1024 377   0.815 -10.010 0.345
++172.17.24.130 10.20.40.252 6  u 482  1024 179   0.215 -1.010  0.545
+```  
+Example 2
+```
+remote    refid        st t when poll reach delay  offset       jitter
+==============================================================================
+*10.0.0.1 172.18.20.40 2  u 174  1024 377   39.833 -0.447        1.107
++10.0.1.1 .GPS.        1  u 285  1024 377   55.782 -1.010 -0.661 1.562
+```
 
-**st 16 =** inoperative NTP server or not viable
-
-**refid .INIT** = Initializing request to server, not reached.
-
-remote refid st t when poll reach delay offset jitter  
-==============================================================================  
-172.28.4.133 10.10.10.251 4 u 482 1024 377 0.815 -10.010 0.345
-
-
-### Successful
-
-![](data:image/png;base64,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)
-
-remote refid st t when poll reach delay offset jitter  
-==============================================================================  
-\*172.28.4.133 10.10.10.251 4 u 482 1024 377 0.815 -10.010 0.345
-
-\+172.28.4.134 10.10.10.252 6 u 482 1024 179 0.215 -1.010 0.545
-
-
-# - 3.01d - Identify license problems based on the log file messages and statistics
+## - 3.01d - Identify license problems based on the log file messages and statistics
 
 [K7747: Error Message: SSL transaction (TPS) rate limit reached](https://support.f5.com/csp/article/K7747)
 
@@ -2650,59 +2437,42 @@ You can use **run util &lt;command>** from TMSH if you don’t feel like going d
 
 Not all programs are there, such as ‘top’
 
+## - 3.02a - Identify hardware problems based on the log file messages and statistics
 
-# - 3.02a - Identify hardware problems based on the log file messages and statistics
+**show sys log ltm \[ range** \<time-parameters> **]**
 
-**show sys log ltm \[ range &lt;time-parameters> ]**
-
-Max lines is 10000, and will not display it if so
-
-Seconds are optional
-
+Max lines is 10000, and will not display it if so  
+Seconds are optional  
 The following require **range**
 
-    **now-3d          3 days ago.**
+now-3d - 3 days ago.  
+now+3h - 3 hours from now. ← This is impossible  
+now-3m - 3 minutes ago.  
+now+3w - 3 weeks from now. ← This is impossible
 
-    ******now+3h          3 hours from now.** ****← This is impossible
-
-    **now-3m          3 minutes ago.**
-
-    ******now+3w          3 weeks from now.** ****← This is impossible
-
-**show sys log ltm** 2022-09-15:00:00:00 ← Cannot get this to work.
-
-**show sys log ltm range now-1h** - Now to 1 hour ago
-
-**show sys log ltm range** 2022-09-15:00:00:00--2022-09-14:00:00:00
+**show sys log ltm** 2022-09-15:00:00:00 ← Cannot get this to work.  
+**show sys log ltm range now-1h** - Now to 1 hour ago  
+**show sys log ltm range** 2022-09-15:00:00:00--2022-09-14:00:00:00  
 
 If you don’t specify a destination in the range, it will be 5 minutes
 
+```
 SYNTAX
+Date/Time Syntax
+  now[ [ + | - ] <integer> [ d | h | w | m ] ]
+  yyyy-mm-dd[ : | T ]hh:mm[:ss]
+  mm-dd[-yyyy][ : | T ]hh:mm[:ss]
+  mm/dd[/yyyy][ : | T ]hh:mm[:ss]
 
-   Date/Time Syntax
+Date Range Syntax
+  now[ [ + | - ] <integer> [ d | h | w | m ] ]--now[ [ + | - ] <integer> [ d | h | w | m ] ]
+  yyyy-mm-dd[ : | T ]hh:mm[:ss]--yyyy-mm-dd[ : | T ]hh:mm[:ss]
+  mm-dd[-yyyy][ : | T ]hh:mm[:ss]--indefinite
+  epoch--mm/dd[yyyy][ : | T ]hh:mm\[:ss]
+  now[ [ + | - ] <integer> [ d | h | w | m ] ]
+```
 
-        now\[ \[ + | - ] &lt;integer> \[ d | h | w | m ] ]
-
-        yyyy-mm-dd\[ : | T ]hh:mm\[:ss]
-
-        mm-dd\[-yyyy]\[ : | T ]hh:mm\[:ss]
-
-        mm/dd\[/yyyy]\[ : | T ]hh:mm\[:ss]
-
-   Date Range Syntax
-
-        now\[ \[ + | - ] &lt;integer> \[ d | h | w | m ] ]--now\[ \[ + | - ] &lt;integer> \[ d | h | w | m ] ]
-
-        yyyy-mm-dd\[ : | T ]hh:mm\[:ss]--yyyy-mm-dd\[ : | T ]hh:mm\[:ss]
-
-        mm-dd\[-yyyy]\[ : | T ]hh:mm\[:ss]--indefinite
-
-        epoch--mm/dd\[/yyyy]\[ : | T ]hh:mm\[:ss]
-
-        now\[ \[ + | - ] &lt;integer> \[ d | h | w | m ] ]
-
-
-## End User Diagnostics
+### End User Diagnostics
 
 [AskF5 | Manual: Field Testing F5 Hardware: F5 BIG-IP iSeries Platforms](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/releasenotes/related/eud-sf.html)
 
@@ -2721,8 +2491,7 @@ Diag file **- /shared/log/eud.log**
 
 Use command **eud_info** to see version installed
 
-
-### USB Flash drive
+#### USB Flash drive
 
 Download .im file to /var/tmp
 
@@ -2734,8 +2503,7 @@ Insert flash drive into BIG-IP
 
 Run mkdisk and follow prompts to install EUD onto flash drive - **cd /tmp/eud; ./mkdisk**
 
-
-## SSL Hardware Accelerator
+### SSL Hardware Accelerator
 
 [K16951: Overview of SSL hardware acceleration fail-safe](https://support.f5.com/csp/article/K16951)
 
@@ -2743,8 +2511,7 @@ crit tmm\[6789]: 01010025:2: Device error: cn0 device requires hard reset; tryin
 
 crit tmm2\[6789]: 01010025:2: Device error: cn2 PCI write master retry timeout
 
-
-## Hard Drive Issues
+### Hard Drive Issues
 
 [Article: K14426 - Hard disk error detection and correction improvements](https://support.f5.com/csp/article/K14426)
 
@@ -2779,11 +2546,9 @@ Results: PASS, FAIL, or NOT RUN
 
 Not supported in VE
 
+## - 3.02b - Identify resource exhaustion problems based on the log file messages and statistics
 
-# - 3.02b - Identify resource exhaustion problems based on the log file messages and statistics
-
-
-## Memory
+### Memory
 
 [Article: K16419 - Overview of BIG-IP memory usage](https://support.f5.com/csp/article/K16419)
 
@@ -2827,9 +2592,9 @@ PID USER  PR  NI  VIRT  RES  SHR S %CPU %MEM TIME+  COMMAND
 
 10510 root  RT   0 2430m 121m  95m S  5.6  3.1 686:26.35 tmm
 
- 7438 root  20   0  487m 104m  28m S  0.7  2.6  68:32.09 mcpd
+7438 root  20   0  487m 104m  28m S  0.7  2.6  68:32.09 mcpd
 
- 7662 root  25   5 50636 9480 6272 S  0.7  0.2   7:59.31 merged
+7662 root  25   5 50636 9480 6272 S  0.7  0.2   7:59.31 merged
 
 15757 root  20   0  2444 1224  852 R  0.7  0.0   0:00.04 top
 
@@ -2872,8 +2637,7 @@ You can increase memory to the System (not TMM) with a **modify sys db** command
 
 It seems VMs always need to be Large allocated on v14 and above.
 
-
-#### A possible problem:
+##### A possible problem:
 
 Available memory (or "free + buffers/cache") is close to zero
 
@@ -2881,7 +2645,7 @@ swap used increases or fluctuates
 
 **show sys memory**
 
-System memory 
+System memory
 
 Host = Linux and non TMM processes
 
@@ -2897,24 +2661,21 @@ TMM cannot be used in swap
 
 Memory used by TMM is cleaned by sweepers periodically
 
-
-#### Connection Reaping
+##### Connection Reaping
 
 High-water - 95% TMM kernel utilization. No new connections are allowed
 
 Low-water - 85% TMM kernel utilization. Aggressive reaping of the most idle connections, may delete connections prior to idle timeout configured.
 
-
-#### Log Entries
+##### Log Entries
 
 011e0002:4: sweeper_update aggressive mode activated - 85% TMM memory utilization will trigger aggressive idle connection deletion.
 
-Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks 
+Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 **LCD panel** - Blocking DoS Attack
 
-
-## CPU
+### CPU
 
 [Overview of BIG-IP TMM CPU Usage](https://support.f5.com/csp/article/K15468)
 
@@ -2939,7 +2700,7 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks 
 - A lot of HTTPS monitors
 - Large complex configs (a ton of ssl profiles/certs/keys)
 - Admin actions - dumping large number of connections or persistence
-- Listing large ARP entries 
+- Listing large ARP entries
 - Large amount of traffic going through one TMM instance
 - Using socks driver instead of vmxnet3
 
@@ -2948,8 +2709,7 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks 
 | Clock advanced by &lt;number> ticks                                                                | In VE, dedicate more resources or priorityThe TMM heartbeat thread dead timer hit \[100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clockCan cause traffic disruption or failover if falls behind more than 10 seconds \[10000 milliseconds] - may not log all because action already happened |
 | info kernel: ltm driver: Idle enforcer starting - tid: &lt;pid> cpu: &lt;core ID X>/&lt;core ID Y> | CPU usage on the Data plane reaches 80%, the Control plane is paused momentarily and used for Data plane until a log message ‘exited’ is shown                                                                                                                                                                                      |
 
-
-## Hard Drive
+### Hard Drive
 
 **df -h** - Display partitions and size/usage
 
@@ -2957,8 +2717,7 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks 
 
 **lvscan** - Display storage per partition. Some are shared, like log, share, etc.
 
-
-## Cache
+### Cache
 
 [K13878: The ramcache.maxmemorypercent variable controls memory allocation for the HTTP cache (11.x - 15.x)](https://support.f5.com/csp/article/K13878)
 
@@ -3016,15 +2775,13 @@ Memory for cache is not allocated until the profile is attached to a VIP. This e
 
 HTTP cache storage is shared among all profiles of the same name. Consolidate profiles when possible
 
-
-# - 3.02c - Identify connectivity problems based on the log files
+## - 3.02c - Identify connectivity problems based on the log files
 
 **modify sys db** **tm.rstcause.log value enable** - Displays “RST sent from &lt;source> to &lt;destination> and the reason in logs
 
 Everything else is self explanatory or I am not aware of any log entries that indicate a connectivity problem. SSL errors logging was not set to warning in 11.5.
 
-
-# - 3.02d - Determine the appropriate log file to examine to determine the cause of the problem
+## - 3.02d - Determine the appropriate log file to examine to determine the cause of the problem
 
 |                                                               |                                      |
 | ------------------------------------------------------------- | ------------------------------------ |
@@ -3035,13 +2792,9 @@ Everything else is self explanatory or I am not aware of any log entries that in
 | Linux events                                                  | /var/log/messages                    |
 | Logins and changes                                            | /var/log/audit                       |
 
-  
-
-
 Objective 3.03 Analyze performance data to identify a resource problem on an LTM device
 
-
-# - 3.03a - Analyze performance data to identify a resource problem on an LTM device
+## - 3.03a - Analyze performance data to identify a resource problem on an LTM device
 
 **Statistics > Performance Reports > Performance Reports**
 
@@ -3053,8 +2806,7 @@ Performance Graphs are easy to look at. If the RAM or CPU is maxed the graph wil
 
 Objective 3.04 Given a scenario, determine the cause of an LTM device failover
 
-
-## HA Groups (Fast Failover)
+### HA Groups (Fast Failover)
 
 [Article: K16947 - F5 recommended practices for the HA group feature](https://support.f5.com/csp/article/K16947)
 
@@ -3080,18 +2832,17 @@ The maximum overall HA Score is the sum of all HA group Pools and Trunk object w
 
 A single Pool or Trunk member object can weigh from 10 - 100
 
-There is no limit to the total HA Score of all Pool / Trunk object weights for HA group. 
+There is no limit to the total HA Score of all Pool / Trunk object weights for HA group.
 
 Weight value (Required) 10 - 100, Assigned to pool or trunk object
 
 Threshold (Optional) - The minimum amount of available objects before making the TOTAL HA score immediately 0. If the threshold is 3, and there’s only 2 trunk links left out of 4, set the score to 0.
 
-- Beware of pools with priority groups as the members that are up could prevent a failover 
+- Beware of pools with priority groups as the members that are up could prevent a failover
 
 Active Bonus (Optional) - A bonus given to the device with the active traffic group. Used to prevent failover if flapping or minor changes occur to trunk links. If traffic-group is at 0, bonus is not applied
 
-
-## HA Order
+### HA Order
 
 Auto Failback - Failover to original active if it becomes available again. Recommended 40 to 60 (Default) seconds.
 
@@ -3099,8 +2850,7 @@ Failover order - Only devices in the same sync-failover group will appear here. 
 
 If the first device is not available, no auto fallback occurs. If no devices are available, Load Aware is used instead
 
-
-## Load Aware
+### Load Aware
 
 BIG-IP Device Service Clustering: Administration pg. 90
 
@@ -3120,8 +2870,7 @@ In order for a next-active device to be chosen for a single traffic group, (the 
 
 **show cm device** - Displays HA Load Capacity, Mgmt IP, Current Load Factor, Next Active Device Load Factor
 
-
-## Failsafes
+### Failsafes
 
 If both units are affected by the same failsafe condition, they can both go into Standby
 
@@ -3139,28 +2888,25 @@ If both units are affected by the same failsafe condition, they can both go into
 
 ltm pool gateway_pool {
 
-    members {
+members {
 
-        10.128.10.254:0 {
+10.128.10.254:0 {
 
-            address 10.128.10.254
-
-        }
-
-    }
-
-    gateway-failsafe-device bigip1.localhost
-
-    min-up-members 1
-
-    min-up-members-action failover
-
-    min-up-members-checking enabled
+address 10.128.10.254
 
 }
 
-  
+}
 
+gateway-failsafe-device bigip1.localhost
+
+min-up-members 1
+
+min-up-members-action failover
+
+min-up-members-checking enabled
+
+}
 
 **VLAN Fail-safe**
 
@@ -3174,7 +2920,7 @@ Timer three-quarter expired - Send ARP request to all entries in table, and ICMP
 
 If the peer LB responds in 11 or 12 code, then failover is averted
 
-Be sure that the port has **spanning-tree trunk portfast** enabled. Otherwise, STP convergence can cause very long failovers (90 seconds). 
+Be sure that the port has **spanning-tree trunk portfast** enabled. Otherwise, STP convergence can cause very long failovers (90 seconds).
 
 With **portfast** it should be 10 seconds.
 
@@ -3185,7 +2931,7 @@ With **portfast** it should be 10 seconds.
 
 **Configure**
 
-System > High Availability > Fail-safe > VLANs 
+System > High Availability > Fail-safe > VLANs
 
 Timeout: 90 seconds (default)
 
@@ -3193,7 +2939,7 @@ Action:
 
 net vlan external {
 
-      failsafe enabled
+failsafe enabled
 
 }
 
@@ -3205,8 +2951,7 @@ net vlan external {
 - Use node monitor for ARP entries to show if you have to
 - Do not configure it on the HA VLAN
 
-
-# - 3.04a - Explain the effect of network failover settings on the LTM device 
+## - 3.04a - Explain the effect of network failover settings on the LTM device 
 
 Default timeout is 3 seconds
 
@@ -3214,22 +2959,19 @@ Default port is UDP 1026
 
 Required for connection mirroring
 
-
-# - 3.04b - Explain the relationship between serial and network failover 
+## - 3.04b - Explain the relationship between serial and network failover 
 
 [K2397: Comparison of hardwired failover and network failover features](https://support.f5.com/csp/article/K2397)
 
 Hardware failover precedence over network failover. The unit will not failover if hardware is up and network is down.
 
-
-# - 3.04c - Differentiate between unicast and multicast network failover modes
+## - 3.04c - Differentiate between unicast and multicast network failover modes
 
 Unicast Failover IP - Used for LTMs primarily, and recommended to use on VIPRIONs as a backup.
 
 Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management interface, and all VIPRIONs receive it that are listening on that VLAN.
 
-
-# - 3.04d - Identify the cause of failover using logs and statistics
+## - 3.04d - Identify the cause of failover using logs and statistics
 
 [Troubleshooting failover events](https://support.f5.com/csp/article/K95002127#p8)
 
@@ -3245,8 +2987,7 @@ Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management 
 
 [K90354463: Cause of Failover - VLAN failsafe](https://support.f5.com/csp/article/K90354463)
 
-
-## Logs
+### Logs
 
 |                                                                                                                                                                                                         |                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -3263,28 +3004,23 @@ Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management 
 | **show sys log tmm \| grep -i 'device error'**crypto-failsafe, switchboard-failsafe                                                                                                                     | Hardware failsafe                                            |
 | proc-run, ready-for-world                                                                                                                                                                               | System (Daemon) Failsafe                                     |
 
-
-## Statistics
+### Statistics
 
 [K14513346: The tmsh show /sys ha-group command output may display an incorrect HA group score value](https://support.f5.com/csp/article/K14513346)
 
-|                                                            |                                                                                                                                                                                                       |
-| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **show cm failover-status**                                | Status ‘Ok’ or ‘Error’ with reason, Network failover IP address and ports of connections (UDP 1026)                                                                                                   |
-| **show sys ha-status all-properties****show sys ha-group** | Failsafe conditions, Failsafe failure status yes/no, timeoutsSee total HA score including active bonus score on current unit                                                                          |
-| **show cm traffic-group all-properties**                   | View HA load factor and next active                                                                                                                                                                   |
-| **run cm watch-sys-device**                                | Live updates of failover status, and HA IPs                                                                                                                                                           |
-| **run cm watch-trafficgroup-device**                       | Live failover condition, monitor fault, next active                                                                                                                                                   |
-| **show sys failover cable**                                | cable state unset - Network failover being used, no hardware failover detected - Max cable length - 50 ftcable set 0 - Active unit should display thiscable state 1 - Standby unit should detect this |
-| **show sys failover**                                      | Display amount of time in current Active or Standby stateFailover active for 119d 00:43:18                                                                                                            |
-
-  
-
+|                                                                |                                                                                                                                                                                                       |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **show cm failover-status**                                    | Status ‘Ok’ or ‘Error’ with reason, Network failover IP address and ports of connections (UDP 1026)                                                                                                   |
+| **show sys ha-status all-properties\*\***show sys ha-group\*\* | Failsafe conditions, Failsafe failure status yes/no, timeoutsSee total HA score including active bonus score on current unit                                                                          |
+| **show cm traffic-group all-properties**                       | View HA load factor and next active                                                                                                                                                                   |
+| **run cm watch-sys-device**                                    | Live updates of failover status, and HA IPs                                                                                                                                                           |
+| **run cm watch-trafficgroup-device**                           | Live failover condition, monitor fault, next active                                                                                                                                                   |
+| **show sys failover cable**                                    | cable state unset - Network failover being used, no hardware failover detected - Max cable length - 50 ftcable set 0 - Active unit should display thiscable state 1 - Standby unit should detect this |
+| **show sys failover**                                          | Display amount of time in current Active or Standby stateFailover active for 119d 00:43:18                                                                                                            |
 
 Objective 3.05 Given a scenario, determine the cause of loss of high availability and/or sync failure
 
-
-# - 3.05a - Explain how the high availability concepts relate to one another
+## - 3.05a - Explain how the high availability concepts relate to one another
 
 DSC supports same or different hardware
 
@@ -3298,20 +3034,17 @@ Folders - Configuration under a partition.
 
 Connection mirroring can only be done on identical hardware and is mirrored to the next-active device.
 
-
-# - 3.05b - Explain the relationship between device trust and device groups
+## - 3.05b - Explain the relationship between device trust and device groups
 
 A peer BIG-IP must have device trust established before it can be put in a device-group
 
-
-# - 3.05c - Identify the cause of config sync failures
+## - 3.05c - Identify the cause of config sync failures
 
 [Troubleshooting ConfigSync and DSC](https://support.f5.com/csp/article/K13946)
 
 [K65332506: Provisioning mismatch may cause configsync error messages](https://support.f5.com/csp/article/K65332506)
 
-
-## Config-Sync Requirements
+### Config-Sync Requirements
 
 - Device Trust established
 - Identical license and provisioned modules
@@ -3320,8 +3053,7 @@ A peer BIG-IP must have device trust established before it can be put in a devic
 - The self-IPs port-lockdown is **NOT** set to **None,** which is not default in 11.5.0
 - **Config must validate/load**
 
-
-### Port 4353 Connectivity
+#### Port 4353 Connectivity
 
 Not actually iQuery, it’s separate
 
@@ -3331,8 +3063,7 @@ Not actually iQuery, it’s separate
 4. Full mesh connectivity between devices over **mcpd** is established
 5. Connectivity will show as port 6699 under netstat
 
-
-## Sync and Device Trust Problems
+### Sync and Device Trust Problems
 
 |                                                                       |                                                                                                                                                                                                                             |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -3342,13 +3073,12 @@ Not actually iQuery, it’s separate
 | Verify configuration will load                                        | **load sys config verify**                                                                                                                                                                                                  |
 | Sync status and recommended action                                    | **show cm sync-status**                                                                                                                                                                                                     |
 | Devices are in the trust group                                        | **show cm device-group device_trust_group**                                                                                                                                                                                 |
-| Config-sync IP is configured and trust connectivity is good           | **show cm device****netstat -pan \| grep -E 6699 -** mcpd for device-trust**run cm sniff-updates -** Listens for CMI comms                                                                                                  |
-| Verify Time                                                           | Verify time/date -  **# date**NTP configured ****(required?)**list sys ntp** **# ntpq -np**                                                                                                                                 |
-| Verify license, software version, and provisioning                    | **show sys license****show sys version / software****list sys provision**                                                                                                                                                   |
+| Config-sync IP is configured and trust connectivity is good           | **show cm device\*\***netstat -pan \| grep -E 6699 -** mcpd for device-trust**run cm sniff-updates -\*\* Listens for CMI comms                                                                                              |
+| Verify Time                                                           | Verify time/date -  **# date**NTP configured \***\*(required?)**list sys ntp\*\* **# ntpq -np**                                                                                                                             |
+| Verify license, software version, and provisioning                    | **show sys license\*\***show sys version / software\***\*list sys provision**                                                                                                                                               |
 | Verify port lockdown                                                  | **list net self allow-service**                                                                                                                                                                                             |
 
-
-### Sync Status Messages
+#### Sync Status Messages
 
 **Disconnected**
 
@@ -3357,31 +3087,28 @@ Not actually iQuery, it’s separate
 
 All else fails - reset device trust
 
-
-### Device Trust
+#### Device Trust
 
 Only a CA or Peer can sign certificates. If a peer member is only a Subordinate in its Local Trust, then it cannot sign certificates of the other device. The peer would sign its own certificate for the peer (pretty confusing)
 
-
-## Self-IPs
+### Self-IPs
 
 Can be a range
 
 Can assign IP that is in the range of separate VLANs to be accessible from both VLANs
 
-
-### Port Lockdown
+#### Port Lockdown
 
 [K13250: Overview of port lockdown behavior (10.x - 11.x)](https://support.f5.com/csp/article/K13250)
 
 Controlling what ports the self-IP can accept traffic on to prevent unauthorized management access, only allow access to other BIP IPs or necessary functions like DNS. Use out of band access instead  (Mgmt)
 
-
-### Options
+#### Options
 
 Need to have ports allowed if you want to communicate from them as well. DNS to resolve hostnames from command line, ICMP, etc.
 
 **Allow Default** - Default in 11.0.0 - 11.5.2
+
 - ICMP
 - OSPF
 - 4353 TCP/UDP (iQuery/CMI)
@@ -3392,28 +3119,27 @@ Need to have ports allowed if you want to communicate from them as well. DNS to 
 - 520 TCP/UDP (RIP)
 - 1026 UDP - Network Failover
 
-**Allow All**  
+**Allow All**
 
 **Allow None -** Default in all other versions
+
 - ICMP
 - Redundant pairs allow exceptions from peer:
   - 1028 TCP - Persistence mirroring (11.0.0 - 11.3.0)
   - 1029 - 1043 (1055) TCP - Mirroring channels per traffic group (11.4.0+)
   - 4353 TCP - For Syncing via CMI (Centralized Management Infra) (11.0.0+)
 
-### Verification
+#### Verification
 
 Verify port lockdown - **list net self allow-service**
 
 View default - **list net self-allow**
 
-
-# - 3.05d - Explain the relationship between traffic groups and LTM objects
+## - 3.05d - Explain the relationship between traffic groups and LTM objects
 
 Traffic groups host these LTM objects for failover - VIPs, SNATs, NATs, Folders, Self IPs
 
-
-# - 3.05e - Interpret log messages to determine the cause of high availability issues
+## - 3.05e - Interpret log messages to determine the cause of high availability issues
 
 [K34063049: Error Message: 0107143c:5: Connection to CMI peer &lt;IP address> has been removed](https://support.f5.com/csp/article/K34063049)
 
@@ -3442,4 +3168,4 @@ Usually a **sod** message is a problem with Network Failover
 | 010c0078:5  Not listening for unicast failover packets on address 192.168.100.2 port 1026010c007b:6: Deleted unicast failover address 192.168.100.2 port 1026 for device /Common/bigip1.f5.com | IP removed from network failover config                                       |
 | 010c008b:5: Unable to send to unreachable unicast address 192.168.100.2 port 1026.                                                                                                             | No route found to network failover IP                                         |
 | 010c0083:4: No failover status messages received for 3.100 seconds, from device /Common/bigip2.f5.com (192.168.100.2) (unicast: -> 192.168.100.1).                                             | Connection lost over Network failover UDP 1026                                |
-| 01340002:3: HA Connection with peer 172.16.1.253:32768 for traffic-group /Common/traffic-group-1 lost.                                                                                         | Connection or persistence mirroring connection lostCheck port 1028 - 1043 TCP |
+| 01340002:3: HA Connection with peer 172.16.1.253:32768 for traffic-group /Common/traffic-group-1 lost.                                                                                         | Connection or persistence mirroring connection lost {{< line_break >}} Check port 1028 - 1043 TCP |
