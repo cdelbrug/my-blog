@@ -1209,38 +1209,24 @@ These headers are used to prevent proxy devices from caching a local copy of the
 - Cache-control:no-store, Cache-control:no-cache, or Pragma:no-cache
 
 Use this to fix the problem and allow the files to be downloaded:
-
+```
 when HTTP_RESPONSE {
-
-if { \[HTTP&#x3A;:header value Content-Type] contains "application/pdf" } {
-
-HTTP&#x3A;:header replace Pragma public
-
-HTTP&#x3A;:header replace Cache-Control public
-
+   if { [HTTP::header value Content-Type] contains "application/pdf" } {
+      HTTP::header replace Pragma public
+      HTTP::header replace Cache-Control public
+   }
+   elseif { [HTTP::header value Content-Type] contains "application/vnd.ms-excel" } {
+      HTTP::header replace Pragma public
+      HTTP::header replace Cache-Control public
+   }
+   elseif { [HTTP::header value Content-Type] contains "application/msword" } {
+      HTTP::header replace Pragma public
+      HTTP::header replace Cache-Control public }
+   else {
+      return
+   }
 }
-
-elseif { \[HTTP&#x3A;:header value Content-Type] contains "application/vnd.ms-excel" } {
-
-HTTP&#x3A;:header replace Pragma public
-
-HTTP&#x3A;:header replace Cache-Control public
-
-}
-
-elseif { \[HTTP&#x3A;:header value Content-Type] contains "application/msword" } {
-
-HTTP&#x3A;:header replace Pragma public
-
-HTTP&#x3A;:header replace Cache-Control public }
-
-else {
-
-return
-
-}
-
-}
+```
 
 Objective 2.04 Interpret AVR information to identify performance issues or application attacks
 
@@ -1491,33 +1477,33 @@ The protocol versions are identified as follows
 
 ### SSLDUMP failure examples
 
-- Server rejects client’s protocol version
+##### Server rejects client’s protocol version
+```
+S>CV0.0 Alert
+level fatal
+value handshake_failure
+```
+##### Server rejects client’s cipher suites
+```
+C>SV3.2 Handshake
+ClientHello
+Version 3.2
+TLS_<ciphers>
 
-  - S>CV0.0 Alert
-  - level fatal
-  - value handshake_failure
+S>CV3.2 Alert
+level fatal
+value handshake_failure
+```
+##### Device does not accept SSL
+```
+C>SV3.1 Handshake
+ClientHello
+Version3.2
 
-- Server rejects client’s cipher suites
+period of waiting
 
-  - C>SV3.2 Handshake
-  - ClientHello
-  - Version 3.2
-  - TLS\_&lt;ciphers>
-  -
-  - S>CV3.2 Alert
-  - level fatal
-  - value handshake_failure
-
-- Device does not accept SSL
-
-  - C>SV3.1 Handshake
-  - ClientHello
-  - Version3.2
-  -
-  - _period of waiting_
-  - \_ \_
-  - C>S TCP FIN
-
+C>S TCP FIN
+```
 Enable SSL debug in /var/log/ltm -  **modify sys db log.ssl.level value debug** (Default is Warning)
 
 ~~Objective 2.07 Given a set of headers or traces, determine a solution to an HTTP/HTTPS application problem~~
@@ -1532,9 +1518,9 @@ Enable SSL debug in /var/log/ltm -  **modify sys db log.ssl.level value debug**
 
 ~~- 2.08a - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration~~
 
-Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem
+## Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem
 
-~~- 2.09a - Investigate the cause of an SSL Handshake failure ~~
+~~- 2.09a - Investigate the cause of an SSL Handshake failure~~
 
 ## - 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration
 
@@ -2111,17 +2097,13 @@ Capture traffic from non-floating self-IP to pool member
 ## - 2.14b - Explain how to obtain needed input and output data to create the monitors
 
 Retrieve a health check file and response from cURL or use openssl, telnet, or ncat.
-
-curl http&#x3A;//10.128.10.10/health-file -H “Host: f5demo.com”
-
-curl http&#x3A;//f5demo.com --resolve “f5demo.com:80:10.128.10.10”
-
+```
+curl http://10.128.10.10/health-file -H “Host: f5demo.com”
+curl http://f5demo.com --resolve “f5demo.com:80:10.128.10.10”
 nc -v 10.128.10.10 443
-
 telnet 10.128.10.10 443
-
-openss s_client -connect 10.128.10.10:443
-
+openssl s_client -connect 10.128.10.10:443
+```
 Objective 2.15 Given a monitor issue, determine an appropriate solution
 
 ## - 2.15a - Determine appropriate monitor and monitor timing based on application and server limitations
@@ -2173,8 +2155,7 @@ The appropriate monitor should be TCP, or HTTP for most apps. ICMP should not be
 
 - Retry Time - 300 seconds. Time before re-checking a down pool member’s status. If 0, won’t be turned back on without manual intervention or another monitor with ‘Time Until Up’ is used.
 
-- ~~Apply HTTP monitor and enable Up Interval, set it to high and Time Until Up. This ensures that once the member is up, stop monitoring it so often and instead use the inband monitor to look for errors. ~~
-
+- ~~Apply HTTP monitor and enable Up Interval, set it to high and Time Until Up. This ensures that once the member is up, stop monitoring it so often and instead use the inband monitor to look for errors.~~
   - ~~The Interval set will be used when its down~~
 
 ### Pools
@@ -2348,15 +2329,12 @@ Not sure how to study for this
 ## - 3.01c - Identify appropriate methods to troubleshoot NTP
 
 ### Prefer NTP server
-
+```
 tmsh edit sys ntp all-properties
-
-include “server &lt;ip> prefer”
-
+include “<server ip> prefer”
 :wq!
-
 list sys ntp servers
-
+```
 ### Troubleshooting
 
 [NTP's REFID](https://www.nwtime.org/ntps-refid/)
@@ -2380,10 +2358,10 @@ ntpd (pid  25898) is running…
 |              |                                                                                                                                                                         |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Variable** | **Description**                                                                                                                                                         |
-| \[tally]     | **\*** =  \*\*\*\*Preferred server\+ = Next available serverspace, x, period (.), dash (-), or pound (#)  = Peer not used - unavailable, not needed, requirements unmet |
+| [tally]     | * = Preferred server{{< line_break >}}+ = Next available server{{< line_break >}}space, x, period (.), dash (-), or pound (#)  = Peer not used - unavailable, not needed, requirements unmet |
 | remote       | Peer address                                                                                                                                                            |
 | refied       | Reference ID.CMDA..GPS.                                                                                                                                                 |
-| st           | Stratum ID0 = invalid/unspecified1 = primary / reference clock (GPS/CMDA, etc.)2-15 = secondary source, refid changes to remote clock’s peer IP16+ = unsynchronized     |
+| st           | Stratum ID{{< line_break >}}0 = invalid/unspecified{{< line_break >}}1 = primary / reference clock (GPS/CMDA, etc.){{< line_break >}}2-15 = secondary source, refid changes to remote clock’s peer IP{{< line_break >}}16+ = unsynchronized     |
 |              |                                                                                                                                                                         |
 | t            | u: unicast address, b: broadcast, l: local address                                                                                                                      |
 |              |                                                                                                                                                                         |
@@ -2521,8 +2499,8 @@ crit tmm2\[6789]: 01010025:2: Device error: cn2 PCI write master retry timeout
 | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | **Log Entry**                                                                                                              | **Outcome**                                                              |
 | no Pending Sectors detected                                                                                                | **No errors detected**                                                   |
-| Recovered LBA:230000007Drive /dev/sda partition UNKNOWNFile affected NONE                                                  | **Errors detected and corrected**                                        |
-| seek(1) error\[25]  recovery of LBA:226300793 not completeDrive: /dev/sda filesystem type: UndeterminedFile affected: NONE | **Error detected and unrecoverable**                                     |
+| Recovered LBA:230000007{{< line_break >}} Drive /dev/sda partition UNKNOWN{{< line_break >}}File affected NONE                                                  | **Errors detected and corrected**                                        |
+| seek(1) error\[25]  recovery of LBA:226300793 not complete{{< line_break >}}Drive: /dev/sda filesystem type: Undetermined{{< line_break >}}File affected: NONE | **Error detected and unrecoverable**                                     |
 | crit smartd\[4652]: Device: /dev/sda, 1 Currently unreadable (pending) sectors                                             | **Possible Failure or just busy and recovers** - **/var/log/daemon.log** |
 
 **Confirming Hard Drive Failures**
@@ -2577,26 +2555,19 @@ Measured in kilobytes
 1000 kilobytes = 1 megabyte
 
 nice process - Priority, lower number = more priority
-
-top - 15:24:56 up 8 days,  4:52,  3 users,  load average: 0.31, 0.20, 0.08
-
-Tasks: 252 total,   1 running, 251 sleeping,   0 stopped,   0 zombie
-
-Cpu(s):  1.2%us,  0.7%sy,  0.3%ni, 97.4%id,  0.2%wa,  0.0%hi,  0.2%si,  0.0%st
-
-Mem:   4063072k total,  3975468k used, 87604k free,   146572k buffers
-
-Swap:  1023992k total, 2796k used,  1021196k free,   468544k cached
-
-PID USER  PR  NI  VIRT  RES  SHR S %CPU %MEM TIME+  COMMAND
-
-10510 root  RT   0 2430m 121m  95m S  5.6  3.1 686:26.35 tmm
-
-7438 root  20   0  487m 104m  28m S  0.7  2.6  68:32.09 mcpd
-
-7662 root  25   5 50636 9480 6272 S  0.7  0.2   7:59.31 merged
-
-15757 root  20   0  2444 1224  852 R  0.7  0.0   0:00.04 top
+```
+top - 15:24:56 up 8 days,  4:52,  3 users,  load average: 0.31, 0.20, 0.08
+Tasks: 252 total,   1 running, 251 sleeping,   0 stopped,   0 zombie
+Cpu(s):  1.2%us,  0.7%sy,  0.3%ni, 97.4%id,  0.2%wa,  0.0%hi,  0.2%si,  0.0%st
+Mem:   4063072k total,  3975468k used,	87604k free,   146572k buffers
+Swap:  1023992k total, 	2796k used,  1021196k free,   468544k cached
+  
+PID USER  	PR  NI  VIRT  RES  SHR S %CPU %MEM	TIME+  COMMAND
+10510 root  	RT   0 2430m 121m  95m S  5.6  3.1 686:26.35 tmm
+ 7438 root  	20   0  487m 104m  28m S  0.7  2.6  68:32.09 mcpd
+ 7662 root  	25   5 50636 9480 6272 S  0.7  0.2   7:59.31 merged
+15757 root  	20   0  2444 1224  852 R  0.7  0.0   0:00.04 top
+```
 
 VIRT - How much memory the process can access
 
@@ -2683,18 +2654,13 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 [K10337613: Idle Enforcer Functionality](https://support.f5.com/csp/article/K10337613)
 
-**show sys proc-info \[ &lt;process-name> ]** - Shows individual processes CPU usage
-
-**show sys tmm-info** - Show TMM CPU usage per process/core
-
-**show sys cpu** - System CPU is an aggregation of TMM and Control Plane CPU usage.
-
-**show sys performance**
-
-**top -** Load average: 1, 5, 15 minute interval. What jobs are queued to run. Over 1 per CPU is bad (4 for quad-core)
+**show sys proc-info \[ &lt;process-name> ]** - Shows individual processes CPU usage  
+**show sys tmm-info** - Show TMM CPU usage per process/core  
+**show sys cpu** - System CPU is an aggregation of TMM and Control Plane CPU usage.  
+**show sys performance**  
+**top -** Load average: 1, 5, 15 minute interval. What jobs are queued to run. Over 1 per CPU is bad (4 for quad-core)  
 
 **High CPU Causes**
-
 - Memory paging, I/O operations
 - Complex iRules
 - A lot of HTTPS monitors
@@ -2706,7 +2672,7 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 |                                                                                                    |                                                                                                                                                                                                                                                                                                                                     |
 | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Clock advanced by &lt;number> ticks                                                                | In VE, dedicate more resources or priorityThe TMM heartbeat thread dead timer hit \[100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clockCan cause traffic disruption or failover if falls behind more than 10 seconds \[10000 milliseconds] - may not log all because action already happened |
+| Clock advanced by &lt;number> ticks                                                                | In VE, dedicate more resources or priority{{< line_break >}}The TMM heartbeat thread dead timer hit \[100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clock{{< line_break >}}Can cause traffic disruption or failover if falls behind more than 10 seconds \[10000 milliseconds] - may not log all because action already happened |
 | info kernel: ltm driver: Idle enforcer starting - tid: &lt;pid> cpu: &lt;core ID X>/&lt;core ID Y> | CPU usage on the Data plane reaches 80%, the Control plane is paused momentarily and used for Data plane until a log message ‘exited’ is shown                                                                                                                                                                                      |
 
 ### Hard Drive
@@ -2728,40 +2694,25 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 ramcache.maxmemorypercent - Percentage amount of memory that the total HTTP cache is allowed to use based on total TMM memory. Default is 50 percent
 
 Verify memory allocated to tmos - **show sys provision**
-
-\---------------------------------------------------------
-
+```
+---------------------------------------------------------
 Sys::Provision
-
 Module CPU (%) Memory (MB) Host-Memory (MB) Disk (MB)
-
-\---------------------------------------------------------
-
+---------------------------------------------------------
 apm 0 0 0 0
-
 asm 0 0 0 0
-
 avr 0 0 0 0
-
 gtm 0 0 0 0
-
 host 10 1296 0 82636
-
 lc 0 0 0 0
-
 ltm 1 0 0 0
-
 pem 0 0 0 0
-
 psm 0 0 0 0
-
-**tmos** 89 **6710** 0 0
-
+tmos 89 6710 0 0
 wam 0 0 0 0
-
 wom 0 0 0 0
-
 woml 0 0 0 0
+```
 
 TMM memory is 6710 MB
 
@@ -2792,7 +2743,7 @@ Everything else is self explanatory or I am not aware of any log entries that in
 | Linux events                                                  | /var/log/messages                    |
 | Logins and changes                                            | /var/log/audit                       |
 
-Objective 3.03 Analyze performance data to identify a resource problem on an LTM device
+## Objective 3.03 Analyze performance data to identify a resource problem on an LTM device
 
 ## - 3.03a - Analyze performance data to identify a resource problem on an LTM device
 
@@ -2804,7 +2755,7 @@ Performance Graphs are easy to look at. If the RAM or CPU is maxed the graph wil
 
 **show net rst-cause** - Cause of resets
 
-Objective 3.04 Given a scenario, determine the cause of an LTM device failover
+## Objective 3.04 Given a scenario, determine the cause of an LTM device failover
 
 ### HA Groups (Fast Failover)
 
@@ -2826,21 +2777,14 @@ System > High Availability > HA Groups
 
 **HA Score Calculation**
 
-HA Score = Weights + Active Bonus
-
-The maximum overall HA Score is the sum of all HA group Pools and Trunk object weights, plus the active bonus value if the unit is active
-
-A single Pool or Trunk member object can weigh from 10 - 100
-
-There is no limit to the total HA Score of all Pool / Trunk object weights for HA group.
-
-Weight value (Required) 10 - 100, Assigned to pool or trunk object
-
-Threshold (Optional) - The minimum amount of available objects before making the TOTAL HA score immediately 0. If the threshold is 3, and there’s only 2 trunk links left out of 4, set the score to 0.
-
-- Beware of pools with priority groups as the members that are up could prevent a failover
-
-Active Bonus (Optional) - A bonus given to the device with the active traffic group. Used to prevent failover if flapping or minor changes occur to trunk links. If traffic-group is at 0, bonus is not applied
+HA Score = Weights + Active Bonus  
+The maximum overall HA Score is the sum of all HA group Pools and Trunk object weights, plus the active bonus value if the unit is active  
+A single Pool or Trunk member object can weigh from 10 - 100  
+There is no limit to the total HA Score of all Pool / Trunk object weights for HA group.  
+Weight value (Required) 10 - 100, Assigned to pool or trunk object  
+Threshold (Optional) - The minimum amount of available objects before making the TOTAL HA score immediately 0. If the threshold is 3, and there’s only 2 trunk links left out of 4, set the score to 0.  
+- Beware of pools with priority groups as the members that are up could prevent a failover  
+Active Bonus (Optional) - A bonus given to the device with the active traffic group. Used to prevent failover if flapping or minor changes occur to trunk links. If traffic-group is at 0, bonus is not applied  
 
 ### HA Order
 
@@ -2885,28 +2829,19 @@ If both units are affected by the same failsafe condition, they can both go into
 3. **System > High Availability > Fail-safe > Gateway**
 4. Specify Pool and which device it belongs to.
 5. Specify threshold - 1 would mean if there is less than 1 member, failover.
-
+```
 ltm pool gateway_pool {
-
-members {
-
-10.128.10.254:0 {
-
-address 10.128.10.254
-
+    members {
+        10.128.10.254:0 {
+            address 10.128.10.254
+        }
+    }
+    gateway-failsafe-device bigip1.localhost
+    min-up-members 1
+    min-up-members-action failover
+    min-up-members-checking enabled
 }
-
-}
-
-gateway-failsafe-device bigip1.localhost
-
-min-up-members 1
-
-min-up-members-action failover
-
-min-up-members-checking enabled
-
-}
+```
 
 **VLAN Fail-safe**
 
@@ -2935,13 +2870,12 @@ System > High Availability > Fail-safe > VLANs
 
 Timeout: 90 seconds (default)
 
-Action:
-
+Action:  <>
+```
 net vlan external {
-
-failsafe enabled
-
+  failsafe enabled
 }
+```
 
 **Miscellaneous Facts**
 
@@ -2973,35 +2907,29 @@ Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management 
 
 ## - 3.04d - Identify the cause of failover using logs and statistics
 
-[Troubleshooting failover events](https://support.f5.com/csp/article/K95002127#p8)
-
-[Overview of SSL hardware acceleration fail-safe](https://support.f5.com/csp/article/K16951)
-
-[How simultaneous failsafe events affect a redundant system](https://support.f5.com/csp/article/K12277)
-
-[K62511312: Cause of Failover - HA Group](https://support.f5.com/csp/article/K62511312)
-
-[K57155323: Cause of Failover - Gateway Fail-Safe](https://support.f5.com/csp/article/K57155323)
-
-[K48546348: Cause of Failover - Auto-failback](https://support.f5.com/csp/article/K48546348)
-
-[K90354463: Cause of Failover - VLAN failsafe](https://support.f5.com/csp/article/K90354463)
+[Troubleshooting failover events](https://support.f5.com/csp/article/K95002127#p8)  
+[Overview of SSL hardware acceleration fail-safe](https://support.f5.com/csp/article/K16951)  
+[How simultaneous failsafe events affect a redundant system](https://support.f5.com/csp/article/K12277)  
+[K62511312: Cause of Failover - HA Group](https://support.f5.com/csp/article/K62511312)  
+[K57155323: Cause of Failover - Gateway Fail-Safe](https://support.f5.com/csp/article/K57155323)  
+[K48546348: Cause of Failover - Auto-failback](https://support.f5.com/csp/article/K48546348)  
+[K90354463: Cause of Failover - VLAN failsafe](https://support.f5.com/csp/article/K90354463)  
 
 ### Logs
 
 |                                                                                                                                                                                                         |                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | 010c002b:5: Traffic group &lt;traffic_group> received a targeted failover command for 10.128.1.100                                                                                                      | Force standby command issued                                 |
-| 010719fb:5: HA Group &lt;ha-pool-name> score updated from 40 to 30.010c0045:5: Leaving active, group score 36 peer group score 40.010c0052:5: Standby for traffic group /Common/&lt;traffic_group_name> | HA Group                                                     |
+| 010719fb:5: HA Group &lt;ha-pool-name> score updated from 40 to 30. {{< line_break >}} 010c0045:5: Leaving active, group score 36 peer group score 40. {{< line_break >}} 010c0052:5: Standby for traffic group /Common/&lt;traffic_group_name> | HA Group                                                     |
 | 01140029:4: HA pool_memb_down /Common/g_pool fails action is failover                                                                                                                                   | Gateway failsafe                                             |
 | 01140029:4: HA vlan_fs                                                                                                                                                                                  | VLAN Failsafe                                                |
 | 010c006d:5: Initiating Auto-Failback.                                                                                                                                                                   | Auto-failback                                                |
-| 01140029:5: HA daemon_heartbeat tmm fails action is failover and restart01140106:2: Overdog daemon calling bigstart restart.                                                                            | System failsafe                                              |
+| 01140029:5: HA daemon_heartbeat tmm fails action is failover and restart{{< line_break >}}01140106:2: Overdog daemon calling bigstart restart.                                                                            | System failsafe                                              |
 | 01140043:0: Ha feature nic_failsafe reboot requested                                                                                                                                                    | High Speed Bus issue detected                                |
 | 01070417:6: AUDIT - user admin - RAW: Request to run /usr/bin/cmd_sod go standby traffic-group-1 GUI                                                                                                    | Force standby in GUI clicked                                 |
 | 00000000:0: go standby                                                                                                                                                                                  | **run sys failover standby** command ran.                    |
 | **show sys log tmm \| grep -i SIGSEGV**                                                                                                                                                                 | Daemon failsafe - Search for SIGSEGV segmentation violations |
-| **show sys log tmm \| grep -i 'device error'**crypto-failsafe, switchboard-failsafe                                                                                                                     | Hardware failsafe                                            |
+| **show sys log tmm \| grep -i 'device error'** {{< line_break >}} crypto-failsafe, switchboard-failsafe                                                                                                                     | Hardware failsafe                                            |
 | proc-run, ready-for-world                                                                                                                                                                               | System (Daemon) Failsafe                                     |
 
 ### Statistics
@@ -3011,26 +2939,23 @@ Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management 
 |                                                                |                                                                                                                                                                                                       |
 | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **show cm failover-status**                                    | Status ‘Ok’ or ‘Error’ with reason, Network failover IP address and ports of connections (UDP 1026)                                                                                                   |
-| **show sys ha-status all-properties\*\***show sys ha-group\*\* | Failsafe conditions, Failsafe failure status yes/no, timeoutsSee total HA score including active bonus score on current unit                                                                          |
+| **show sys ha-status all-properties** {{< line_break >}} **show sys ha-group** | Failsafe conditions, Failsafe failure status yes/no, timeouts {{< line_break >}} See total HA score including active bonus score on current unit                                                                          |
 | **show cm traffic-group all-properties**                       | View HA load factor and next active                                                                                                                                                                   |
 | **run cm watch-sys-device**                                    | Live updates of failover status, and HA IPs                                                                                                                                                           |
 | **run cm watch-trafficgroup-device**                           | Live failover condition, monitor fault, next active                                                                                                                                                   |
 | **show sys failover cable**                                    | cable state unset - Network failover being used, no hardware failover detected - Max cable length - 50 ftcable set 0 - Active unit should display thiscable state 1 - Standby unit should detect this |
 | **show sys failover**                                          | Display amount of time in current Active or Standby stateFailover active for 119d 00:43:18                                                                                                            |
 
-Objective 3.05 Given a scenario, determine the cause of loss of high availability and/or sync failure
+## Objective 3.05 Given a scenario, determine the cause of loss of high availability and/or sync failure
 
 ## - 3.05a - Explain how the high availability concepts relate to one another
 
 DSC supports same or different hardware
 
-Device Trust - Multiple BIG-IPs establish trust by signing each other's certificates.
-
-Device Groups - A collection of BIG-IPs that have established trust and wish to Sync-Failover or Sync-Only with each other.
-
-Traffic Groups - A collection of traffic objects - VIPs, SNATs, NATs, Folders, and Self IPs, that can be transferred to another member in a Sync-Failover Device-Group if there is an issue.
-
-Folders - Configuration under a partition.
+Device Trust - Multiple BIG-IPs establish trust by signing each other's certificates.  
+Device Groups - A collection of BIG-IPs that have established trust and wish to Sync-Failover or Sync-Only with each other.  
+Traffic Groups - A collection of traffic objects - VIPs, SNATs, NATs, Folders, and Self IPs, that can be transferred to another member in a Sync-Failover Device-Group if there is an issue.  
+Folders - Configuration under a partition.  
 
 Connection mirroring can only be done on identical hardware and is mirrored to the next-active device.
 
@@ -3069,13 +2994,13 @@ Not actually iQuery, it’s separate
 | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Verify Commit IDs, CID origin, and CID time. Higher CID = more recent | **run cm watch-devicegroup-device**                                                                                                                                                                                         |
 | Processes are up                                                      | **bigstart status devmgmtd mcpd sod tmm**                                                                                                                                                                                   |
-| Mismatched provisioned modules                                        | 01260013:4: SSL Handshake failed for TCP &lt;bigip1_configsync_ip>:4353 -> &lt;bigip2_configsync_ip>:&lt;random_port>01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: **alert(20) Decryption error** |
+| Mismatched provisioned modules                                        | 01260013:4: SSL Handshake failed for TCP &lt;bigip1_configsync_ip>:4353 -> &lt;bigip2_configsync_ip>:&lt;random_port>{{< line_break >}}01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: **alert(20) Decryption error** |
 | Verify configuration will load                                        | **load sys config verify**                                                                                                                                                                                                  |
 | Sync status and recommended action                                    | **show cm sync-status**                                                                                                                                                                                                     |
 | Devices are in the trust group                                        | **show cm device-group device_trust_group**                                                                                                                                                                                 |
-| Config-sync IP is configured and trust connectivity is good           | **show cm device\*\***netstat -pan \| grep -E 6699 -** mcpd for device-trust**run cm sniff-updates -\*\* Listens for CMI comms                                                                                              |
-| Verify Time                                                           | Verify time/date -  **# date**NTP configured \***\*(required?)**list sys ntp\*\* **# ntpq -np**                                                                                                                             |
-| Verify license, software version, and provisioning                    | **show sys license\*\***show sys version / software\***\*list sys provision**                                                                                                                                               |
+| Config-sync IP is configured and trust connectivity is good           | **show cm device** {{< line_break >}} **netstat -pan \| grep -E 6699** - mcpd for device-trust {{< line_break >}} **run cm sniff-updates** - Listens for CMI comms                                                                                              |
+| Verify Time                                                           | Verify time/date -  **# date**{{< line_break >}}NTP configured (required?){{< line_break >}}**list sys ntp** {{< line_break >}} **# ntpq -np**                                                                                                                             |
+| Verify license, software version, and provisioning                    | **show sys license** {{< line_break >}} **show sys version / software** {{< line_break >}} **list sys provision**                                                                                                                                               |
 | Verify port lockdown                                                  | **list net self allow-service**                                                                                                                                                                                             |
 
 #### Sync Status Messages
@@ -3141,31 +3066,24 @@ Traffic groups host these LTM objects for failover - VIPs, SNATs, NATs, Folders,
 
 ## - 3.05e - Interpret log messages to determine the cause of high availability issues
 
-[K34063049: Error Message: 0107143c:5: Connection to CMI peer &lt;IP address> has been removed](https://support.f5.com/csp/article/K34063049)
-
-[K06416036: Error Message: 0107143a:5: CMI reconnect timer: &lt;status>](https://support.f5.com/csp/article/K06416036)
-
-[K13667: BIG-IP device group members must run the same major, minor or maintenance software version](https://support.f5.com/csp/article/K13667)
-
-[K75975904: Troubleshooting network failover](https://support.f5.com/csp/article/K75975904)
-
-[K72087447: Error Message: HA Connection with peer \[address:port\] for traffic-group /Common/\[traffic-group_name\] lost. (11.x - 13.x)](https://support.f5.com/csp/article/K72087447)
-
-[K37457128: Error Message: info sod\[&lt;PID>\]: 010c007b:6: Deleted unicast failover address &lt;IP address> port &lt;port> for device /&lt;partition>/&lt;hostname>.](https://support.f5.com/csp/article/K37457128)
-
-[K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address &lt;IP_address> port &lt;port_number>](https://support.f5.com/csp/article/K29449945)
-
-[K17362757: Error Message: 010c0083:4: No failover status messages received for &lt;timeout> seconds, from device &lt;device> (&lt;IP_address>)](https://support.f5.com/csp/article/K17362757)
+[K34063049: Error Message: 0107143c:5: Connection to CMI peer &lt;IP address> has been removed](https://support.f5.com/csp/article/K34063049)  
+[K06416036: Error Message: 0107143a:5: CMI reconnect timer: &lt;status>](https://support.f5.com/csp/article/K06416036)  
+[K13667: BIG-IP device group members must run the same major, minor or maintenance software version](https://support.f5.com/csp/article/K13667)  
+[K75975904: Troubleshooting network failover](https://support.f5.com/csp/article/K75975904)  
+[K72087447: Error Message: HA Connection with peer \[address:port\] for traffic-group /Common/\[traffic-group_name\] lost. (11.x - 13.x)](https://support.f5.com/csp/article/K72087447)  
+[K37457128: Error Message: info sod\[&lt;PID>\]: 010c007b:6: Deleted unicast failover address &lt;IP address> port &lt;port> for device /&lt;partition>/&lt;hostname>.](https://support.f5.com/csp/article/K37457128)  
+[K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address &lt;IP_address> port &lt;port_number>](https://support.f5.com/csp/article/K29449945)  
+[K17362757: Error Message: 010c0083:4: No failover status messages received for &lt;timeout> seconds, from device &lt;device> (&lt;IP_address>)](https://support.f5.com/csp/article/K17362757)  
 
 Usually a **sod** message is a problem with Network Failover
 
 |                                                                                                                                                                                                |                                                                               |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | 01070712:3: Caught configuration exception (0), Can't parse MCP message, can't parse atomic message                                                                                            | Major Software mismatch                                                       |
-| 0107143c:5: Connection to CMI peer 192.168.100.2 has been removed0107143a:5: CMI reconnect timer: enabled0107143a:5: CMI reconnect timer: disabled, all peers are connected                    | Device trust port 4353/6699 issues                                            |
-| 0107142f:3: Can't connect to CMI peer 10.11.23.140, TMM outbound listener not yet created0107142f:3: Can't connect to CMI peer 192.168.10.100, port:6699, Transport endpoint is not connected  | TMM not initialized on local or remote device                                 |
+| 0107143c:5: Connection to CMI peer 192.168.100.2 has been removed{{< line_break >}}0107143a:5: CMI reconnect timer: enabled{{< line_break >}}0107143a:5: CMI reconnect timer: disabled, all peers are connected                    | Device trust port 4353/6699 issues                                            |
+| 0107142f:3: Can't connect to CMI peer 10.11.23.140, TMM outbound listener not yet created{{< line_break >}}0107142f:3: Can't connect to CMI peer 192.168.10.100, port:6699, Transport endpoint is not connected  | TMM not initialized on local or remote device                                 |
 | 01340007:5: HA Connection with peer 192.168.100.2:32768 for traffic-group /Common/traffic-group-1 closing.                                                                                     | Received force offline message from peer                                      |
-| 010c0078:5  Not listening for unicast failover packets on address 192.168.100.2 port 1026010c007b:6: Deleted unicast failover address 192.168.100.2 port 1026 for device /Common/bigip1.f5.com | IP removed from network failover config                                       |
+| 010c0078:5  Not listening for unicast failover packets on address 192.168.100.2 port 1026{{< line_break >}}010c007b:6: Deleted unicast failover address 192.168.100.2 port 1026 for device /Common/bigip1.f5.com | IP removed from network failover config                                       |
 | 010c008b:5: Unable to send to unreachable unicast address 192.168.100.2 port 1026.                                                                                                             | No route found to network failover IP                                         |
 | 010c0083:4: No failover status messages received for 3.100 seconds, from device /Common/bigip2.f5.com (192.168.100.2) (unicast: -> 192.168.100.1).                                             | Connection lost over Network failover UDP 1026                                |
 | 01340002:3: HA Connection with peer 172.16.1.253:32768 for traffic-group /Common/traffic-group-1 lost.                                                                                         | Connection or persistence mirroring connection lost {{< line_break >}} Check port 1028 - 1043 TCP |
