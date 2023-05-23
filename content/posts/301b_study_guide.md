@@ -51,9 +51,9 @@ Leave ‘source’ in profile blank
 
 Use a unique delimiter in the ‘target’ field and a space between the source/target pairs.
 
-Don’t put &lt; > unless you want to literally.
+Don’t put < > unless you want to literally.
 
-**@**&lt;search string1>**@**&lt;replacement string1>**@** **@**&lt;search string2>**@**&lt;replacement string2>**@**
+**@**<search string1>**@**<replacement string1>**@** **@**<search string2>**@**<replacement string2>**@**
 
 Note: The first character in the field defines the delimiter bounding each field for this replacement and must not appear anywhere else in the target string. In certain versions, the delimiter can be a period (.), asterisk (\*), forward slash (/), dash (-), colon (:), underscore (\_), question mark (?), equals (=), at (@), comma (,), or ampersand (&) character.
 
@@ -63,8 +63,8 @@ Note: The first character in the field defines the delimiter bounding each field
 ltm profile stream h1_marquee {
  app-service none
  defaults-from stream
- source &lt;h1>Sunshine&lt;/h1>
- target &lt;marquee>&lt;h1>Moon&lt;/h1>&lt;/marquee>
+ source <h1>Sunshine</h1>
+ target <marquee><h1>Moon</h1></marquee>
 }
 ```
 
@@ -137,7 +137,7 @@ Only rewrite courtesy redirects to HTTPS
 
 Courtesy redirects = Sent by server, the F5 adds / to specify a directory if original resource isn’t found.
 
-- http&#x3A;//f5.com/stuff → https&#x3A;//f5.com/stuff**/**
+- http://f5.com/stuff → https://f5.com/stuff/
 
 Nodes - Change the redirect containing the node’s IP to the VIP
 
@@ -191,11 +191,11 @@ Objects that are cached continue to be served even if the pool member is offline
 
 #### Show and Delete Entries
 
-**show ltm profile ramcache** &lt;profile_name> **\[ host** &lt;vip_address:port> **max-response** &lt;how_many_entries_to_display> **]**
+**show ltm profile ramcache** <profile_name> **\[ host** <vip_address:port> **max-response** <how_many_entries_to_display> **]**
 
-**delete ltm profile ramcache** &lt;profile_name> **\[ host** &lt;vip_address:port> **uri /**&lt;object_name> **]**
+**delete ltm profile ramcache** <profile_name> **\[ host** <vip_address:port> **uri /**<object_name> **]**
 
-**delete ltm profile ramcache** &lt;profile_name> \*\*\*\*- Deletes all entries
+**delete ltm profile ramcache** <profile_name> \*\*\*\*- Deletes all entries
 
 ### XML
 
@@ -245,16 +245,13 @@ The F5 buffers data from the server if the client has not acknowledged data quic
 May want to increase this with clients that have packet loss or are latent. Keeping both the same and high is optimal so data is buffered as soon as the client ACKs content in the send buffer.
 
 Proxy Buffer High: The amount of data in the buffer in which to close the receive window from the server.
-
 Proxy Buffer Low: Amount of data in the buffer that triggers the receive window to open.
 
 (The amount of space free on the metal rollers to start accepting more bags.- 3 feet)
 
-Send Buffer**:** Data that was sent but not yet acknowledged - kept just in case it needs retransmitted.
-
+Send Buffer: Data that was sent but not yet acknowledged - kept just in case it needs retransmitted.
 Receive Window: How much to send the F5 that can be outstanding/unacknowledged
-
-Congestion Control**:** Use Woodside if some clients are wireless
+Congestion Control: Use Woodside if some clients are wireless
 
 **tcp-mobile-optimized**
 
@@ -403,7 +400,7 @@ Supported directories that can be increased:
 
 Verify free space - **list sys disk**
 
-Increase space - **modify sys disk directory /var new-size** &lt;desired value in KB>
+Increase space - **modify sys disk directory /var new-size** <desired value in KB>
 
 Verify - **show sys disk directory**
 
@@ -431,7 +428,7 @@ Check or restart **httpd** and **tomcat**
 
 ### Daemons
 
-**restart sys service &lt;name>**
+**restart sys service <name>**
 
 The **mcpd** daemon is the Master Control Program. Allows two-way communication between userland (applications outside the kernel) processes and TMM processes.
 
@@ -440,14 +437,14 @@ If this is down, traffic management does not function and nothing can be configu
 MCP is responsible for health checks
 
 **show sys mcp-state**
-
-- \--------------------------------------------------------
-- Sys::mcpd State:
-- \--------------------------------------------------------
-- Running Phase                            running
-- Last Configuration Load Status  full-config-load-succeed
-- End Platform ID received:           true
-
+```
+--------------------------------------------------------
+Sys::mcpd State:
+--------------------------------------------------------
+Running Phase                            running
+Last Configuration Load Status           full-config-load-succeed
+End Platform ID received:                true
+```
 ### MOS (Maintenance Operating System)
 
 [Article: K14245 - Overview of the recovery tasks performed from the MOS (11.x - 15.x)](https://support.f5.com/csp/article/K14245)
@@ -457,18 +454,14 @@ Reboot into it from CLI: **mosreboot**
 Boot into it using Console:
 
 Select TMOS Maintenance from grub boot menu:
-
-GNU GRUB  version 0.97  (619K LOWER / 3653927K UPPER MEMORY)
-
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
-
-\* BIG-IP 12.1.3.7 Build 0.0.2 - drive sda.1                      \*
-
-\* TMOS maintenance                                               \*
-
-\*                                                                \*
-
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+```
+   GNU GRUB  version 0.97  (619K LOWER / 3653927K UPPER MEMORY)
+ ******************************************************************
+ * BIG-IP 12.1.3.7 Build 0.0.2 - drive sda.1                      *
+ * TMOS maintenance                                               *
+ *                                                                *
+ ******************************************************************
+```
 
 You will be logged in as root automatically
 
@@ -485,16 +478,15 @@ Capabilities:
 For ext2/ext3/ext4 filesystems
 
 #### Error on boot about HDD
-
-\[/sbin/fsck.ext3 (1) -- /shared] fsck.ext3 -a /dev/mapper/vg--db--sda-dat.share.1 dat.share.1 contains a file system with errors, check forced.
-
-Error reading block 5259469 (Attempt to read block from filesystem resulted in short read) while reading indirect blocks of inode 2622816.
+```
+[/sbin/fsck.ext3 (1) -- /shared] fsck.ext3 -a /dev/mapper/vg--db--sda-dat.share.1 dat.share.1 contains a file system with errors, check forced.
+ Error reading block 5259469 (Attempt to read block from filesystem resulted in short read) while reading indirect blocks of inode 2622816.
+```
 
 **e2fsck -yf** /dev/mapper/vg--db--sda-dat.share.1
 
-\-y : Assume yes to all questions
-
-\-f : Force check even if it seems clean
+**-y** : Assume yes to all questions  
+**-f** : Force check even if it seems clean  
 
 ### fsck
 
@@ -508,37 +500,28 @@ Error reading block 5259469 (Attempt to read block from filesystem resulted in s
 
 #### Run on next reboot
 
-**touch /forcefsck**
-
+**touch /forcefsck**  
 **reboot**
 
 OR
 
-**shutdown -r\*\***F\*\* **now**
+**shutdown -rF now**
 
 #### Error on boot about HDD
 
+```
 set.1./var contains a file system with errors, check forced
-
 set.1./var: Directory inode 81930, block 0, offset 0: directory corrupted
-
-set.1./var: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY. (i.e., without -a or -p options) \[FAILED]
-
-\*\*\* An error occurred during the file system check.
-
-\*\*\* Dropping you to a shell; the system will reboot
-
-\*\*\* when you leave the shell.
-
-\*\*\* Warning -- SELinux is active
-
-\*\*\* Disabling security enforcement for system recovery.
-
-\*\*\* Run 'setenforce 1' to reenable.
-
+set.1./var: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY. (i.e., without -a or -p options) [FAILED]
+*** An error occurred during the file system check.
+*** Dropping you to a shell; the system will reboot
+*** when you leave the shell.
+*** Warning -- SELinux is active
+*** Disabling security enforcement for system recovery.
+*** Run 'setenforce 1' to reenable.
 Give root password for maintenance
-
 (or type Control-D to continue)
+```
 
 **CTRL + D**
 
@@ -555,7 +538,7 @@ Remove serial cable if necessary or disable it - **modify sys db failover.usetty
 Update Master Key on the new device to what the old device had, so that the UCS loads
 
 - Retrieve key from failed device - **f5mku -K**
-- Replace master key on new unit **f5mku -r &lt;key>**
+- Replace master key on new unit **f5mku -r <key>**
 
 ### Reload Configuration
 
@@ -594,17 +577,17 @@ SCF files are intended to help configure additional BIG-IP systems; SCFs are not
 
 Save the running configuration to an SCF
 
-- **save sys config file** &lt;SCF_filename> **\[passphrase** &lt;passphrase>]
+- **save sys config file** <SCF_filename> **\[passphrase** <passphrase>]
 
 Specify a custom name for the TAR file when saving the configuration to an unencrypted SCF:
 
-- **save sys config file** &lt;SCF_filename> **tar-file** &lt;TAR-FILE_filename>
+- **save sys config file** <SCF_filename> **tar-file** <TAR-FILE_filename>
 
 Note: When you use the tar-file option, the actual file does not have .tar file extension by default, unless specified. Additionally, you cannot specify the passphrase option when you use the tar-file option.
 
 The SCF file and the TAR file are saved to the **/var/local/scf/** directory.
 
-Files referenced \[keys, external monitor files and external data group files] in config are saved in **/var/local/scf/&lt;name>.tar**
+Files referenced \[keys, external monitor files and external data group files] in config are saved in **/var/local/scf/<name>.tar**
 
 #### Loading a SCF
 
@@ -614,15 +597,15 @@ You cannot load an SCF onto another software version
 
 To install an SCF:
 
-- **load sys config file &lt;SCF_filename> \[passphrase &lt;passphrase>]**
+- **load sys config file <SCF_filename> \[passphrase <passphrase>]**
 
 To load the unencrypted configuration with a TAR file that has a custom name:
 
-- **load sys config file** &lt;SCF_filename> **tar-file** &lt;TAR-FILE_filename>
+- **load sys config file** <SCF_filename> **tar-file** <TAR-FILE_filename>
 
 ### Diff SCF files
 
-**show sys config-diff** &lt;SCF_filename> \[SCF_filename_or_blank_for_running_config]
+**show sys config-diff** <SCF_filename> \[SCF_filename_or_blank_for_running_config]
 
 ### UCS Contents & Info
 
@@ -677,7 +660,7 @@ Dependencies
 - **mke2fs - Creates Linux ext2 file system**
 - **extlinux - Lightweight bootloader that starts computers with the Linux kernel**
 
-Unmount, plug into BIG-IP and reboot: **umount /mnt/&lt;directory>**
+Unmount, plug into BIG-IP and reboot: **umount /mnt/<directory>**
 
 You will be in MOS and prompted to perform an **automatic** **clean** **install**, just hit **\[Enter]**
 
@@ -695,7 +678,7 @@ The server providing the image must be on the same network as the management por
 
 ## - 1.04b - Identify the TMSH sys software install options required to install a new version
 
-**install sys software** { **hotfix** \| **image** } &lt;filename> (**create-volume**)  **volume** &lt;HDx.x>
+**install sys software** { **hotfix** \| **image** } <filename> (**create-volume**)  **volume** <HDx.x>
 
 ## - 1.04c - Identify the steps required to upgrade the LTM device such as: license renewal, validation of upgrade path, review release notes, etc.
 
@@ -712,7 +695,7 @@ Make sure there’s enough space on the hard drive. Use “df -h” - 50GB requi
 
 #### Verify image
 
-- **md5sum** /shared/images/&lt;name>.iso
+- **md5sum** /shared/images/<name>.iso
 
 #### List available images for installation
 
@@ -722,11 +705,11 @@ System > Software Management > Image | Hotfix List
 
 #### Install to inactive volume
 
-**install sys software** { **hotfix** \| **image** } &lt;iso> \[**create-volume**]  **volume** &lt;HDx.x>
+**install sys software** { **hotfix** \| **image** } <iso> \[**create-volume**]  **volume** <HDx.x>
 
 **GUI -** System > Software Management > Image | Hotfix List > Install > HDx.x
 
-Delete volume: **delete sys software volume** HD1.&lt;x>
+Delete volume: **delete sys software volume** HD1.<x>
 
 #### Reactivate the license (Traffic impacting)
 
@@ -798,13 +781,13 @@ Objective 1.06 Describe the benefits of custom alerting within an LTM environmen
 
 ## - 1.06a - Describe how to specify the OIDs for alerting
 
-alert &lt;name> “&lt;message>” {  
-snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;**300 - 999>**”  
+alert <name> “<message>” {  
+snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999>**”  
 }
 
 ## - 1.06b - Explain how to log different levels of local traffic message logs
 
-TMSH - **modify sys db &lt;name>.level value &lt;log-level-string>**
+TMSH - **modify sys db <name>.level value <log-level-string>**
 
 GUI - System > Logs > Configuration > Options
 
@@ -815,7 +798,7 @@ Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:8
 ### Modify Linux host syslog levels
 
 - **list sys syslog all-properties**
-- **modify sys syslog &lt;function>-from &lt;function>-to &lt;level>**
+- **modify sys syslog <function>-from <function>-to <level>**
 - **modify sys syslog daemon-from warning daemon-to emerg**
 
 ## - 1.06c - Explain how to trigger custom alerts for testing purposes
@@ -827,7 +810,7 @@ Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:8
 2. Grep for that alert for the full logging info-
 
    1. **cd /etc/alertd/**
-   2. **grep &lt;alert name> \*.h**
+   2. **grep <alert name> \*.h**
 
 3. Find Log Info
 
@@ -849,7 +832,7 @@ System > Logs > Configuration > Remote Logging
 
 ### SNMP
 
-Place custom MIB files in **/config/snmp/&lt;name>.tcl**
+Place custom MIB files in **/config/snmp/<name>.tcl**
 
 Default MIBs under **/usr/share/snmp/mibs**
 
@@ -867,8 +850,8 @@ System > SNMP > Traps > Configuration
 1. Create backup of **/config/user_alert.conf**
 2. Open and add new SNMP traps in proper format
 
-alert &lt;name> “&lt;message>” {  
-snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;**300 - 999**>”  
+alert <name> “<message>” {  
+snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999**>”  
 }
 
 3. Message -  A syslog message that will match and send the trap. Can use literal or regular expressions. For regex, put parentheses around the expression - (.\*) for example.
@@ -879,12 +862,12 @@ snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;**300 - 999**>”
 
 **ssmtp** is the process for emailing
 
-**modify sys outbound-smtp mailhub** &lt;mail-server:port>
+**modify sys outbound-smtp mailhub** <mail-server:port>
 
 **/config/user_alert.conf**
 
-alert &lt;name> “&lt;message>” {  
-snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;**300 - 999**>”,
+alert <name> “<message>” {  
+snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999**>”,
 
 email toaddress="dg-network@config.com, noc@config.com"  
 fromaddress="root" ←- The FQDN will be the hostname  
@@ -962,39 +945,39 @@ Logical: and, if, else
 
 Statement: **pool, node, virtual**
 
-Query: **IP::remote_addr, IP::addr, HTTP&#x3A;:host**
+Query: **IP::remote_addr, IP::addr, HTTP::host**
 
-Data manipulation: **HTTP&#x3A;:header remove**
+Data manipulation: **HTTP::header remove**
 
 Utility: **URI::decode**
 
-HTTP&#x3A;:method
+HTTP::method
 
-HTTP&#x3A;:request
+HTTP::request
 
-#### HTTP&#x3A;:header
+#### HTTP::header
 
-HTTP&#x3A;:header value &lt;header-name> - Returns value from header name
+HTTP::header value <header-name> - Returns value from header name
 
-HTTP&#x3A;:header values &lt;header-name> - Returns list of values from header name.
+HTTP::header values <header-name> - Returns list of values from header name.
 
-HTTP&#x3A;:header names
+HTTP::header names
 
-HTTP&#x3A;:header exists &lt;header-name>
+HTTP::header exists <header-name>
 
-HTTP&#x3A;:header insert \["lws"] \[\[list] &lt;header1-name> &lt;header1-value> &lt;header2-name> &lt;header2-value> ] - ‘“lws”’, the system adds linear white space to long header values.
+HTTP::header insert \["lws"] \[\[list] <header1-name> <header1-value> <header2-name> <header2-value> ] - ‘“lws”’, the system adds linear white space to long header values.
 
-HTTP&#x3A;:header is_redirect
+HTTP::header is_redirect
 
-HTTP&#x3A;:header replace &lt;header-name> \[&lt;new-header-value>]
+HTTP::header replace <header-name> \[<new-header-value>]
 
-HTTP&#x3A;:header remove &lt;header-name>
+HTTP::header remove <header-name>
 
-#### HTTP&#x3A;:uri
+#### HTTP::uri
 
 Full URI including query
 
-#### HTTP&#x3A;:path
+#### HTTP::path
 
 HTTP_REQUEST, SERVER_CONNECTED & more
 
@@ -1002,7 +985,7 @@ HTTP_REQUEST, SERVER_CONNECTED & more
 
 Does not include the query (?test.xml)
 
-#### HTTP&#x3A;:query
+#### HTTP::query
 
 Objective 2.02 Explain the functionality of a simple iRule
 
@@ -1012,15 +995,15 @@ Events are processed in a linear fashion so all CLIENT_ACCEPTED events in all iR
 
 Once one Event in all iRules is processed, action is taken if matched
 
-HTTP&#x3A;:redirect takes precedence over pool command
+HTTP::redirect takes precedence over pool command
 
-**&lt;Insert iRules here that direct to pools or nodes based on URI, host header, or IP address that even do snat as well. Use switch, if, elseif, starts_with, contains>**
+**<Insert iRules here that direct to pools or nodes based on URI, host header, or IP address that even do snat as well. Use switch, if, elseif, starts_with, contains>**
 
 ## - 2.02a - Interpret information in iRule logs to determine the iRule and iRule events where they occurred
 
 Logging in an iRule
 
-log local0.&lt;level-optional> “log here!”
+log local0.<level-optional> “log here!”
 
 Levels
 
@@ -1042,13 +1025,10 @@ Error Message: 01220001:3: TCL error
 
 Objective 2.03 Given specific traffic and configuration containing a simple iRule determine the result of the iRule on the traffic
 
-[event](https://clouddocs.f5.com/api/irules/event.html)
-
-[switch](https://clouddocs.f5.com/api/irules/switch.html)
-
-[return](https://clouddocs.f5.com/api/irules/return.html)
-
-[class](https://clouddocs.f5.com/api/irules/class.html)
+[event](https://clouddocs.f5.com/api/irules/event.html)  
+[switch](https://clouddocs.f5.com/api/irules/switch.html)  
+[return](https://clouddocs.f5.com/api/irules/return.html)  
+[class](https://clouddocs.f5.com/api/irules/class.html)  
 
 The \* in front of a URL will make it so only the URL with stuff in front of that asterisk will match. If there is nothing in front, then that entry won’t be matched. Example, \*default.com, make sure to add “default.com” to the rule.
 
@@ -1096,65 +1076,41 @@ class match - Sees if item matches in the data-group
 
 ### Example iRules
 
+```
 when HTTP_REQUEST {
-
-switch -glob \[string tolower \[HTTP&#x3A;:uri]] {
-
-\# only match ‘/example/blah’ and not ‘/example/’
-
-"/example/\*" {
-
-pool server4
-
-snat 10.0.0.1
-
+    switch -glob [string tolower [HTTP::uri]] {
+        # only match ‘/example/blah’ and not ‘/example/’
+        "/example/*" { 
+            pool server4
+            snat 10.0.0.1 
+        }
+        # only match literal URI with nothing after it
+        "/example4" { 
+            pool server3
+            snat 10.0.0.2 
+        }
+        default { 
+            pool default_pool 
+        }
+    }
 }
-
-\# only match literal URI with nothing after it
-
-"/example4" {
-
-pool server3
-
-snat 10.0.0.2
-
-}
-
-default {
-
-pool default_pool
-
-}
-
-}
-
-}
-
+```
+Example 2
+```
 when HTTP_REQUEST {
-
-if { \[class match \[IP::client_addr] equals "localusers_dg" ] } {
-
-pool server2
-
+    if { [class match [IP::client_addr] equals "localusers_dg" ] } {
+        pool server2
+    }
+    elseif { [class match [IP::client_addr] equals "remote_users_dg"] } {
+        pool remote_pool
+        snat 10.2.2.2
+    elseif { [string match [IP::client_addr] equals "1.1.1.1"] } {
+        drop
+    else
+      drop
+    }
 }
-
-elseif { \[class match \[IP::client_addr] equals "remote_users_dg"] } {
-
-pool remote_pool
-
-snat 10.2.2.2
-
-elseif { \[string match \[IP::client_addr] equals "1.1.1.1"] } {
-
-drop
-
-else
-
-drop
-
-}
-
-}
+```
 
 ## - 2.03a - Use an iRule to resolve application issues related to traffic steering and/or application data
 
@@ -1162,43 +1118,28 @@ drop
 
 Webpages/HTML responses contain links to http pages. You can use a Stream profile or/and iRule to replace http with https in the text of the HTML response page.
 
-Do this in HTTP_RESPONSE
+Do this in HTTP_RESPONSE  
+<https://support.f5.com/csp/article/K31100432#irule>  
 
-<https://support.f5.com/csp/article/K31100432#irule>
-
+```
 when HTTP_REQUEST {
-
-\# Disable the stream filter for all requests
-
-STREAM::disable
-
-\# LTM does not decompress response content, so if the server has compression enabled
-
-\# and it cannot be disabled on the server, we can prevent the server from
-
-\# sending a compressed response by removing the compression offerings from the client
-
-HTTP&#x3A;:header remove "Accept-Encoding"
-
+   # Disable the stream filter for all requests
+   STREAM::disable
+   # LTM does not decompress response content, so if the server has compression enabled
+   # and it cannot be disabled on the server, we can prevent the server from
+   # sending a compressed response by removing the compression offerings from the client
+   HTTP::header remove "Accept-Encoding"
 }
-
 when HTTP_RESPONSE {
-
-\# Check if response type is text
-
-if {\[HTTP&#x3A;:header value Content-Type] contains "text"}{
-
-\# Replace http&#x3A;// with https&#x3A;//
-
-STREAM::expression {@http&#x3A;//@https&#x3A;//@}
-
-\# Enable the stream filter for this response only
-
-STREAM::enable
-
+   # Check if response type is text
+      if {[HTTP::header value Content-Type] contains "text"}{
+      # Replace http:// with https://
+      STREAM::expression {@http://@https://@}
+      # Enable the stream filter for this response only
+      STREAM::enable
+      }
 }
-
-}
+```
 
 ### Allow Internet Explorer to download files through SSL
 
@@ -1228,7 +1169,7 @@ when HTTP_RESPONSE {
 }
 ```
 
-Objective 2.04 Interpret AVR information to identify performance issues or application attacks
+## Objective 2.04 Interpret AVR information to identify performance issues or application attacks
 
 ## - 2.04a - Explain how to modify profile settings using information from the AVR 
 
@@ -1367,7 +1308,7 @@ If the code received is not understood by the client, like 491 for example, a 40
 
 **_If-Match_**: Tells the server to respond if the ETags match
 
-**_If-Modified-Since_\*\***_:_\*\* Return the requested entity only if the resource was modified since &lt;date/time>. Server will respond with “304 Not Modified” if it hasn’t been.
+**_If-Modified-Since_\*\***_:_\*\* Return the requested entity only if the resource was modified since <date/time>. Server will respond with “304 Not Modified” if it hasn’t been.
 
 **_If-None-Match_\*\***_:_** Respond only if the ETag does **_not_\*\* match.
 
@@ -1402,7 +1343,7 @@ with me and just serve them the cached resource. This can cause duplicate entrie
 
 iRule commands to help with this issue:
 
-- **CACHE::userkey &lt;keystring> - Creates a user-defined caching group. Overrides _Vary_ header.**
+- **CACHE::userkey <keystring> - Creates a user-defined caching group. Overrides _Vary_ header.**
 - **CACHE::useragent - Can specify a group of _User-Agents_ to serve cached content to for the same request**
 - **CACHE::acceptencoding - Can specify a group of _Accept-Encoding_ headers \_\_to serve cached content to for the same request, like gzip and deflate would be the same cached entry instead of separate (duplicate)**
 
@@ -1410,13 +1351,13 @@ You can also use those commands even if the _Vary_ header isn’t present.
 
 ### Caching Commands - Show and Delete Entries
 
-**show ltm profile ramcache** &lt;profile_name> **max-response** &lt;how_many_entries_to_display>
+**show ltm profile ramcache** <profile_name> **max-response** <how_many_entries_to_display>
 
-**show ltm profile ramcache** &lt;profile_name> **host** &lt;vip_address:port>
+**show ltm profile ramcache** <profile_name> **host** <vip_address:port>
 
-**delete ltm profile ramcache** &lt;profile_name> **host** &lt;vip_address:port> **uri /&lt;object_name>**
+**delete ltm profile ramcache** <profile_name> **host** <vip_address:port> **uri /<object_name>**
 
-**delete ltm profile ramcache** &lt;profile_name> \*\*\*\*- Deletes all entries
+**delete ltm profile ramcache** <profile_name> \*\*\*\*- Deletes all entries
 
 ## - 2.06c - Explain HTTP methods (GET, POST, etc.)
 
@@ -1569,11 +1510,11 @@ Override Connection Limit: Pool member limits overridden. Virtual Server ones ar
 
 ##### Insert (Default) 
 
-**BIGipServer&lt;pool_name>** cookie is inserted. The server port and address are encoded. Unable to maintain persistence across virtual servers (HTTP/HTTPS) if pool member ports are different.
+**BIGipServer<pool_name>** cookie is inserted. The server port and address are encoded. Unable to maintain persistence across virtual servers (HTTP/HTTPS) if pool member ports are different.
 
 ##### Rewrite
 
-Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer&lt;pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).
+Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer<pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).
 
 Use over passive mode whenever possible
 
@@ -1865,7 +1806,7 @@ Flags
 - If you don’t specify one, it defaults to eth0 (mgmt)
 - Use 0.0 (loopback) to capture traffic in all route-domains and VLANs
 - Specifying VLAN disables hardware checksum L4 UDP/TCP, and calculates it in software
-- :p - Follow and capture traffic through the entire flow - SNAT and OneConnect included. Only works correctly if using ‘src host &lt;x.x.x.x.>’ and ‘dst host &lt;x.x.x.x>’ filters. If you use ‘host &lt;x.x.x.x>’ it will capture everything.
+- :p - Follow and capture traffic through the entire flow - SNAT and OneConnect included. Only works correctly if using ‘src host <x.x.x.x.>’ and ‘dst host <x.x.x.x>’ filters. If you use ‘host <x.x.x.x>’ it will capture everything.
 - :nnn - Low, Medium, High details from TMM
 
 \-n - Disable name resolution
@@ -1910,7 +1851,7 @@ and | or | not
 
 #### Filters
 
-**src | dst \[ net | host | &lt;ip> ]**
+**src | dst \[ net | host | <ip> ]**
 
 #### Output
 
@@ -1982,7 +1923,7 @@ tcpdump won’t show 3 way handshake on the server-side and will show multiple H
 2. Capture traffic with tcpdump
 3. Create pre-master secret (symmetric key)
 
-**ssldump -r &lt;capture-file.pcap> -k &lt;private-key.key> -M &lt;pre-master-secret-log>**
+**ssldump -r <capture-file.pcap> -k <private-key.key> -M <pre-master-secret-log>**
 
 The output of the pre-master-secret log file can now be loaded into Wireshark. (Edit > Preferences > Protocols > SSL > PMS key log filename.
 
@@ -2015,11 +1956,11 @@ ICMP destination unreachable - can be multiple things, like the destination host
 
 **show net rst-cause**
 
-db variable **tm.rstcause.log value enable** - Displays “RST sent from &lt;source> to &lt;destination> and the reason in logs
+db variable **tm.rstcause.log value enable** - Displays “RST sent from <source> to <destination> and the reason in logs
 
 db variable **tm.rstcause.pkt value enable** - Displays RST cause in TCP payload
 
-- Can use **tcpdump -i &lt;int>:nn** to display the cause without this set.
+- Can use **tcpdump -i <int>:nn** to display the cause without this set.
 
 Reaping - RST when high-water mark is reached and no new connections are allowed
 
@@ -2083,7 +2024,7 @@ Creates separate TMM processes per CPU to share the load across all.
 
 Demotion - iRule with Global variable, **set::** or **$::** demotes CMP to single.
 
-**show ltm virtual &lt;vs-name>**
+**show ltm virtual <vs-name>**
 
 - CMP - **enabled/disabled**
 - CMP Mode - **all-cpus**, **single, none**, **disabled**
@@ -2245,7 +2186,7 @@ Logs in, downloads file to /var/tmp
 
 Any output from an external monitor to **stdout** will result in a member being Available. If the script fails, do not write failed status to **stdout**
 
-Writing to stdout - ‘**echo** &lt;string>’
+Writing to stdout - ‘**echo** <string>’
 
 ## - 2.15b - Describe how to modify monitor settings to resolve monitor problems
 
@@ -2409,7 +2350,7 @@ remote    refid        st t when poll reach delay  offset       jitter
 
 Objective 3.02 Identify the appropriate command to use to determine the cause of an LTM device problem
 
-You can use **run util &lt;command>** from TMSH if you don’t feel like going down to bash
+You can use **run util <command>** from TMSH if you don’t feel like going down to bash
 
 **run util tcpdump -i 1.1 host 1.1.1.1**
 
@@ -2473,9 +2414,9 @@ Use command **eud_info** to see version installed
 
 Download .im file to /var/tmp
 
-Install it - **im** &lt;file_name>.im
+Install it - **im** <file_name>.im
 
-Loopback mount the downloaded file - **mkdir** **/tmp/eud; mount** **-o ro,loop** &lt;file_name>.im **/tmp/eud**
+Loopback mount the downloaded file - **mkdir** **/tmp/eud; mount** **-o ro,loop** <file_name>.im **/tmp/eud**
 
 Insert flash drive into BIG-IP
 
@@ -2650,11 +2591,11 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 [Overview of BIG-IP TMM CPU Usage](https://support.f5.com/csp/article/K15468)
 
-[Error Message: Clock advanced by &lt;number> ticks](https://support.f5.com/csp/article/K10095?sr=24657578)
+[Error Message: Clock advanced by <number> ticks](https://support.f5.com/csp/article/K10095?sr=24657578)
 
 [K10337613: Idle Enforcer Functionality](https://support.f5.com/csp/article/K10337613)
 
-**show sys proc-info \[ &lt;process-name> ]** - Shows individual processes CPU usage  
+**show sys proc-info \[ <process-name> ]** - Shows individual processes CPU usage  
 **show sys tmm-info** - Show TMM CPU usage per process/core  
 **show sys cpu** - System CPU is an aggregation of TMM and Control Plane CPU usage.  
 **show sys performance**  
@@ -2672,14 +2613,14 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 |                                                                                                    |                                                                                                                                                                                                                                                                                                                                     |
 | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Clock advanced by &lt;number> ticks                                                                | In VE, dedicate more resources or priority{{< line_break >}}The TMM heartbeat thread dead timer hit \[100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clock{{< line_break >}}Can cause traffic disruption or failover if falls behind more than 10 seconds \[10000 milliseconds] - may not log all because action already happened |
-| info kernel: ltm driver: Idle enforcer starting - tid: &lt;pid> cpu: &lt;core ID X>/&lt;core ID Y> | CPU usage on the Data plane reaches 80%, the Control plane is paused momentarily and used for Data plane until a log message ‘exited’ is shown                                                                                                                                                                                      |
+| Clock advanced by <number> ticks                                                                | In VE, dedicate more resources or priority{{< line_break >}}The TMM heartbeat thread dead timer hit \[100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clock{{< line_break >}}Can cause traffic disruption or failover if falls behind more than 10 seconds \[10000 milliseconds] - may not log all because action already happened |
+| info kernel: ltm driver: Idle enforcer starting - tid: <pid> cpu: <core ID X>/<core ID Y> | CPU usage on the Data plane reaches 80%, the Control plane is paused momentarily and used for Data plane until a log message ‘exited’ is shown                                                                                                                                                                                      |
 
 ### Hard Drive
 
 **df -h** - Display partitions and size/usage
 
-**du &lt;directory> -h** - Display size of files, -h = human readable sizes in K or G, automatically recursive into directories!
+**du <directory> -h** - Display size of files, -h = human readable sizes in K or G, automatically recursive into directories!
 
 **lvscan** - Display storage per partition. Some are shared, like log, share, etc.
 
@@ -2728,7 +2669,7 @@ HTTP cache storage is shared among all profiles of the same name. Consolidate pr
 
 ## - 3.02c - Identify connectivity problems based on the log files
 
-**modify sys db** **tm.rstcause.log value enable** - Displays “RST sent from &lt;source> to &lt;destination> and the reason in logs
+**modify sys db** **tm.rstcause.log value enable** - Displays “RST sent from <source> to <destination> and the reason in logs
 
 Everything else is self explanatory or I am not aware of any log entries that indicate a connectivity problem. SSL errors logging was not set to warning in 11.5.
 
@@ -2767,9 +2708,9 @@ Assigned to a floating traffic group on all devices.
 
 Faster than VLAN, system, or gateway failsafes
 
-Don’t use Force Standby while this feature is enabled on &lt; 13.0 devices, it will fail back to the Active unit. [Disable HA group first](https://support.f5.com/csp/article/K14515)
+Don’t use Force Standby while this feature is enabled on < 13.0 devices, it will fail back to the Active unit. [Disable HA group first](https://support.f5.com/csp/article/K14515)
 
-Don’t use Auto-Failback on &lt;13.0 devices. It will keep failing back to the primary and cause flaps.
+Don’t use Auto-Failback on <13.0 devices. It will keep failing back to the primary and cause flaps.
 
 **Creating**
 
@@ -2919,8 +2860,8 @@ Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management 
 
 |                                                                                                                                                                                                         |                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| 010c002b:5: Traffic group &lt;traffic_group> received a targeted failover command for 10.128.1.100                                                                                                      | Force standby command issued                                 |
-| 010719fb:5: HA Group &lt;ha-pool-name> score updated from 40 to 30. {{< line_break >}} 010c0045:5: Leaving active, group score 36 peer group score 40. {{< line_break >}} 010c0052:5: Standby for traffic group /Common/&lt;traffic_group_name> | HA Group                                                     |
+| 010c002b:5: Traffic group <traffic_group> received a targeted failover command for 10.128.1.100                                                                                                      | Force standby command issued                                 |
+| 010719fb:5: HA Group <ha-pool-name> score updated from 40 to 30. {{< line_break >}} 010c0045:5: Leaving active, group score 36 peer group score 40. {{< line_break >}} 010c0052:5: Standby for traffic group /Common/<traffic_group_name> | HA Group                                                     |
 | 01140029:4: HA pool_memb_down /Common/g_pool fails action is failover                                                                                                                                   | Gateway failsafe                                             |
 | 01140029:4: HA vlan_fs                                                                                                                                                                                  | VLAN Failsafe                                                |
 | 010c006d:5: Initiating Auto-Failback.                                                                                                                                                                   | Auto-failback                                                |
@@ -2994,7 +2935,7 @@ Not actually iQuery, it’s separate
 | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Verify Commit IDs, CID origin, and CID time. Higher CID = more recent | **run cm watch-devicegroup-device**                                                                                                                                                                                         |
 | Processes are up                                                      | **bigstart status devmgmtd mcpd sod tmm**                                                                                                                                                                                   |
-| Mismatched provisioned modules                                        | 01260013:4: SSL Handshake failed for TCP &lt;bigip1_configsync_ip>:4353 -> &lt;bigip2_configsync_ip>:&lt;random_port>{{< line_break >}}01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: **alert(20) Decryption error** |
+| Mismatched provisioned modules                                        | 01260013:4: SSL Handshake failed for TCP <bigip1_configsync_ip>:4353 -> <bigip2_configsync_ip>:<random_port>{{< line_break >}}01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: **alert(20) Decryption error** |
 | Verify configuration will load                                        | **load sys config verify**                                                                                                                                                                                                  |
 | Sync status and recommended action                                    | **show cm sync-status**                                                                                                                                                                                                     |
 | Devices are in the trust group                                        | **show cm device-group device_trust_group**                                                                                                                                                                                 |
@@ -3066,14 +3007,14 @@ Traffic groups host these LTM objects for failover - VIPs, SNATs, NATs, Folders,
 
 ## - 3.05e - Interpret log messages to determine the cause of high availability issues
 
-[K34063049: Error Message: 0107143c:5: Connection to CMI peer &lt;IP address> has been removed](https://support.f5.com/csp/article/K34063049)  
-[K06416036: Error Message: 0107143a:5: CMI reconnect timer: &lt;status>](https://support.f5.com/csp/article/K06416036)  
+[K34063049: Error Message: 0107143c:5: Connection to CMI peer <IP address> has been removed](https://support.f5.com/csp/article/K34063049)  
+[K06416036: Error Message: 0107143a:5: CMI reconnect timer: <status>](https://support.f5.com/csp/article/K06416036)  
 [K13667: BIG-IP device group members must run the same major, minor or maintenance software version](https://support.f5.com/csp/article/K13667)  
 [K75975904: Troubleshooting network failover](https://support.f5.com/csp/article/K75975904)  
 [K72087447: Error Message: HA Connection with peer \[address:port\] for traffic-group /Common/\[traffic-group_name\] lost. (11.x - 13.x)](https://support.f5.com/csp/article/K72087447)  
-[K37457128: Error Message: info sod\[&lt;PID>\]: 010c007b:6: Deleted unicast failover address &lt;IP address> port &lt;port> for device /&lt;partition>/&lt;hostname>.](https://support.f5.com/csp/article/K37457128)  
-[K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address &lt;IP_address> port &lt;port_number>](https://support.f5.com/csp/article/K29449945)  
-[K17362757: Error Message: 010c0083:4: No failover status messages received for &lt;timeout> seconds, from device &lt;device> (&lt;IP_address>)](https://support.f5.com/csp/article/K17362757)  
+[K37457128: Error Message: info sod\[<PID>\]: 010c007b:6: Deleted unicast failover address <IP address> port <port> for device /<partition>/<hostname>.](https://support.f5.com/csp/article/K37457128)  
+[K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address <IP_address> port <port_number>](https://support.f5.com/csp/article/K29449945)  
+[K17362757: Error Message: 010c0083:4: No failover status messages received for <timeout> seconds, from device <device> (<IP_address>)](https://support.f5.com/csp/article/K17362757)  
 
 Usually a **sod** message is a problem with Network Failover
 

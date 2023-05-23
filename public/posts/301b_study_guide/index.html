@@ -14,7 +14,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
 This is the study guide I&rsquo;ve been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I&rsquo;ve sourced the material from solution articles, experience, and manuals.
 Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a scenario, determine the appropriate profile setting modifications SSL K13385: Overview of the Proxy SSL feature"><meta itemprop="datePublished" content="2023-04-30T20:14:22+08:00" />
 <meta itemprop="dateModified" content="2023-04-30T20:14:22+08:00" />
-<meta itemprop="wordCount" content="15776">
+<meta itemprop="wordCount" content="15749">
 <meta itemprop="keywords" content="" /><meta property="og:title" content="F5 301b Study Guide" />
 <meta property="og:description" content="Introduction Hey all,
 This is the study guide I&rsquo;ve been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I&rsquo;ve sourced the material from solution articles, experience, and manuals.
@@ -40,7 +40,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/routeyour.net\/posts\/301b_study_guide\/"
-    },"genre": "posts","wordcount":  15776 ,
+    },"genre": "posts","wordcount":  15749 ,
     "url": "https:\/\/routeyour.net\/posts\/301b_study_guide\/","datePublished": "2023-04-30T20:14:22+08:00","dateModified": "2023-04-30T20:14:22+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -124,7 +124,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
       Caleb Delbrugge</span></span></div>
-      <div class="post-meta-line"><span title="published on 2023-04-30 20:14:22"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-30">2023-04-30</time></span>&nbsp;<span title="Updated on 2023-04-30 20:14:22"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-30">2023-04-30</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>15776 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>75 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span title="published on 2023-04-30 20:14:22"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-30">2023-04-30</time></span>&nbsp;<span title="Updated on 2023-04-30 20:14:22"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-30">2023-04-30</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>15749 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>74 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -235,6 +235,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
         <li><a href="#allow-internet-explorer-to-download-files-through-ssl">Allow Internet Explorer to download files through SSL</a></li>
       </ul>
     </li>
+    <li><a href="#objective-204-interpret-avr-information-to-identify-performance-issues-or-application-attacks">Objective 2.04 Interpret AVR information to identify performance issues or application attacks</a></li>
     <li><a href="#--204a---explain-how-to-modify-profile-settings-using-information-from-the-avr">- 2.04a - Explain how to modify profile settings using information from the AVR </a></li>
     <li><a href="#--204b---explain-how-to-use-advanced-filters-to-narrow-output-data-from-avr">- 2.04b - Explain how to use advanced filters to narrow output data from AVR </a></li>
     <li><a href="#--204c---identify-potential-latency-increases-within-an-application">- 2.04c - Identify potential latency increases within an application</a></li>
@@ -266,6 +267,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
         <li><a href="#ssldump-failure-examples">SSLDUMP failure examples</a></li>
       </ul>
     </li>
+    <li><a href="#objective-209-given-a-direct-trace-a-trace-through-the-ltm-device-and-other-relevant-information-compare-the-traces-to-determine-a-solution-to-an-httphttps-application-problem">Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem</a></li>
     <li><a href="#--209b---given-a-failed-http-request-and-ltm-configuration-data-determine-if-the-connection-is-failing-due-to-the-ltm-configuration">- 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration</a>
       <ul>
         <li><a href="#auto-last-hop">Auto Last Hop</a></li>
@@ -354,7 +356,9 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
     </li>
     <li><a href="#--302c---identify-connectivity-problems-based-on-the-log-files">- 3.02c - Identify connectivity problems based on the log files</a></li>
     <li><a href="#--302d---determine-the-appropriate-log-file-to-examine-to-determine-the-cause-of-the-problem">- 3.02d - Determine the appropriate log file to examine to determine the cause of the problem</a></li>
-    <li><a href="#--303a---analyze-performance-data-to-identify-a-resource-problem-on-an-ltm-device">- 3.03a - Analyze performance data to identify a resource problem on an LTM device</a>
+    <li><a href="#objective-303-analyze-performance-data-to-identify-a-resource-problem-on-an-ltm-device">Objective 3.03 Analyze performance data to identify a resource problem on an LTM device</a></li>
+    <li><a href="#--303a---analyze-performance-data-to-identify-a-resource-problem-on-an-ltm-device">- 3.03a - Analyze performance data to identify a resource problem on an LTM device</a></li>
+    <li><a href="#objective-304-given-a-scenario-determine-the-cause-of-an-ltm-device-failover">Objective 3.04 Given a scenario, determine the cause of an LTM device failover</a>
       <ul>
         <li><a href="#ha-groups-fast-failover">HA Groups (Fast Failover)</a></li>
         <li><a href="#ha-order">HA Order</a></li>
@@ -371,6 +375,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
         <li><a href="#statistics">Statistics</a></li>
       </ul>
     </li>
+    <li><a href="#objective-305-given-a-scenario-determine-the-cause-of-loss-of-high-availability-andor-sync-failure">Objective 3.05 Given a scenario, determine the cause of loss of high availability and/or sync failure</a></li>
     <li><a href="#--305a---explain-how-the-high-availability-concepts-relate-to-one-another">- 3.05a - Explain how the high availability concepts relate to one another</a></li>
     <li><a href="#--305b---explain-the-relationship-between-device-trust-and-device-groups">- 3.05b - Explain the relationship between device trust and device groups</a></li>
     <li><a href="#--305c---identify-the-cause-of-config-sync-failures">- 3.05c - Identify the cause of config sync failures</a>
@@ -409,14 +414,14 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
 <p>Leave ‘source’ in profile blank</p>
 <p>Use a unique delimiter in the ‘target’ field and a space between the source/target pairs.</p>
 <p>Don’t put &lt; &gt; unless you want to literally.</p>
-<p><strong>@</strong>&lt;search string1&gt;<strong>@</strong>&lt;replacement string1&gt;<strong>@</strong> <strong>@</strong>&lt;search string2&gt;<strong>@</strong>&lt;replacement string2&gt;<strong>@</strong></p>
+<p><strong>@</strong><!-- raw HTML omitted --><strong>@</strong><!-- raw HTML omitted --><strong>@</strong> <strong>@</strong><!-- raw HTML omitted --><strong>@</strong><!-- raw HTML omitted --><strong>@</strong></p>
 <p>Note: The first character in the field defines the delimiter bounding each field for this replacement and must not appear anywhere else in the target string. In certain versions, the delimiter can be a period (.), asterisk (*), forward slash (/), dash (-), colon (:), underscore (_), question mark (?), equals (=), at (@), comma (,), or ampersand (&amp;) character.</p>
 <p><strong>Example:</strong></p>
 <pre tabindex="0"><code>ltm profile stream h1_marquee {
  app-service none
  defaults-from stream
- source &amp;lt;h1&gt;Sunshine&amp;lt;/h1&gt;
- target &amp;lt;marquee&gt;&amp;lt;h1&gt;Moon&amp;lt;/h1&gt;&amp;lt;/marquee&gt;
+ source &lt;h1&gt;Sunshine&lt;/h1&gt;
+ target &lt;marquee&gt;&lt;h1&gt;Moon&lt;/h1&gt;&lt;/marquee&gt;
 }
 </code></pre><p>You don’t need to use an iRule</p>
 <pre tabindex="0"><code>when HTTP_RESPONSE {
@@ -485,7 +490,7 @@ Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a sc
 <p>Only rewrite courtesy redirects to HTTPS</p>
 <p>Courtesy redirects = Sent by server, the F5 adds / to specify a directory if original resource isn’t found.</p>
 <ul>
-<li>http://f5.com/stuff → https://f5.com/stuff**/**</li>
+<li><a href="http://f5.com/stuff"target="_blank" rel="external nofollow noopener noreferrer">http://f5.com/stuff</a> → <a href="https://f5.com/stuff/"target="_blank" rel="external nofollow noopener noreferrer">https://f5.com/stuff/</a></li>
 </ul>
 <p>Nodes - Change the redirect containing the node’s IP to the VIP</p>
 <p>All - Rewrites all HTTP 301, 302, 303, 305, or 307 redirects to HTTPS</p>
@@ -562,12 +567,12 @@ Inserts <strong>Content-Encoding</strong> header in response from Server, and sp
 <p>The F5 buffers data from the server if the client has not acknowledged data quick enough. This allows the server to focus on other requests.</p>
 <p>(Airport analogy - Bags are offloaded to the metal rollers to allow people to rest and do other things.)</p>
 <p>May want to increase this with clients that have packet loss or are latent. Keeping both the same and high is optimal so data is buffered as soon as the client ACKs content in the send buffer.</p>
-<p>Proxy Buffer High: The amount of data in the buffer in which to close the receive window from the server.</p>
-<p>Proxy Buffer Low: Amount of data in the buffer that triggers the receive window to open.</p>
+<p>Proxy Buffer High: The amount of data in the buffer in which to close the receive window from the server.
+Proxy Buffer Low: Amount of data in the buffer that triggers the receive window to open.</p>
 <p>(The amount of space free on the metal rollers to start accepting more bags.- 3 feet)</p>
-<p>Send Buffer**:** Data that was sent but not yet acknowledged - kept just in case it needs retransmitted.</p>
-<p>Receive Window: How much to send the F5 that can be outstanding/unacknowledged</p>
-<p>Congestion Control**:** Use Woodside if some clients are wireless</p>
+<p>Send Buffer: Data that was sent but not yet acknowledged - kept just in case it needs retransmitted.
+Receive Window: How much to send the F5 that can be outstanding/unacknowledged
+Congestion Control: Use Woodside if some clients are wireless</p>
 <p><strong>tcp-mobile-optimized</strong></p>
 <ul>
 <li>Buffers and window increased to allow for latency/packet loss</li>
@@ -671,7 +676,7 @@ Inserts <strong>Content-Encoding</strong> header in response from Server, and sp
 <li>/shared</li>
 </ul>
 <p>Verify free space - <strong>list sys disk</strong></p>
-<p>Increase space - <strong>modify sys disk directory /var new-size</strong> &lt;desired value in KB&gt;</p>
+<p>Increase space - <strong>modify sys disk directory /var new-size</strong> <!-- raw HTML omitted --></p>
 <p>Verify - <strong>show sys disk directory</strong></p>
 <p><strong>reboot</strong></p>
 <h3 id="console">Console</h3>
@@ -687,31 +692,29 @@ Flow control - N</p>
 <p>Check or restart <strong>httpd</strong> and <strong>tomcat</strong></p>
 <p><strong>bigstart restart httpd tomcat</strong></p>
 <h3 id="daemons">Daemons</h3>
-<p><strong>restart sys service &lt;name&gt;</strong></p>
+<p><strong>restart sys service <!-- raw HTML omitted --></strong></p>
 <p>The <strong>mcpd</strong> daemon is the Master Control Program. Allows two-way communication between userland (applications outside the kernel) processes and TMM processes.</p>
 <p>If this is down, traffic management does not function and nothing can be configured. Other daemons will also not function correctly.</p>
 <p>MCP is responsible for health checks</p>
 <p><strong>show sys mcp-state</strong></p>
-<ul>
-<li>-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</li>
-<li>Sys::mcpd State:</li>
-<li>-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</li>
-<li>Running Phase                            running</li>
-<li>Last Configuration Load Status  full-config-load-succeed</li>
-<li>End Platform ID received:           true</li>
-</ul>
-<h3 id="mos-maintenance-operating-system">MOS (Maintenance Operating System)</h3>
+<pre tabindex="0"><code>--------------------------------------------------------
+Sys::mcpd State:
+--------------------------------------------------------
+Running Phase                            running
+Last Configuration Load Status           full-config-load-succeed
+End Platform ID received:                true
+</code></pre><h3 id="mos-maintenance-operating-system">MOS (Maintenance Operating System)</h3>
 <p><a href="https://support.f5.com/csp/article/K14245"target="_blank" rel="external nofollow noopener noreferrer">Article: K14245 - Overview of the recovery tasks performed from the MOS (11.x - 15.x)</a></p>
 <p>Reboot into it from CLI: <strong>mosreboot</strong></p>
 <p>Boot into it using Console:</p>
 <p>Select TMOS Maintenance from grub boot menu:</p>
-<p>GNU GRUB  version 0.97  (619K LOWER / 3653927K UPPER MEMORY)</p>
-<p>******************************************************************</p>
-<p>* BIG-IP 12.1.3.7 Build 0.0.2 - drive sda.1                      *</p>
-<p>* TMOS maintenance                                               *</p>
-<p>*                                                                *</p>
-<p>******************************************************************</p>
-<p>You will be logged in as root automatically</p>
+<pre tabindex="0"><code>   GNU GRUB  version 0.97  (619K LOWER / 3653927K UPPER MEMORY)
+ ******************************************************************
+ * BIG-IP 12.1.3.7 Build 0.0.2 - drive sda.1                      *
+ * TMOS maintenance                                               *
+ *                                                                *
+ ******************************************************************
+</code></pre><p>You will be logged in as root automatically</p>
 <p>Capabilities:</p>
 <ul>
 <li>Mount filesystems</li>
@@ -723,34 +726,34 @@ Flow control - N</p>
 <h3 id="e2fsck">e2fsck</h3>
 <p>For ext2/ext3/ext4 filesystems</p>
 <h4 id="error-on-boot-about-hdd">Error on boot about HDD</h4>
-<p>[/sbin/fsck.ext3 (1) &ndash; /shared] fsck.ext3 -a /dev/mapper/vg&ndash;db&ndash;sda-dat.share.1 dat.share.1 contains a file system with errors, check forced.</p>
-<p>Error reading block 5259469 (Attempt to read block from filesystem resulted in short read) while reading indirect blocks of inode 2622816.</p>
-<p><strong>e2fsck -yf</strong> /dev/mapper/vg&ndash;db&ndash;sda-dat.share.1</p>
-<p>-y : Assume yes to all questions</p>
-<p>-f : Force check even if it seems clean</p>
+<pre tabindex="0"><code>[/sbin/fsck.ext3 (1) -- /shared] fsck.ext3 -a /dev/mapper/vg--db--sda-dat.share.1 dat.share.1 contains a file system with errors, check forced.
+ Error reading block 5259469 (Attempt to read block from filesystem resulted in short read) while reading indirect blocks of inode 2622816.
+</code></pre><p><strong>e2fsck -yf</strong> /dev/mapper/vg&ndash;db&ndash;sda-dat.share.1</p>
+<p><strong>-y</strong> : Assume yes to all questions<br>
+<strong>-f</strong> : Force check even if it seems clean</p>
 <h3 id="fsck">fsck</h3>
 <p><a href="https://support.f5.com/csp/article/K73827442"target="_blank" rel="external nofollow noopener noreferrer">Article: K73827442 - Forcing a file system check on the next system reboot (12.x - 15.x)</a></p>
 <p><a href="https://support.f5.com/csp/article/K60432403"target="_blank" rel="external nofollow noopener noreferrer">Article: K60432403 - Recovering from a failed device start due to file system errors</a></p>
 <p><a href="https://www.devcentral.f5.com/s/question/0D51T00006wzaNH/f5-upgrade-error"target="_blank" rel="external nofollow noopener noreferrer">F5 upgrade error DevCentral</a></p>
 <p><a href="https://support.f5.com/csp/article/K61521075"target="_blank" rel="external nofollow noopener noreferrer">K61521075: BIG-IP VE failed to boot after outage with console message: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY.</a> - May not be on test</p>
 <h4 id="run-on-next-reboot">Run on next reboot</h4>
-<p><strong>touch /forcefsck</strong></p>
-<p><strong>reboot</strong></p>
+<p><strong>touch /forcefsck</strong><br>
+<strong>reboot</strong></p>
 <p>OR</p>
-<p>**shutdown -r****F** <strong>now</strong></p>
+<p><strong>shutdown -rF now</strong></p>
 <h4 id="error-on-boot-about-hdd-1">Error on boot about HDD</h4>
-<p>set.1./var contains a file system with errors, check forced</p>
-<p>set.1./var: Directory inode 81930, block 0, offset 0: directory corrupted</p>
-<p>set.1./var: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY. (i.e., without -a or -p options) [FAILED]</p>
-<p>*** An error occurred during the file system check.</p>
-<p>*** Dropping you to a shell; the system will reboot</p>
-<p>*** when you leave the shell.</p>
-<p>*** Warning &ndash; SELinux is active</p>
-<p>*** Disabling security enforcement for system recovery.</p>
-<p>*** Run &lsquo;setenforce 1&rsquo; to reenable.</p>
-<p>Give root password for maintenance</p>
-<p>(or type Control-D to continue)</p>
-<p><strong>CTRL + D</strong></p>
+<pre tabindex="0"><code>set.1./var contains a file system with errors, check forced
+set.1./var: Directory inode 81930, block 0, offset 0: directory corrupted
+set.1./var: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY. (i.e., without -a or -p options) [FAILED]
+*** An error occurred during the file system check.
+*** Dropping you to a shell; the system will reboot
+*** when you leave the shell.
+*** Warning -- SELinux is active
+*** Disabling security enforcement for system recovery.
+*** Run &#39;setenforce 1&#39; to reenable.
+Give root password for maintenance
+(or type Control-D to continue)
+</code></pre><p><strong>CTRL + D</strong></p>
 <p>*login*</p>
 <p><strong>fsck -y</strong> Automatically attempt to fix any filesystem corruption errors automagically.</p>
 <h3 id="replace-down-device">Replace down device</h3>
@@ -759,7 +762,7 @@ Flow control - N</p>
 <p>Update Master Key on the new device to what the old device had, so that the UCS loads</p>
 <ul>
 <li>Retrieve key from failed device - <strong>f5mku -K</strong></li>
-<li>Replace master key on new unit <strong>f5mku -r &lt;key&gt;</strong></li>
+<li>Replace master key on new unit <strong>f5mku -r <!-- raw HTML omitted --></strong></li>
 </ul>
 <h3 id="reload-configuration">Reload Configuration</h3>
 <p><a href="https://support.f5.com/csp/article/K13030"target="_blank" rel="external nofollow noopener noreferrer">Article: K13030 - Forcing the mcpd process to reload the BIG-IP configuration</a></p>
@@ -783,7 +786,7 @@ Flow control - N</p>
 <h4 id="saving-an-scf-file">Saving an SCF file</h4>
 <p>Save the running configuration to an SCF</p>
 <ul>
-<li><strong>save sys config file</strong> &lt;SCF_filename&gt; <strong>[passphrase</strong> &lt;passphrase&gt;]</li>
+<li><strong>save sys config file</strong> &lt;SCF_filename&gt; <strong>[passphrase</strong> <!-- raw HTML omitted -->]</li>
 </ul>
 <p>Specify a custom name for the TAR file when saving the configuration to an unencrypted SCF:</p>
 <ul>
@@ -791,13 +794,13 @@ Flow control - N</p>
 </ul>
 <p>Note: When you use the tar-file option, the actual file does not have .tar file extension by default, unless specified. Additionally, you cannot specify the passphrase option when you use the tar-file option.</p>
 <p>The SCF file and the TAR file are saved to the <strong>/var/local/scf/</strong> directory.</p>
-<p>Files referenced [keys, external monitor files and external data group files] in config are saved in <strong>/var/local/scf/&lt;name&gt;.tar</strong></p>
+<p>Files referenced [keys, external monitor files and external data group files] in config are saved in <strong>/var/local/scf/<!-- raw HTML omitted -->.tar</strong></p>
 <h4 id="loading-a-scf">Loading a SCF</h4>
 <p>When loading a SCF file, the current config is backed up in <strong>/var/local/scf/backup.scf</strong></p>
 <p>You cannot load an SCF onto another software version</p>
 <p>To install an SCF:</p>
 <ul>
-<li><strong>load sys config file &lt;SCF_filename&gt; [passphrase &lt;passphrase&gt;]</strong></li>
+<li><strong>load sys config file &lt;SCF_filename&gt; [passphrase <!-- raw HTML omitted -->]</strong></li>
 </ul>
 <p>To load the unencrypted configuration with a TAR file that has a custom name:</p>
 <ul>
@@ -851,7 +854,7 @@ Flow control - N</p>
 <p><strong>extlinux - Lightweight bootloader that starts computers with the Linux kernel</strong></p>
 </li>
 </ul>
-<p>Unmount, plug into BIG-IP and reboot: <strong>umount /mnt/&lt;directory&gt;</strong></p>
+<p>Unmount, plug into BIG-IP and reboot: <strong>umount /mnt/<!-- raw HTML omitted --></strong></p>
 <p>You will be in MOS and prompted to perform an <strong>automatic</strong> <strong>clean</strong> <strong>install</strong>, just hit <strong>[Enter]</strong></p>
 <h4 id="usb-dvd-rom-drive---recommended">USB DVD-ROM Drive - Recommended</h4>
 <p>Burn .iso image file to DVD.</p>
@@ -860,7 +863,7 @@ Flow control - N</p>
 <p>Can be used to install when physical access is not available and to multiple systems simultaneously.</p>
 <p>The server providing the image must be on the same network as the management port and provide HTTP, TFTP and DHCP services.</p>
 <h2 id="--104b---identify-the-tmsh-sys-software-install-options-required-to-install-a-new-version">- 1.04b - Identify the TMSH sys software install options required to install a new version</h2>
-<p><strong>install sys software</strong> { <strong>hotfix</strong> | <strong>image</strong> } &lt;filename&gt; (<strong>create-volume</strong>)  <strong>volume</strong> &lt;HDx.x&gt;</p>
+<p><strong>install sys software</strong> { <strong>hotfix</strong> | <strong>image</strong> } <!-- raw HTML omitted --> (<strong>create-volume</strong>)  <strong>volume</strong> &lt;HDx.x&gt;</p>
 <h2 id="--104c---identify-the-steps-required-to-upgrade-the-ltm-device-such-as-license-renewal-validation-of-upgrade-path-review-release-notes-etc">- 1.04c - Identify the steps required to upgrade the LTM device such as: license renewal, validation of upgrade path, review release notes, etc.</h2>
 <h3 id="upgrade-code">Upgrade Code</h3>
 <h4 id="preparation">Preparation</h4>
@@ -872,15 +875,15 @@ Flow control - N</p>
 </ul>
 <h4 id="verify-image">Verify image</h4>
 <ul>
-<li><strong>md5sum</strong> /shared/images/&lt;name&gt;.iso</li>
+<li><strong>md5sum</strong> /shared/images/<!-- raw HTML omitted -->.iso</li>
 </ul>
 <h4 id="list-available-images-for-installation">List available images for installation</h4>
 <p><strong>list sys software image</strong></p>
 <p>System &gt; Software Management &gt; Image | Hotfix List</p>
 <h4 id="install-to-inactive-volume">Install to inactive volume</h4>
-<p><strong>install sys software</strong> { <strong>hotfix</strong> | <strong>image</strong> } &lt;iso&gt; [<strong>create-volume</strong>]  <strong>volume</strong> &lt;HDx.x&gt;</p>
+<p><strong>install sys software</strong> { <strong>hotfix</strong> | <strong>image</strong> } <!-- raw HTML omitted --> [<strong>create-volume</strong>]  <strong>volume</strong> &lt;HDx.x&gt;</p>
 <p><strong>GUI -</strong> System &gt; Software Management &gt; Image | Hotfix List &gt; Install &gt; HDx.x</p>
-<p>Delete volume: <strong>delete sys software volume</strong> HD1.&lt;x&gt;</p>
+<p>Delete volume: <strong>delete sys software volume</strong> HD1.<!-- raw HTML omitted --></p>
 <h4 id="reactivate-the-license-traffic-impacting">Reactivate the license (Traffic impacting)</h4>
 <p>If you fail to do this, Reboot into the old volume and reactivate.</p>
 <p>Terms</p>
@@ -923,18 +926,18 @@ Flow control - N</p>
 <p>Upgrade primary / standby</p>
 <p>Objective 1.06 Describe the benefits of custom alerting within an LTM environment</p>
 <h2 id="--106a---describe-how-to-specify-the-oids-for-alerting">- 1.06a - Describe how to specify the OIDs for alerting</h2>
-<p>alert &lt;name&gt; “&lt;message&gt;” {<br>
+<p>alert <!-- raw HTML omitted --> “<!-- raw HTML omitted -->” {<br>
 snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;<strong>300 - 999&gt;</strong>”<br>
 }</p>
 <h2 id="--106b---explain-how-to-log-different-levels-of-local-traffic-message-logs">- 1.06b - Explain how to log different levels of local traffic message logs</h2>
-<p>TMSH - <strong>modify sys db &lt;name&gt;.level value &lt;log-level-string&gt;</strong></p>
+<p>TMSH - <strong>modify sys db <!-- raw HTML omitted -->.level value <!-- raw HTML omitted --></strong></p>
 <p>GUI - System &gt; Logs &gt; Configuration &gt; Options</p>
 <p>The severity level is in between the colons</p>
 <p>Jul 22 07:38:28 nusiaalbipve02 mcpd[1844]: 01070638:5: Pool member 10.0.0.154:80 monitor status forced down.</p>
 <h3 id="modify-linux-host-syslog-levels">Modify Linux host syslog levels</h3>
 <ul>
 <li><strong>list sys syslog all-properties</strong></li>
-<li><strong>modify sys syslog &lt;function&gt;-from &lt;function&gt;-to &lt;level&gt;</strong></li>
+<li><strong>modify sys syslog <!-- raw HTML omitted -->-from <!-- raw HTML omitted -->-to <!-- raw HTML omitted --></strong></li>
 <li><strong>modify sys syslog daemon-from warning daemon-to emerg</strong></li>
 </ul>
 <h2 id="--106c---explain-how-to-trigger-custom-alerts-for-testing-purposes">- 1.06c - Explain how to trigger custom alerts for testing purposes</h2>
@@ -947,7 +950,7 @@ snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;<strong>300 - 999&gt;</strong>”<br
 <p>Grep for that alert for the full logging info-</p>
 <ol>
 <li><strong>cd /etc/alertd/</strong></li>
-<li><strong>grep &lt;alert name&gt; *.h</strong></li>
+<li><strong>grep <!-- raw HTML omitted --> *.h</strong></li>
 </ol>
 </li>
 <li>
@@ -967,7 +970,7 @@ snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;<strong>300 - 999&gt;</strong>”<br
 <h3 id="configure-syslog">Configure Syslog</h3>
 <p>System &gt; Logs &gt; Configuration &gt; Remote Logging</p>
 <h3 id="snmp">SNMP</h3>
-<p>Place custom MIB files in <strong>/config/snmp/&lt;name&gt;.tcl</strong></p>
+<p>Place custom MIB files in <strong>/config/snmp/<!-- raw HTML omitted -->.tcl</strong></p>
 <p>Default MIBs under <strong>/usr/share/snmp/mibs</strong></p>
 <h4 id="traps">Traps</h4>
 <p>Default SNMP Traps - <strong>/etc/alertd/alert.conf</strong> (Don’t add or remove traps from here)<br>
@@ -979,7 +982,7 @@ User-defined SNMP Traps - <strong>/config/user_alert.conf</strong></p>
 <li>Create backup of <strong>/config/user_alert.conf</strong></li>
 <li>Open and add new SNMP traps in proper format</li>
 </ol>
-<p>alert &lt;name&gt; “&lt;message&gt;” {<br>
+<p>alert <!-- raw HTML omitted --> “<!-- raw HTML omitted -->” {<br>
 snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;<strong>300 - 999</strong>&gt;”<br>
 }</p>
 <ol start="3">
@@ -989,9 +992,9 @@ snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;<strong>300 - 999</strong>&gt;”<br
 </ol>
 <h3 id="email-snmp-traps">Email SNMP traps</h3>
 <p><strong>ssmtp</strong> is the process for emailing</p>
-<p><strong>modify sys outbound-smtp mailhub</strong> &lt;mail-server:port&gt;</p>
+<p><strong>modify sys outbound-smtp mailhub</strong> <a href="mail-server:port">mail-server:port</a></p>
 <p><strong>/config/user_alert.conf</strong></p>
-<p>alert &lt;name&gt; “&lt;message&gt;” {<br>
+<p>alert <!-- raw HTML omitted --> “<!-- raw HTML omitted -->” {<br>
 snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.&lt;<strong>300 - 999</strong>&gt;”,</p>
 <p>email toaddress=&ldquo;<a href="mailto:dg-network@config.com">dg-network@config.com</a>, <a href="mailto:noc@config.com">noc@config.com</a>&rdquo;<br>
 fromaddress=&ldquo;root&rdquo; ←- The FQDN will be the hostname<br>
@@ -1037,22 +1040,22 @@ body=&ldquo;There’s an alert!&rdquo;</p>
 <p>Utility: <strong>URI::decode</strong></p>
 <p>HTTP::method</p>
 <p>HTTP::request</p>
-<h4 id="httpx3aheader">HTTP::header</h4>
-<p>HTTP::header value &lt;header-name&gt; - Returns value from header name</p>
-<p>HTTP::header values &lt;header-name&gt; - Returns list of values from header name.</p>
+<h4 id="httpheader">HTTP::header</h4>
+<p>HTTP::header value <!-- raw HTML omitted --> - Returns value from header name</p>
+<p>HTTP::header values <!-- raw HTML omitted --> - Returns list of values from header name.</p>
 <p>HTTP::header names</p>
-<p>HTTP::header exists &lt;header-name&gt;</p>
-<p>HTTP::header insert [&ldquo;lws&rdquo;] [[list] &lt;header1-name&gt; &lt;header1-value&gt; &lt;header2-name&gt; &lt;header2-value&gt; ] - ‘“lws”’, the system adds linear white space to long header values.</p>
+<p>HTTP::header exists <!-- raw HTML omitted --></p>
+<p>HTTP::header insert [&ldquo;lws&rdquo;] [[list] <!-- raw HTML omitted --> <!-- raw HTML omitted --> <!-- raw HTML omitted --> <!-- raw HTML omitted --> ] - ‘“lws”’, the system adds linear white space to long header values.</p>
 <p>HTTP::header is_redirect</p>
-<p>HTTP::header replace &lt;header-name&gt; [&lt;new-header-value&gt;]</p>
-<p>HTTP::header remove &lt;header-name&gt;</p>
-<h4 id="httpx3auri">HTTP::uri</h4>
+<p>HTTP::header replace <!-- raw HTML omitted --> [<!-- raw HTML omitted -->]</p>
+<p>HTTP::header remove <!-- raw HTML omitted --></p>
+<h4 id="httpuri">HTTP::uri</h4>
 <p>Full URI including query</p>
-<h4 id="httpx3apath">HTTP::path</h4>
+<h4 id="httppath">HTTP::path</h4>
 <p>HTTP_REQUEST, SERVER_CONNECTED &amp; more</p>
 <p>/main/index.jsp</p>
 <p>Does not include the query (?test.xml)</p>
-<h4 id="httpx3aquery">HTTP::query</h4>
+<h4 id="httpquery">HTTP::query</h4>
 <p>Objective 2.02 Explain the functionality of a simple iRule</p>
 <p>iRules are processed in order in which they appear in the GUI and CMD</p>
 <p>Events are processed in a linear fashion so all CLIENT_ACCEPTED events in all iRules finish processing before the first HTTP_REQUEST event can fire.</p>
@@ -1061,7 +1064,7 @@ body=&ldquo;There’s an alert!&rdquo;</p>
 <p><strong>&lt;Insert iRules here that direct to pools or nodes based on URI, host header, or IP address that even do snat as well. Use switch, if, elseif, starts_with, contains&gt;</strong></p>
 <h2 id="--202a---interpret-information-in-irule-logs-to-determine-the-irule-and-irule-events-where-they-occurred">- 2.02a - Interpret information in iRule logs to determine the iRule and iRule events where they occurred</h2>
 <p>Logging in an iRule</p>
-<p>log local0.&lt;level-optional&gt; “log here!”</p>
+<p>log local0.<!-- raw HTML omitted --> “log here!”</p>
 <p>Levels</p>
 <ul>
 <li>emerg</li>
@@ -1080,10 +1083,10 @@ body=&ldquo;There’s an alert!&rdquo;</p>
 <li>Can happen if the wrong variable is unset at the end</li>
 </ul>
 <p>Objective 2.03 Given specific traffic and configuration containing a simple iRule determine the result of the iRule on the traffic</p>
-<p><a href="https://clouddocs.f5.com/api/irules/event.html"target="_blank" rel="external nofollow noopener noreferrer">event</a></p>
-<p><a href="https://clouddocs.f5.com/api/irules/switch.html"target="_blank" rel="external nofollow noopener noreferrer">switch</a></p>
-<p><a href="https://clouddocs.f5.com/api/irules/return.html"target="_blank" rel="external nofollow noopener noreferrer">return</a></p>
-<p><a href="https://clouddocs.f5.com/api/irules/class.html"target="_blank" rel="external nofollow noopener noreferrer">class</a></p>
+<p><a href="https://clouddocs.f5.com/api/irules/event.html"target="_blank" rel="external nofollow noopener noreferrer">event</a><br>
+<a href="https://clouddocs.f5.com/api/irules/switch.html"target="_blank" rel="external nofollow noopener noreferrer">switch</a><br>
+<a href="https://clouddocs.f5.com/api/irules/return.html"target="_blank" rel="external nofollow noopener noreferrer">return</a><br>
+<a href="https://clouddocs.f5.com/api/irules/class.html"target="_blank" rel="external nofollow noopener noreferrer">class</a></p>
 <p>The * in front of a URL will make it so only the URL with stuff in front of that asterisk will match. If there is nothing in front, then that entry won’t be matched. Example, *default.com, make sure to add “default.com” to the rule.</p>
 <p>An asterisk afterwards works as ‘contains’</p>
 <p>glob - Allows the use of limited regex on URL/URI’s (* or  ?) that is more performant</p>
@@ -1111,82 +1114,83 @@ body=&ldquo;There’s an alert!&rdquo;</p>
 <p>class - Allows querying of data-groups</p>
 <p>class match - Sees if item matches in the data-group</p>
 <h3 id="example-irules">Example iRules</h3>
-<p>when HTTP_REQUEST {</p>
-<p>switch -glob [string tolower [HTTP::uri]] {</p>
-<p># only match ‘/example/blah’ and not ‘/example/’</p>
-<p>&ldquo;/example/*&rdquo; {</p>
-<p>pool server4</p>
-<p>snat 10.0.0.1</p>
-<p>}</p>
-<p># only match literal URI with nothing after it</p>
-<p>&ldquo;/example4&rdquo; {</p>
-<p>pool server3</p>
-<p>snat 10.0.0.2</p>
-<p>}</p>
-<p>default {</p>
-<p>pool default_pool</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
-<p>when HTTP_REQUEST {</p>
-<p>if { [class match [IP::client_addr] equals &ldquo;localusers_dg&rdquo; ] } {</p>
-<p>pool server2</p>
-<p>}</p>
-<p>elseif { [class match [IP::client_addr] equals &ldquo;remote_users_dg&rdquo;] } {</p>
-<p>pool remote_pool</p>
-<p>snat 10.2.2.2</p>
-<p>elseif { [string match [IP::client_addr] equals &ldquo;1.1.1.1&rdquo;] } {</p>
-<p>drop</p>
-<p>else</p>
-<p>drop</p>
-<p>}</p>
-<p>}</p>
-<h2 id="--203a---use-an-irule-to-resolve-application-issues-related-to-traffic-steering-andor-application-data">- 2.03a - Use an iRule to resolve application issues related to traffic steering and/or application data</h2>
+<pre tabindex="0"><code>when HTTP_REQUEST {
+    switch -glob [string tolower [HTTP::uri]] {
+        # only match ‘/example/blah’ and not ‘/example/’
+        &#34;/example/*&#34; { 
+            pool server4
+            snat 10.0.0.1 
+        }
+        # only match literal URI with nothing after it
+        &#34;/example4&#34; { 
+            pool server3
+            snat 10.0.0.2 
+        }
+        default { 
+            pool default_pool 
+        }
+    }
+}
+</code></pre><p>Example 2</p>
+<pre tabindex="0"><code>when HTTP_REQUEST {
+    if { [class match [IP::client_addr] equals &#34;localusers_dg&#34; ] } {
+        pool server2
+    }
+    elseif { [class match [IP::client_addr] equals &#34;remote_users_dg&#34;] } {
+        pool remote_pool
+        snat 10.2.2.2
+    elseif { [string match [IP::client_addr] equals &#34;1.1.1.1&#34;] } {
+        drop
+    else
+      drop
+    }
+}
+</code></pre><h2 id="--203a---use-an-irule-to-resolve-application-issues-related-to-traffic-steering-andor-application-data">- 2.03a - Use an iRule to resolve application issues related to traffic steering and/or application data</h2>
 <h3 id="insecure-content-on-page">Insecure Content on Page</h3>
 <p>Webpages/HTML responses contain links to http pages. You can use a Stream profile or/and iRule to replace http with https in the text of the HTML response page.</p>
-<p>Do this in HTTP_RESPONSE</p>
-<p><a href="https://support.f5.com/csp/article/K31100432#irule"target="_blank" rel="external nofollow noopener noreferrer">https://support.f5.com/csp/article/K31100432#irule</a></p>
-<p>when HTTP_REQUEST {</p>
-<p># Disable the stream filter for all requests</p>
-<p>STREAM::disable</p>
-<p># LTM does not decompress response content, so if the server has compression enabled</p>
-<p># and it cannot be disabled on the server, we can prevent the server from</p>
-<p># sending a compressed response by removing the compression offerings from the client</p>
-<p>HTTP::header remove &ldquo;Accept-Encoding&rdquo;</p>
-<p>}</p>
-<p>when HTTP_RESPONSE {</p>
-<p># Check if response type is text</p>
-<p>if {[HTTP::header value Content-Type] contains &ldquo;text&rdquo;}{</p>
-<p># Replace http:// with https://</p>
-<p>STREAM::expression {@http://@https://@}</p>
-<p># Enable the stream filter for this response only</p>
-<p>STREAM::enable</p>
-<p>}</p>
-<p>}</p>
-<h3 id="allow-internet-explorer-to-download-files-through-ssl">Allow Internet Explorer to download files through SSL</h3>
+<p>Do this in HTTP_RESPONSE<br>
+<a href="https://support.f5.com/csp/article/K31100432#irule"target="_blank" rel="external nofollow noopener noreferrer">https://support.f5.com/csp/article/K31100432#irule</a></p>
+<pre tabindex="0"><code>when HTTP_REQUEST {
+   # Disable the stream filter for all requests
+   STREAM::disable
+   # LTM does not decompress response content, so if the server has compression enabled
+   # and it cannot be disabled on the server, we can prevent the server from
+   # sending a compressed response by removing the compression offerings from the client
+   HTTP::header remove &#34;Accept-Encoding&#34;
+}
+when HTTP_RESPONSE {
+   # Check if response type is text
+      if {[HTTP::header value Content-Type] contains &#34;text&#34;}{
+      # Replace http:// with https://
+      STREAM::expression {@http://@https://@}
+      # Enable the stream filter for this response only
+      STREAM::enable
+      }
+}
+</code></pre><h3 id="allow-internet-explorer-to-download-files-through-ssl">Allow Internet Explorer to download files through SSL</h3>
 <p><a href="https://support.f5.com/csp/article/K8093"target="_blank" rel="external nofollow noopener noreferrer">Article: K8093 - Using iRules to modify Cache-control headers to allow Internet Explorer to download files through SSL</a></p>
 <p>These headers are used to prevent proxy devices from caching a local copy of the file when handling connections.</p>
 <ul>
 <li>Cache-control:no-store, Cache-control:no-cache, or Pragma:no-cache</li>
 </ul>
 <p>Use this to fix the problem and allow the files to be downloaded:</p>
-<p>when HTTP_RESPONSE {</p>
-<p>if { [HTTP::header value Content-Type] contains &ldquo;application/pdf&rdquo; } {</p>
-<p>HTTP::header replace Pragma public</p>
-<p>HTTP::header replace Cache-Control public</p>
-<p>}</p>
-<p>elseif { [HTTP::header value Content-Type] contains &ldquo;application/vnd.ms-excel&rdquo; } {</p>
-<p>HTTP::header replace Pragma public</p>
-<p>HTTP::header replace Cache-Control public</p>
-<p>}</p>
-<p>elseif { [HTTP::header value Content-Type] contains &ldquo;application/msword&rdquo; } {</p>
-<p>HTTP::header replace Pragma public</p>
-<p>HTTP::header replace Cache-Control public }</p>
-<p>else {</p>
-<p>return</p>
-<p>}</p>
-<p>}</p>
-<p>Objective 2.04 Interpret AVR information to identify performance issues or application attacks</p>
+<pre tabindex="0"><code>when HTTP_RESPONSE {
+   if { [HTTP::header value Content-Type] contains &#34;application/pdf&#34; } {
+      HTTP::header replace Pragma public
+      HTTP::header replace Cache-Control public
+   }
+   elseif { [HTTP::header value Content-Type] contains &#34;application/vnd.ms-excel&#34; } {
+      HTTP::header replace Pragma public
+      HTTP::header replace Cache-Control public
+   }
+   elseif { [HTTP::header value Content-Type] contains &#34;application/msword&#34; } {
+      HTTP::header replace Pragma public
+      HTTP::header replace Cache-Control public }
+   else {
+      return
+   }
+}
+</code></pre><h2 id="objective-204-interpret-avr-information-to-identify-performance-issues-or-application-attacks">Objective 2.04 Interpret AVR information to identify performance issues or application attacks</h2>
 <h2 id="--204a---explain-how-to-modify-profile-settings-using-information-from-the-avr">- 2.04a - Explain how to modify profile settings using information from the AVR </h2>
 <p>Maybe you could increase the buffers on the TCP profile</p>
 <h2 id="--204b---explain-how-to-use-advanced-filters-to-narrow-output-data-from-avr">- 2.04b - Explain how to use advanced filters to narrow output data from AVR </h2>
@@ -1431,7 +1435,7 @@ body=&ldquo;There’s an alert!&rdquo;</p>
 </ul>
 <p>iRule commands to help with this issue:</p>
 <ul>
-<li><strong>CACHE::userkey &lt;keystring&gt; - Creates a user-defined caching group. Overrides <em>Vary</em> header.</strong></li>
+<li><strong>CACHE::userkey <!-- raw HTML omitted --> - Creates a user-defined caching group. Overrides <em>Vary</em> header.</strong></li>
 <li><strong>CACHE::useragent - Can specify a group of <em>User-Agents</em> to serve cached content to for the same request</strong></li>
 <li><strong>CACHE::acceptencoding - Can specify a group of <em>Accept-Encoding</em> headers __to serve cached content to for the same request, like gzip and deflate would be the same cached entry instead of separate (duplicate)</strong></li>
 </ul>
@@ -1476,64 +1480,36 @@ body=&ldquo;There’s an alert!&rdquo;</p>
 <li>TLS1.2 - 3.3</li>
 </ul>
 <h3 id="ssldump-failure-examples">SSLDUMP failure examples</h3>
-<ul>
-<li>
-<p>Server rejects client’s protocol version</p>
-<ul>
-<li>S&gt;CV0.0 Alert</li>
-<li>level fatal</li>
-<li>value handshake_failure</li>
-</ul>
-</li>
-<li>
-<p>Server rejects client’s cipher suites</p>
-<ul>
-<li>C&gt;SV3.2 Handshake</li>
-<li>ClientHello</li>
-<li>Version 3.2</li>
-<li>
-<table>
-<thead>
-<tr>
-<th>TLS_&lt;ciphers&gt;</th>
-</tr>
-</thead>
-</table>
-</li>
-<li>S&gt;CV3.2 Alert</li>
-<li>level fatal</li>
-<li>value handshake_failure</li>
-</ul>
-</li>
-<li>
-<p>Device does not accept SSL</p>
-<ul>
-<li>C&gt;SV3.1 Handshake</li>
-<li>ClientHello</li>
-<li>
-<table>
-<thead>
-<tr>
-<th>Version3.2</th>
-</tr>
-</thead>
-</table>
-</li>
-<li><em>period of waiting</em></li>
-<li>_ _</li>
-<li>C&gt;S TCP FIN</li>
-</ul>
-</li>
-</ul>
-<p>Enable SSL debug in /var/log/ltm -  <strong>modify sys db log.ssl.level value debug</strong> (Default is Warning)</p>
+<h5 id="server-rejects-clients-protocol-version">Server rejects client’s protocol version</h5>
+<pre tabindex="0"><code>S&gt;CV0.0 Alert
+level fatal
+value handshake_failure
+</code></pre><h5 id="server-rejects-clients-cipher-suites">Server rejects client’s cipher suites</h5>
+<pre tabindex="0"><code>C&gt;SV3.2 Handshake
+ClientHello
+Version 3.2
+TLS_&lt;ciphers&gt;
+
+S&gt;CV3.2 Alert
+level fatal
+value handshake_failure
+</code></pre><h5 id="device-does-not-accept-ssl">Device does not accept SSL</h5>
+<pre tabindex="0"><code>C&gt;SV3.1 Handshake
+ClientHello
+Version3.2
+
+period of waiting
+
+C&gt;S TCP FIN
+</code></pre><p>Enable SSL debug in /var/log/ltm -  <strong>modify sys db log.ssl.level value debug</strong> (Default is Warning)</p>
 <p><del>Objective 2.07 Given a set of headers or traces, determine a solution to an HTTP/HTTPS application problem</del></p>
 <p><del>- 2.07a - Investigate the cause of a specific response code</del></p>
 <p><del>- 2.07b - Investigate the cause of an SSL Handshake failure</del></p>
 <p><del>- 2.07c - Predict the browser caching behavior when application data is received (headers and HTML)</del></p>
 <p><del>Objective 2.08 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine the root cause of an HTTP/HTTPS application problem</del></p>
 <p><del>- 2.08a - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration</del></p>
-<p>Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem</p>
-<p>~~- 2.09a - Investigate the cause of an SSL Handshake failure ~~</p>
+<h2 id="objective-209-given-a-direct-trace-a-trace-through-the-ltm-device-and-other-relevant-information-compare-the-traces-to-determine-a-solution-to-an-httphttps-application-problem">Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem</h2>
+<p><del>- 2.09a - Investigate the cause of an SSL Handshake failure</del></p>
 <h2 id="--209b---given-a-failed-http-request-and-ltm-configuration-data-determine-if-the-connection-is-failing-due-to-the-ltm-configuration">- 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration</h2>
 <p>Packet Process Order: Packet filter &gt; Connection table &gt; Virtual Server &gt; NAT &gt; SNAT &gt; Self IP</p>
 <h3 id="auto-last-hop">Auto Last Hop</h3>
@@ -1844,7 +1820,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <h4 id="operators-1">Operators</h4>
 <p>and | or | not</p>
 <h4 id="filters">Filters</h4>
-<p><strong>src | dst [ net | host | &lt;ip&gt; ]</strong></p>
+<p><strong>src | dst [ net | host | <!-- raw HTML omitted --> ]</strong></p>
 <h4 id="output">Output</h4>
 <p><strong>IPv4</strong></p>
 <p>IP is printed at the beginning if -e is not used.</p>
@@ -1897,7 +1873,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <li>Capture traffic with tcpdump</li>
 <li>Create pre-master secret (symmetric key)</li>
 </ol>
-<p><strong>ssldump -r &lt;capture-file.pcap&gt; -k &lt;private-key.key&gt; -M &lt;pre-master-secret-log&gt;</strong></p>
+<p><strong>ssldump -r &lt;capture-file.pcap&gt; -k &lt;private-key.key&gt; -M <!-- raw HTML omitted --></strong></p>
 <p>The output of the pre-master-secret log file can now be loaded into Wireshark. (Edit &gt; Preferences &gt; Protocols &gt; SSL &gt; PMS key log filename.</p>
 <h2 id="--210e---explain-how-to-recognize-the-different-causes-of-slow-traffic-eg-drops-rsts-retransmits-icmp-errors-demotion-from-cmp">- 2.10e - Explain how to recognize the different causes of slow traffic (e.g., drops, RSTs, retransmits, ICMP errors, demotion from CMP)</h2>
 <p>ICMP Errors - Packet filter being used and sending ICMP error on Reject</p>
@@ -1932,10 +1908,10 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 </ul>
 <h3 id="resets">Resets</h3>
 <p><strong>show net rst-cause</strong></p>
-<p>db variable <strong>tm.rstcause.log value enable</strong> - Displays “RST sent from &lt;source&gt; to &lt;destination&gt; and the reason in logs</p>
+<p>db variable <strong>tm.rstcause.log value enable</strong> - Displays “RST sent from <!-- raw HTML omitted --> to <!-- raw HTML omitted --> and the reason in logs</p>
 <p>db variable <strong>tm.rstcause.pkt value enable</strong> - Displays RST cause in TCP payload</p>
 <ul>
-<li>Can use <strong>tcpdump -i &lt;int&gt;:nn</strong> to display the cause without this set.</li>
+<li>Can use <strong>tcpdump -i <!-- raw HTML omitted -->:nn</strong> to display the cause without this set.</li>
 </ul>
 <p>Reaping - RST when high-water mark is reached and no new connections are allowed</p>
 <p>TM.RejectUnmatched <strong>true</strong></p>
@@ -1997,7 +1973,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <h3 id="cmp---cluster-multiprocessing">CMP - Cluster Multiprocessing</h3>
 <p>Creates separate TMM processes per CPU to share the load across all.</p>
 <p>Demotion - iRule with Global variable, <strong>set::</strong> or <strong>$::</strong> demotes CMP to single.</p>
-<p><strong>show ltm virtual &lt;vs-name&gt;</strong></p>
+<p><strong>show ltm virtual <!-- raw HTML omitted --></strong></p>
 <ul>
 <li>CMP - <strong>enabled/disabled</strong></li>
 <li>CMP Mode - <strong>all-cpus</strong>, <strong>single, none</strong>, <strong>disabled</strong></li>
@@ -2007,12 +1983,12 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <p>Capture traffic from non-floating self-IP to pool member</p>
 <h2 id="--214b---explain-how-to-obtain-needed-input-and-output-data-to-create-the-monitors">- 2.14b - Explain how to obtain needed input and output data to create the monitors</h2>
 <p>Retrieve a health check file and response from cURL or use openssl, telnet, or ncat.</p>
-<p>curl http://10.128.10.10/health-file -H “Host: f5demo.com”</p>
-<p>curl http://f5demo.com &ndash;resolve “f5demo.com:80:10.128.10.10”</p>
-<p>nc -v 10.128.10.10 443</p>
-<p>telnet 10.128.10.10 443</p>
-<p>openss s_client -connect 10.128.10.10:443</p>
-<p>Objective 2.15 Given a monitor issue, determine an appropriate solution</p>
+<pre tabindex="0"><code>curl http://10.128.10.10/health-file -H “Host: f5demo.com”
+curl http://f5demo.com --resolve “f5demo.com:80:10.128.10.10”
+nc -v 10.128.10.10 443
+telnet 10.128.10.10 443
+openssl s_client -connect 10.128.10.10:443
+</code></pre><p>Objective 2.15 Given a monitor issue, determine an appropriate solution</p>
 <h2 id="--215a---determine-appropriate-monitor-and-monitor-timing-based-on-application-and-server-limitations">- 2.15a - Determine appropriate monitor and monitor timing based on application and server limitations</h2>
 <p><a href="https://support.f5.com/csp/article/K12531"target="_blank" rel="external nofollow noopener noreferrer">Troubleshooting Health Monitors</a></p>
 <p><a href="https://support.f5.com/csp/article/K3451"target="_blank" rel="external nofollow noopener noreferrer">Content length limits for HTTP(S) monitors</a></p>
@@ -2062,7 +2038,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <p>Retry Time - 300 seconds. Time before re-checking a down pool member’s status. If 0, won’t be turned back on without manual intervention or another monitor with ‘Time Until Up’ is used.</p>
 </li>
 <li>
-<p>~~Apply HTTP monitor and enable Up Interval, set it to high and Time Until Up. This ensures that once the member is up, stop monitoring it so often and instead use the inband monitor to look for errors. ~~</p>
+<p><del>Apply HTTP monitor and enable Up Interval, set it to high and Time Until Up. This ensures that once the member is up, stop monitoring it so often and instead use the inband monitor to look for errors.</del></p>
 <ul>
 <li><del>The Interval set will be used when its down</del></li>
 </ul>
@@ -2123,7 +2099,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <h3 id="external">External</h3>
 <p><a href="https://support.f5.com/csp/article/K7444"target="_blank" rel="external nofollow noopener noreferrer">Requirements for external monitor output</a></p>
 <p>Any output from an external monitor to <strong>stdout</strong> will result in a member being Available. If the script fails, do not write failed status to <strong>stdout</strong></p>
-<p>Writing to stdout - ‘<strong>echo</strong> &lt;string&gt;’</p>
+<p>Writing to stdout - ‘<strong>echo</strong> <!-- raw HTML omitted -->’</p>
 <h2 id="--215b---describe-how-to-modify-monitor-settings-to-resolve-monitor-problems">- 2.15b - Describe how to modify monitor settings to resolve monitor problems</h2>
 <p>Default setting for multiple monitors on a pool is for All to pass.</p>
 <h3 id="http-1">HTTP</h3>
@@ -2212,11 +2188,11 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <p>Not sure how to study for this</p>
 <h2 id="--301c---identify-appropriate-methods-to-troubleshoot-ntp">- 3.01c - Identify appropriate methods to troubleshoot NTP</h2>
 <h3 id="prefer-ntp-server">Prefer NTP server</h3>
-<p>tmsh edit sys ntp all-properties</p>
-<p>include “server &lt;ip&gt; prefer”</p>
-<p>:wq!</p>
-<p>list sys ntp servers</p>
-<h3 id="troubleshooting-1">Troubleshooting</h3>
+<pre tabindex="0"><code>tmsh edit sys ntp all-properties
+include “&lt;server ip&gt; prefer”
+:wq!
+list sys ntp servers
+</code></pre><h3 id="troubleshooting-1">Troubleshooting</h3>
 <p><a href="https://www.nwtime.org/ntps-refid/"target="_blank" rel="external nofollow noopener noreferrer">NTP&rsquo;s REFID</a></p>
 <p>NTP = UDP port 123</p>
 <p><strong>show sys service ntpd</strong></p>
@@ -2240,7 +2216,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 </tr>
 <tr>
 <td>[tally]</td>
-<td><strong>*</strong> =  ****Preferred server+ = Next available serverspace, x, period (.), dash (-), or pound (#)  = Peer not used - unavailable, not needed, requirements unmet</td>
+<td>* = Preferred server<br />+ = Next available server<br />space, x, period (.), dash (-), or pound (#)  = Peer not used - unavailable, not needed, requirements unmet</td>
 </tr>
 <tr>
 <td>remote</td>
@@ -2252,7 +2228,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 </tr>
 <tr>
 <td>st</td>
-<td>Stratum ID0 = invalid/unspecified1 = primary / reference clock (GPS/CMDA, etc.)2-15 = secondary source, refid changes to remote clock’s peer IP16+ = unsynchronized</td>
+<td>Stratum ID<br />0 = invalid/unspecified<br />1 = primary / reference clock (GPS/CMDA, etc.)<br />2-15 = secondary source, refid changes to remote clock’s peer IP<br />16+ = unsynchronized</td>
 </tr>
 <tr>
 <td></td>
@@ -2300,7 +2276,7 @@ Auto last hop [ Default | Enabled | Disabled  ]</p>
 <p><a href="https://support.f5.com/csp/article/K7747"target="_blank" rel="external nofollow noopener noreferrer">K7747: Error Message: SSL transaction (TPS) rate limit reached</a></p>
 <p>01260008:3: SSL transaction (TPS) rate limit reached</p>
 <p>Objective 3.02 Identify the appropriate command to use to determine the cause of an LTM device problem</p>
-<p>You can use <strong>run util &lt;command&gt;</strong> from TMSH if you don’t feel like going down to bash</p>
+<p>You can use <strong>run util <!-- raw HTML omitted --></strong> from TMSH if you don’t feel like going down to bash</p>
 <p><strong>run util tcpdump -i 1.1 host 1.1.1.1</strong></p>
 <p>Not all programs are there, such as ‘top’</p>
 <h2 id="--302a---identify-hardware-problems-based-on-the-log-file-messages-and-statistics">- 3.02a - Identify hardware problems based on the log file messages and statistics</h2>
@@ -2371,11 +2347,11 @@ Date Range Syntax
 <td><strong>No errors detected</strong></td>
 </tr>
 <tr>
-<td>Recovered LBA:230000007Drive /dev/sda partition UNKNOWNFile affected NONE</td>
+<td>Recovered LBA:230000007<br /> Drive /dev/sda partition UNKNOWN<br />File affected NONE</td>
 <td><strong>Errors detected and corrected</strong></td>
 </tr>
 <tr>
-<td>seek(1) error[25]  recovery of LBA:226300793 not completeDrive: /dev/sda filesystem type: UndeterminedFile affected: NONE</td>
+<td>seek(1) error[25]  recovery of LBA:226300793 not complete<br />Drive: /dev/sda filesystem type: Undetermined<br />File affected: NONE</td>
 <td><strong>Error detected and unrecoverable</strong></td>
 </tr>
 <tr>
@@ -2413,17 +2389,18 @@ Date Range Syntax
 <p>1 million kilobytes = 1 gigabyte</p>
 <p>1000 kilobytes = 1 megabyte</p>
 <p>nice process - Priority, lower number = more priority</p>
-<p>top - 15:24:56 up 8 days,  4:52,  3 users,  load average: 0.31, 0.20, 0.08</p>
-<p>Tasks: 252 total,   1 running, 251 sleeping,   0 stopped,   0 zombie</p>
-<p>Cpu(s):  1.2%us,  0.7%sy,  0.3%ni, 97.4%id,  0.2%wa,  0.0%hi,  0.2%si,  0.0%st</p>
-<p>Mem:   4063072k total,  3975468k used, 87604k free,   146572k buffers</p>
-<p>Swap:  1023992k total, 2796k used,  1021196k free,   468544k cached</p>
-<p>PID USER  PR  NI  VIRT  RES  SHR S %CPU %MEM TIME+  COMMAND</p>
-<p>10510 root  RT   0 2430m 121m  95m S  5.6  3.1 686:26.35 tmm</p>
-<p>7438 root  20   0  487m 104m  28m S  0.7  2.6  68:32.09 mcpd</p>
-<p>7662 root  25   5 50636 9480 6272 S  0.7  0.2   7:59.31 merged</p>
-<p>15757 root  20   0  2444 1224  852 R  0.7  0.0   0:00.04 top</p>
-<p>VIRT - How much memory the process can access</p>
+<pre tabindex="0"><code>top - 15:24:56 up 8 days,  4:52,  3 users,  load average: 0.31, 0.20, 0.08
+Tasks: 252 total,   1 running, 251 sleeping,   0 stopped,   0 zombie
+Cpu(s):  1.2%us,  0.7%sy,  0.3%ni, 97.4%id,  0.2%wa,  0.0%hi,  0.2%si,  0.0%st
+Mem:   4063072k total,  3975468k used,	87604k free,   146572k buffers
+Swap:  1023992k total, 	2796k used,  1021196k free,   468544k cached
+  
+PID USER  	PR  NI  VIRT  RES  SHR S %CPU %MEM	TIME+  COMMAND
+10510 root  	RT   0 2430m 121m  95m S  5.6  3.1 686:26.35 tmm
+ 7438 root  	20   0  487m 104m  28m S  0.7  2.6  68:32.09 mcpd
+ 7662 root  	25   5 50636 9480 6272 S  0.7  0.2   7:59.31 merged
+15757 root  	20   0  2444 1224  852 R  0.7  0.0   0:00.04 top
+</code></pre><p>VIRT - How much memory the process can access</p>
 <p>RES - How much the process is using in physical memory</p>
 <p>Z - Zombie, terminated and waiting for parent process to finish</p>
 <p>TIME+ Cumulative amount of time the process has used.</p>
@@ -2471,13 +2448,13 @@ Date Range Syntax
 <p><strong>LCD panel</strong> - Blocking DoS Attack</p>
 <h3 id="cpu">CPU</h3>
 <p><a href="https://support.f5.com/csp/article/K15468"target="_blank" rel="external nofollow noopener noreferrer">Overview of BIG-IP TMM CPU Usage</a></p>
-<p><a href="https://support.f5.com/csp/article/K10095?sr=24657578"target="_blank" rel="external nofollow noopener noreferrer">Error Message: Clock advanced by &lt;number&gt; ticks</a></p>
+<p><a href="https://support.f5.com/csp/article/K10095?sr=24657578"target="_blank" rel="external nofollow noopener noreferrer">Error Message: Clock advanced by <!-- raw HTML omitted --> ticks</a></p>
 <p><a href="https://support.f5.com/csp/article/K10337613"target="_blank" rel="external nofollow noopener noreferrer">K10337613: Idle Enforcer Functionality</a></p>
-<p><strong>show sys proc-info [ &lt;process-name&gt; ]</strong> - Shows individual processes CPU usage</p>
-<p><strong>show sys tmm-info</strong> - Show TMM CPU usage per process/core</p>
-<p><strong>show sys cpu</strong> - System CPU is an aggregation of TMM and Control Plane CPU usage.</p>
-<p><strong>show sys performance</strong></p>
-<p><strong>top -</strong> Load average: 1, 5, 15 minute interval. What jobs are queued to run. Over 1 per CPU is bad (4 for quad-core)</p>
+<p><strong>show sys proc-info [ <!-- raw HTML omitted --> ]</strong> - Shows individual processes CPU usage<br>
+<strong>show sys tmm-info</strong> - Show TMM CPU usage per process/core<br>
+<strong>show sys cpu</strong> - System CPU is an aggregation of TMM and Control Plane CPU usage.<br>
+<strong>show sys performance</strong><br>
+<strong>top -</strong> Load average: 1, 5, 15 minute interval. What jobs are queued to run. Over 1 per CPU is bad (4 for quad-core)</p>
 <p><strong>High CPU Causes</strong></p>
 <ul>
 <li>Memory paging, I/O operations</li>
@@ -2498,18 +2475,18 @@ Date Range Syntax
 </thead>
 <tbody>
 <tr>
-<td>Clock advanced by &lt;number&gt; ticks</td>
-<td>In VE, dedicate more resources or priorityThe TMM heartbeat thread dead timer hit [100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clockCan cause traffic disruption or failover if falls behind more than 10 seconds [10000 milliseconds] - may not log all because action already happened</td>
+<td>Clock advanced by <!-- raw HTML omitted --> ticks</td>
+<td>In VE, dedicate more resources or priority<br />The TMM heartbeat thread dead timer hit [100 ms - physical, 300ms - virtual edition] and how far behind it is from the system clock<br />Can cause traffic disruption or failover if falls behind more than 10 seconds [10000 milliseconds] - may not log all because action already happened</td>
 </tr>
 <tr>
-<td>info kernel: ltm driver: Idle enforcer starting - tid: &lt;pid&gt; cpu: &lt;core ID X&gt;/&lt;core ID Y&gt;</td>
+<td>info kernel: ltm driver: Idle enforcer starting - tid: <!-- raw HTML omitted --> cpu: <!-- raw HTML omitted -->/<!-- raw HTML omitted --></td>
 <td>CPU usage on the Data plane reaches 80%, the Control plane is paused momentarily and used for Data plane until a log message ‘exited’ is shown</td>
 </tr>
 </tbody>
 </table>
 <h3 id="hard-drive">Hard Drive</h3>
 <p><strong>df -h</strong> - Display partitions and size/usage</p>
-<p><strong>du &lt;directory&gt; -h</strong> - Display size of files, -h = human readable sizes in K or G, automatically recursive into directories!</p>
+<p><strong>du <!-- raw HTML omitted --> -h</strong> - Display size of files, -h = human readable sizes in K or G, automatically recursive into directories!</p>
 <p><strong>lvscan</strong> - Display storage per partition. Some are shared, like log, share, etc.</p>
 <h3 id="cache">Cache</h3>
 <p><a href="https://support.f5.com/csp/article/K13878"target="_blank" rel="external nofollow noopener noreferrer">K13878: The ramcache.maxmemorypercent variable controls memory allocation for the HTTP cache (11.x - 15.x)</a></p>
@@ -2517,31 +2494,31 @@ Date Range Syntax
 <p>01070668:3: The amount of cache memory assigned to Web Acceleration profiles (840MB) exceeds the maximum amount (838MB) defined by Ramcache.MaxMemoryPercent (50)</p>
 <p>ramcache.maxmemorypercent - Percentage amount of memory that the total HTTP cache is allowed to use based on total TMM memory. Default is 50 percent</p>
 <p>Verify memory allocated to tmos - <strong>show sys provision</strong></p>
-<p>-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
-<p>Sys::Provision</p>
-<p>Module CPU (%) Memory (MB) Host-Memory (MB) Disk (MB)</p>
-<p>-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
-<p>apm 0 0 0 0</p>
-<p>asm 0 0 0 0</p>
-<p>avr 0 0 0 0</p>
-<p>gtm 0 0 0 0</p>
-<p>host 10 1296 0 82636</p>
-<p>lc 0 0 0 0</p>
-<p>ltm 1 0 0 0</p>
-<p>pem 0 0 0 0</p>
-<p>psm 0 0 0 0</p>
-<p><strong>tmos</strong> 89 <strong>6710</strong> 0 0</p>
-<p>wam 0 0 0 0</p>
-<p>wom 0 0 0 0</p>
-<p>woml 0 0 0 0</p>
-<p>TMM memory is 6710 MB</p>
+<pre tabindex="0"><code>---------------------------------------------------------
+Sys::Provision
+Module CPU (%) Memory (MB) Host-Memory (MB) Disk (MB)
+---------------------------------------------------------
+apm 0 0 0 0
+asm 0 0 0 0
+avr 0 0 0 0
+gtm 0 0 0 0
+host 10 1296 0 82636
+lc 0 0 0 0
+ltm 1 0 0 0
+pem 0 0 0 0
+psm 0 0 0 0
+tmos 89 6710 0 0
+wam 0 0 0 0
+wom 0 0 0 0
+woml 0 0 0 0
+</code></pre><p>TMM memory is 6710 MB</p>
 <p>DB set to 50 percent</p>
 <p>4 TMM instances</p>
 <p>Formula: 6710 x .50 / 4 - 838MB is the max.</p>
 <p>Memory for cache is not allocated until the profile is attached to a VIP. This error would not generate until you apply the profiles</p>
 <p>HTTP cache storage is shared among all profiles of the same name. Consolidate profiles when possible</p>
 <h2 id="--302c---identify-connectivity-problems-based-on-the-log-files">- 3.02c - Identify connectivity problems based on the log files</h2>
-<p><strong>modify sys db</strong> <strong>tm.rstcause.log value enable</strong> - Displays “RST sent from &lt;source&gt; to &lt;destination&gt; and the reason in logs</p>
+<p><strong>modify sys db</strong> <strong>tm.rstcause.log value enable</strong> - Displays “RST sent from <!-- raw HTML omitted --> to <!-- raw HTML omitted --> and the reason in logs</p>
 <p>Everything else is self explanatory or I am not aware of any log entries that indicate a connectivity problem. SSL errors logging was not set to warning in 11.5.</p>
 <h2 id="--302d---determine-the-appropriate-log-file-to-examine-to-determine-the-cause-of-the-problem">- 3.02d - Determine the appropriate log file to examine to determine the cause of the problem</h2>
 <table>
@@ -2578,13 +2555,13 @@ Date Range Syntax
 </tr>
 </tbody>
 </table>
-<p>Objective 3.03 Analyze performance data to identify a resource problem on an LTM device</p>
+<h2 id="objective-303-analyze-performance-data-to-identify-a-resource-problem-on-an-ltm-device">Objective 3.03 Analyze performance data to identify a resource problem on an LTM device</h2>
 <h2 id="--303a---analyze-performance-data-to-identify-a-resource-problem-on-an-ltm-device">- 3.03a - Analyze performance data to identify a resource problem on an LTM device</h2>
 <p><strong>Statistics &gt; Performance Reports &gt; Performance Reports</strong></p>
 <p>Performance Graphs are easy to look at. If the RAM or CPU is maxed the graph will say.</p>
 <p><strong>show sys traffic</strong> - Shows packets dropped due to Errors and why</p>
 <p><strong>show net rst-cause</strong> - Cause of resets</p>
-<p>Objective 3.04 Given a scenario, determine the cause of an LTM device failover</p>
+<h2 id="objective-304-given-a-scenario-determine-the-cause-of-an-ltm-device-failover">Objective 3.04 Given a scenario, determine the cause of an LTM device failover</h2>
 <h3 id="ha-groups-fast-failover">HA Groups (Fast Failover)</h3>
 <p><a href="https://support.f5.com/csp/article/K16947"target="_blank" rel="external nofollow noopener noreferrer">Article: K16947 - F5 recommended practices for the HA group feature</a></p>
 <p>Used to failover when a trunk link(s) or pool member(s) goes down.</p>
@@ -2595,16 +2572,16 @@ Date Range Syntax
 <p><strong>Creating</strong></p>
 <p>System &gt; High Availability &gt; HA Groups</p>
 <p><strong>HA Score Calculation</strong></p>
-<p>HA Score = Weights + Active Bonus</p>
-<p>The maximum overall HA Score is the sum of all HA group Pools and Trunk object weights, plus the active bonus value if the unit is active</p>
-<p>A single Pool or Trunk member object can weigh from 10 - 100</p>
-<p>There is no limit to the total HA Score of all Pool / Trunk object weights for HA group.</p>
-<p>Weight value (Required) 10 - 100, Assigned to pool or trunk object</p>
-<p>Threshold (Optional) - The minimum amount of available objects before making the TOTAL HA score immediately 0. If the threshold is 3, and there’s only 2 trunk links left out of 4, set the score to 0.</p>
+<p>HA Score = Weights + Active Bonus<br>
+The maximum overall HA Score is the sum of all HA group Pools and Trunk object weights, plus the active bonus value if the unit is active<br>
+A single Pool or Trunk member object can weigh from 10 - 100<br>
+There is no limit to the total HA Score of all Pool / Trunk object weights for HA group.<br>
+Weight value (Required) 10 - 100, Assigned to pool or trunk object<br>
+Threshold (Optional) - The minimum amount of available objects before making the TOTAL HA score immediately 0. If the threshold is 3, and there’s only 2 trunk links left out of 4, set the score to 0.</p>
 <ul>
-<li>Beware of pools with priority groups as the members that are up could prevent a failover</li>
+<li>Beware of pools with priority groups as the members that are up could prevent a failover<br>
+Active Bonus (Optional) - A bonus given to the device with the active traffic group. Used to prevent failover if flapping or minor changes occur to trunk links. If traffic-group is at 0, bonus is not applied</li>
 </ul>
-<p>Active Bonus (Optional) - A bonus given to the device with the active traffic group. Used to prevent failover if flapping or minor changes occur to trunk links. If traffic-group is at 0, bonus is not applied</p>
 <h3 id="ha-order">HA Order</h3>
 <p>Auto Failback - Failover to original active if it becomes available again. Recommended 40 to 60 (Default) seconds.</p>
 <p>Failover order - Only devices in the same sync-failover group will appear here. Fails back to the first device in order when it becomes available.</p>
@@ -2631,18 +2608,18 @@ Date Range Syntax
 <li>Specify Pool and which device it belongs to.</li>
 <li>Specify threshold - 1 would mean if there is less than 1 member, failover.</li>
 </ol>
-<p>ltm pool gateway_pool {</p>
-<p>members {</p>
-<p>10.128.10.254:0 {</p>
-<p>address 10.128.10.254</p>
-<p>}</p>
-<p>}</p>
-<p>gateway-failsafe-device bigip1.localhost</p>
-<p>min-up-members 1</p>
-<p>min-up-members-action failover</p>
-<p>min-up-members-checking enabled</p>
-<p>}</p>
-<p><strong>VLAN Fail-safe</strong></p>
+<pre tabindex="0"><code>ltm pool gateway_pool {
+    members {
+        10.128.10.254:0 {
+            address 10.128.10.254
+        }
+    }
+    gateway-failsafe-device bigip1.localhost
+    min-up-members 1
+    min-up-members-action failover
+    min-up-members-checking enabled
+}
+</code></pre><p><strong>VLAN Fail-safe</strong></p>
 <p><a href="https://support.f5.com/csp/article/K13297"target="_blank" rel="external nofollow noopener noreferrer">Overview of VLAN failsafe</a></p>
 <p>Passively listens for traffic on VLAN. If there is none, generate traffic and expect response before the timer expires, or perform failover action.</p>
 <p>Timer half expired - Send ARP request to oldest entry (IPv4)</p>
@@ -2658,11 +2635,11 @@ Date Range Syntax
 <p><strong>Configure</strong></p>
 <p>System &gt; High Availability &gt; Fail-safe &gt; VLANs</p>
 <p>Timeout: 90 seconds (default)</p>
-<p>Action:</p>
-<p>net vlan external {</p>
-<p>failsafe enabled</p>
-<p>}</p>
-<p><strong>Miscellaneous Facts</strong></p>
+<p>Action:  &lt;&gt;</p>
+<pre tabindex="0"><code>net vlan external {
+  failsafe enabled
+}
+</code></pre><p><strong>Miscellaneous Facts</strong></p>
 <ul>
 <li>VLAN failsafe configuration is not synced, make changes on all units</li>
 <li>allow-service on Floating Self-IPs needs to be default (untested)</li>
@@ -2681,13 +2658,13 @@ Date Range Syntax
 <p>Unicast Failover IP - Used for LTMs primarily, and recommended to use on VIPRIONs as a backup.</p>
 <p>Multicast Failover - Used by VIPRIONs - Multicast is sent out on the management interface, and all VIPRIONs receive it that are listening on that VLAN.</p>
 <h2 id="--304d---identify-the-cause-of-failover-using-logs-and-statistics">- 3.04d - Identify the cause of failover using logs and statistics</h2>
-<p><a href="https://support.f5.com/csp/article/K95002127#p8"target="_blank" rel="external nofollow noopener noreferrer">Troubleshooting failover events</a></p>
-<p><a href="https://support.f5.com/csp/article/K16951"target="_blank" rel="external nofollow noopener noreferrer">Overview of SSL hardware acceleration fail-safe</a></p>
-<p><a href="https://support.f5.com/csp/article/K12277"target="_blank" rel="external nofollow noopener noreferrer">How simultaneous failsafe events affect a redundant system</a></p>
-<p><a href="https://support.f5.com/csp/article/K62511312"target="_blank" rel="external nofollow noopener noreferrer">K62511312: Cause of Failover - HA Group</a></p>
-<p><a href="https://support.f5.com/csp/article/K57155323"target="_blank" rel="external nofollow noopener noreferrer">K57155323: Cause of Failover - Gateway Fail-Safe</a></p>
-<p><a href="https://support.f5.com/csp/article/K48546348"target="_blank" rel="external nofollow noopener noreferrer">K48546348: Cause of Failover - Auto-failback</a></p>
-<p><a href="https://support.f5.com/csp/article/K90354463"target="_blank" rel="external nofollow noopener noreferrer">K90354463: Cause of Failover - VLAN failsafe</a></p>
+<p><a href="https://support.f5.com/csp/article/K95002127#p8"target="_blank" rel="external nofollow noopener noreferrer">Troubleshooting failover events</a><br>
+<a href="https://support.f5.com/csp/article/K16951"target="_blank" rel="external nofollow noopener noreferrer">Overview of SSL hardware acceleration fail-safe</a><br>
+<a href="https://support.f5.com/csp/article/K12277"target="_blank" rel="external nofollow noopener noreferrer">How simultaneous failsafe events affect a redundant system</a><br>
+<a href="https://support.f5.com/csp/article/K62511312"target="_blank" rel="external nofollow noopener noreferrer">K62511312: Cause of Failover - HA Group</a><br>
+<a href="https://support.f5.com/csp/article/K57155323"target="_blank" rel="external nofollow noopener noreferrer">K57155323: Cause of Failover - Gateway Fail-Safe</a><br>
+<a href="https://support.f5.com/csp/article/K48546348"target="_blank" rel="external nofollow noopener noreferrer">K48546348: Cause of Failover - Auto-failback</a><br>
+<a href="https://support.f5.com/csp/article/K90354463"target="_blank" rel="external nofollow noopener noreferrer">K90354463: Cause of Failover - VLAN failsafe</a></p>
 <h3 id="logs">Logs</h3>
 <table>
 <thead>
@@ -2702,7 +2679,7 @@ Date Range Syntax
 <td>Force standby command issued</td>
 </tr>
 <tr>
-<td>010719fb:5: HA Group &lt;ha-pool-name&gt; score updated from 40 to 30.010c0045:5: Leaving active, group score 36 peer group score 40.010c0052:5: Standby for traffic group /Common/&lt;traffic_group_name&gt;</td>
+<td>010719fb:5: HA Group <!-- raw HTML omitted --> score updated from 40 to 30. <br /> 010c0045:5: Leaving active, group score 36 peer group score 40. <br /> 010c0052:5: Standby for traffic group /Common/&lt;traffic_group_name&gt;</td>
 <td>HA Group</td>
 </tr>
 <tr>
@@ -2718,7 +2695,7 @@ Date Range Syntax
 <td>Auto-failback</td>
 </tr>
 <tr>
-<td>01140029:5: HA daemon_heartbeat tmm fails action is failover and restart01140106:2: Overdog daemon calling bigstart restart.</td>
+<td>01140029:5: HA daemon_heartbeat tmm fails action is failover and restart<br />01140106:2: Overdog daemon calling bigstart restart.</td>
 <td>System failsafe</td>
 </tr>
 <tr>
@@ -2738,7 +2715,7 @@ Date Range Syntax
 <td>Daemon failsafe - Search for SIGSEGV segmentation violations</td>
 </tr>
 <tr>
-<td>**show sys log tmm | grep -i &lsquo;device error&rsquo;**crypto-failsafe, switchboard-failsafe</td>
+<td><strong>show sys log tmm | grep -i &lsquo;device error&rsquo;</strong> <br /> crypto-failsafe, switchboard-failsafe</td>
 <td>Hardware failsafe</td>
 </tr>
 <tr>
@@ -2762,8 +2739,8 @@ Date Range Syntax
 <td>Status ‘Ok’ or ‘Error’ with reason, Network failover IP address and ports of connections (UDP 1026)</td>
 </tr>
 <tr>
-<td>**show sys ha-status all-properties****show sys ha-group**</td>
-<td>Failsafe conditions, Failsafe failure status yes/no, timeoutsSee total HA score including active bonus score on current unit</td>
+<td><strong>show sys ha-status all-properties</strong> <br /> <strong>show sys ha-group</strong></td>
+<td>Failsafe conditions, Failsafe failure status yes/no, timeouts <br /> See total HA score including active bonus score on current unit</td>
 </tr>
 <tr>
 <td><strong>show cm traffic-group all-properties</strong></td>
@@ -2787,13 +2764,13 @@ Date Range Syntax
 </tr>
 </tbody>
 </table>
-<p>Objective 3.05 Given a scenario, determine the cause of loss of high availability and/or sync failure</p>
+<h2 id="objective-305-given-a-scenario-determine-the-cause-of-loss-of-high-availability-andor-sync-failure">Objective 3.05 Given a scenario, determine the cause of loss of high availability and/or sync failure</h2>
 <h2 id="--305a---explain-how-the-high-availability-concepts-relate-to-one-another">- 3.05a - Explain how the high availability concepts relate to one another</h2>
 <p>DSC supports same or different hardware</p>
-<p>Device Trust - Multiple BIG-IPs establish trust by signing each other&rsquo;s certificates.</p>
-<p>Device Groups - A collection of BIG-IPs that have established trust and wish to Sync-Failover or Sync-Only with each other.</p>
-<p>Traffic Groups - A collection of traffic objects - VIPs, SNATs, NATs, Folders, and Self IPs, that can be transferred to another member in a Sync-Failover Device-Group if there is an issue.</p>
-<p>Folders - Configuration under a partition.</p>
+<p>Device Trust - Multiple BIG-IPs establish trust by signing each other&rsquo;s certificates.<br>
+Device Groups - A collection of BIG-IPs that have established trust and wish to Sync-Failover or Sync-Only with each other.<br>
+Traffic Groups - A collection of traffic objects - VIPs, SNATs, NATs, Folders, and Self IPs, that can be transferred to another member in a Sync-Failover Device-Group if there is an issue.<br>
+Folders - Configuration under a partition.</p>
 <p>Connection mirroring can only be done on identical hardware and is mirrored to the next-active device.</p>
 <h2 id="--305b---explain-the-relationship-between-device-trust-and-device-groups">- 3.05b - Explain the relationship between device trust and device groups</h2>
 <p>A peer BIG-IP must have device trust established before it can be put in a device-group</p>
@@ -2837,7 +2814,7 @@ Date Range Syntax
 </tr>
 <tr>
 <td>Mismatched provisioned modules</td>
-<td>01260013:4: SSL Handshake failed for TCP &lt;bigip1_configsync_ip&gt;:4353 -&gt; &lt;bigip2_configsync_ip&gt;:&lt;random_port&gt;01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: <strong>alert(20) Decryption error</strong></td>
+<td>01260013:4: SSL Handshake failed for TCP &lt;bigip1_configsync_ip&gt;:4353 -&gt; &lt;bigip2_configsync_ip&gt;:&lt;random_port&gt;<br />01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: <strong>alert(20) Decryption error</strong></td>
 </tr>
 <tr>
 <td>Verify configuration will load</td>
@@ -2853,15 +2830,15 @@ Date Range Syntax
 </tr>
 <tr>
 <td>Config-sync IP is configured and trust connectivity is good</td>
-<td><strong>show cm device**<strong>netstat -pan | grep -E 6699 -</strong> mcpd for device-trust</strong>run cm sniff-updates -** Listens for CMI comms</td>
+<td><strong>show cm device</strong> <br /> <strong>netstat -pan | grep -E 6699</strong> - mcpd for device-trust <br /> <strong>run cm sniff-updates</strong> - Listens for CMI comms</td>
 </tr>
 <tr>
 <td>Verify Time</td>
-<td>Verify time/date -  <strong># date</strong>NTP configured ****(required?)**list sys ntp** <strong># ntpq -np</strong></td>
+<td>Verify time/date -  <strong># date</strong><br />NTP configured (required?)<br /><strong>list sys ntp</strong> <br /> <strong># ntpq -np</strong></td>
 </tr>
 <tr>
 <td>Verify license, software version, and provisioning</td>
-<td><strong>show sys license**<strong>show sys version / software*</strong>*list sys provision</strong></td>
+<td><strong>show sys license</strong> <br /> <strong>show sys version / software</strong> <br /> <strong>list sys provision</strong></td>
 </tr>
 <tr>
 <td>Verify port lockdown</td>
@@ -2916,14 +2893,14 @@ Date Range Syntax
 <h2 id="--305d---explain-the-relationship-between-traffic-groups-and-ltm-objects">- 3.05d - Explain the relationship between traffic groups and LTM objects</h2>
 <p>Traffic groups host these LTM objects for failover - VIPs, SNATs, NATs, Folders, Self IPs</p>
 <h2 id="--305e---interpret-log-messages-to-determine-the-cause-of-high-availability-issues">- 3.05e - Interpret log messages to determine the cause of high availability issues</h2>
-<p><a href="https://support.f5.com/csp/article/K34063049"target="_blank" rel="external nofollow noopener noreferrer">K34063049: Error Message: 0107143c:5: Connection to CMI peer &lt;IP address&gt; has been removed</a></p>
-<p><a href="https://support.f5.com/csp/article/K06416036"target="_blank" rel="external nofollow noopener noreferrer">K06416036: Error Message: 0107143a:5: CMI reconnect timer: &lt;status&gt;</a></p>
-<p><a href="https://support.f5.com/csp/article/K13667"target="_blank" rel="external nofollow noopener noreferrer">K13667: BIG-IP device group members must run the same major, minor or maintenance software version</a></p>
-<p><a href="https://support.f5.com/csp/article/K75975904"target="_blank" rel="external nofollow noopener noreferrer">K75975904: Troubleshooting network failover</a></p>
-<p><a href="https://support.f5.com/csp/article/K72087447"target="_blank" rel="external nofollow noopener noreferrer">K72087447: Error Message: HA Connection with peer [address:port] for traffic-group /Common/[traffic-group_name] lost. (11.x - 13.x)</a></p>
-<p><a href="https://support.f5.com/csp/article/K37457128"target="_blank" rel="external nofollow noopener noreferrer">K37457128: Error Message: info sod[&lt;PID&gt;]: 010c007b:6: Deleted unicast failover address &lt;IP address&gt; port &lt;port&gt; for device /&lt;partition&gt;/&lt;hostname&gt;.</a></p>
-<p><a href="https://support.f5.com/csp/article/K29449945"target="_blank" rel="external nofollow noopener noreferrer">K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address &lt;IP_address&gt; port &lt;port_number&gt;</a></p>
-<p><a href="https://support.f5.com/csp/article/K17362757"target="_blank" rel="external nofollow noopener noreferrer">K17362757: Error Message: 010c0083:4: No failover status messages received for &lt;timeout&gt; seconds, from device &lt;device&gt; (&lt;IP_address&gt;)</a></p>
+<p><a href="https://support.f5.com/csp/article/K34063049"target="_blank" rel="external nofollow noopener noreferrer">K34063049: Error Message: 0107143c:5: Connection to CMI peer <!-- raw HTML omitted --> has been removed</a><br>
+<a href="https://support.f5.com/csp/article/K06416036"target="_blank" rel="external nofollow noopener noreferrer">K06416036: Error Message: 0107143a:5: CMI reconnect timer: <!-- raw HTML omitted --></a><br>
+<a href="https://support.f5.com/csp/article/K13667"target="_blank" rel="external nofollow noopener noreferrer">K13667: BIG-IP device group members must run the same major, minor or maintenance software version</a><br>
+<a href="https://support.f5.com/csp/article/K75975904"target="_blank" rel="external nofollow noopener noreferrer">K75975904: Troubleshooting network failover</a><br>
+<a href="https://support.f5.com/csp/article/K72087447"target="_blank" rel="external nofollow noopener noreferrer">K72087447: Error Message: HA Connection with peer [address:port] for traffic-group /Common/[traffic-group_name] lost. (11.x - 13.x)</a><br>
+<a href="https://support.f5.com/csp/article/K37457128"target="_blank" rel="external nofollow noopener noreferrer">K37457128: Error Message: info sod[<!-- raw HTML omitted -->]: 010c007b:6: Deleted unicast failover address <!-- raw HTML omitted --> port <!-- raw HTML omitted --> for device /<!-- raw HTML omitted -->/<!-- raw HTML omitted -->.</a><br>
+<a href="https://support.f5.com/csp/article/K29449945"target="_blank" rel="external nofollow noopener noreferrer">K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address &lt;IP_address&gt; port &lt;port_number&gt;</a><br>
+<a href="https://support.f5.com/csp/article/K17362757"target="_blank" rel="external nofollow noopener noreferrer">K17362757: Error Message: 010c0083:4: No failover status messages received for <!-- raw HTML omitted --> seconds, from device <!-- raw HTML omitted --> (&lt;IP_address&gt;)</a></p>
 <p>Usually a <strong>sod</strong> message is a problem with Network Failover</p>
 <table>
 <thead>
@@ -2938,11 +2915,11 @@ Date Range Syntax
 <td>Major Software mismatch</td>
 </tr>
 <tr>
-<td>0107143c:5: Connection to CMI peer 192.168.100.2 has been removed0107143a:5: CMI reconnect timer: enabled0107143a:5: CMI reconnect timer: disabled, all peers are connected</td>
+<td>0107143c:5: Connection to CMI peer 192.168.100.2 has been removed<br />0107143a:5: CMI reconnect timer: enabled<br />0107143a:5: CMI reconnect timer: disabled, all peers are connected</td>
 <td>Device trust port 4353/6699 issues</td>
 </tr>
 <tr>
-<td>0107142f:3: Can&rsquo;t connect to CMI peer 10.11.23.140, TMM outbound listener not yet created0107142f:3: Can&rsquo;t connect to CMI peer 192.168.10.100, port:6699, Transport endpoint is not connected</td>
+<td>0107142f:3: Can&rsquo;t connect to CMI peer 10.11.23.140, TMM outbound listener not yet created<br />0107142f:3: Can&rsquo;t connect to CMI peer 192.168.10.100, port:6699, Transport endpoint is not connected</td>
 <td>TMM not initialized on local or remote device</td>
 </tr>
 <tr>
@@ -2950,7 +2927,7 @@ Date Range Syntax
 <td>Received force offline message from peer</td>
 </tr>
 <tr>
-<td>010c0078:5  Not listening for unicast failover packets on address 192.168.100.2 port 1026010c007b:6: Deleted unicast failover address 192.168.100.2 port 1026 for device /Common/bigip1.f5.com</td>
+<td>010c0078:5  Not listening for unicast failover packets on address 192.168.100.2 port 1026<br />010c007b:6: Deleted unicast failover address 192.168.100.2 port 1026 for device /Common/bigip1.f5.com</td>
 <td>IP removed from network failover config</td>
 </tr>
 <tr>
