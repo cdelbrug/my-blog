@@ -7,7 +7,7 @@ date: 2023-04-30T20:14:22+08:00
 
 Hey all,
 
-This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.
+This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.\
 
 ## Section 1 - Maintain Application and LTM Device Health
 
