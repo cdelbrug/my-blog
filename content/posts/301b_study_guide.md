@@ -7,12 +7,14 @@ date: 2023-04-30T20:14:22+08:00
 
 Hey all,
 
-This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.\
+This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.
+{{< line_break >}}
+{{< line_break >}}
 
 ## Section 1 - Maintain Application and LTM Device Health
-
+{{< line_break >}}
 ## Objective 1.01 Given a scenario, determine the appropriate profile setting modifications
-
+{{< line_break >}}
 ### SSL
 
 [K13385: Overview of the Proxy SSL feature](https://support.f5.com/csp/article/K13385)
@@ -20,7 +22,7 @@ This is the study guide I've been building since I started studying for this exa
 Proxy SSL does NOT terminate SSL on the load balancer. Use it to optimize the SSL connection.
 
 Use Proxy SSL in an SSL profile to forward a client cert to a server for certification authentication
-
+{{< line_break >}}
 ### Stream Profile
 
 [Overview of the Stream Profile](https://support.f5.com/csp/article/K39394712)
@@ -496,7 +498,7 @@ For ext2/ext3/ext4 filesystems
 
 [F5 upgrade error DevCentral](https://www.devcentral.f5.com/s/question/0D51T00006wzaNH/f5-upgrade-error)
 
-[K61521075: BIG-IP VE failed to boot after outage with console message: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY.](https://support.f5.com/csp/article/K61521075) - May not be on test
+[K61521075: BIG-IP VE failed to boot after outage with console message: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY.](https://support.f5.com/csp/article/K61521075)
 
 #### Run on next reboot
 
@@ -530,8 +532,6 @@ Give root password for maintenance
 **fsck -y** Automatically attempt to fix any filesystem corruption errors automagically.
 
 ### Replace down device
-
-Only a couple steps that might be on the test:
 
 Remove serial cable if necessary or disable it - **modify sys db failover.usetty01 value disable**
 
