@@ -8,54 +8,46 @@ date: 2023-04-30T20:14:22+08:00
 Hey all,
 
 This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.
+
+Blocks of text that are italicized I do not think are going to be on the test but it's nice to have contexual information
+
+The official blueprint has several duplicate objectives in it for some reason (someone should proof read that thing lol). I went through and crossed out these.
+
+The test itself is very challenging. It requires quick thinking, as there are 80 questions to answer in 90 minutes! The thing that makes it the most difficult, is the amount of data that they present you, especially on troubleshooting questions. My advice is to skip all of that data, and read the question and answers first. Eliminate the irrelevant questions or questions with invalid syntax. Then, validate the other answers with the data they give you to determine the correct answer. This will save you a lot of time.
 {{< line_break >}}
 {{< line_break >}}
 
 ## Section 1 - Maintain Application and LTM Device Health
-{{< line_break >}}
 ## Objective 1.01 Given a scenario, determine the appropriate profile setting modifications
-{{< line_break >}}
 ### SSL
+[K13385: Overview of the Proxy SSL feature](https://support.f5.com/csp/article/K13385)  
 
-[K13385: Overview of the Proxy SSL feature](https://support.f5.com/csp/article/K13385)
+Proxy SSL does NOT terminate SSL on the load balancer. Use it to optimize the SSL connection.  
+Use Proxy SSL in an SSL profile to forward a client cert to a server for certification authentication  
 
-Proxy SSL does NOT terminate SSL on the load balancer. Use it to optimize the SSL connection.
-
-Use Proxy SSL in an SSL profile to forward a client cert to a server for certification authentication
-{{< line_break >}}
 ### Stream Profile
+[Overview of the Stream Profile](https://support.f5.com/csp/article/K39394712)  
+[Article: K7027 - Replacing multiple strings using a Stream profile](https://support.f5.com/csp/article/K7027)  
 
-[Overview of the Stream Profile](https://support.f5.com/csp/article/K39394712)
-
-[Article: K7027 - Replacing multiple strings using a Stream profile](https://support.f5.com/csp/article/K7027)
-
-“Content rewrite”
-
-Standard Virtual Server setting
-
-Replaces string in a data stream (TCP) from the client and server
-
-Can replace string if it spans across multiple segments by buffering just enough data to do so
-
-If HTTP profile is applied, search is done in HTTP payload only (not headers) in each segment. Otherwise, the whole TCP segment is searched and this is when you can replace HTTP Headers!
-
-Compatible with HTTP Profile Chunking
+“Content rewrite”  
+Standard Virtual Server setting  
+Replaces string in a data stream (TCP) from the client and server  
+Can replace string if it spans across multiple segments by buffering just enough data to do so  
+If HTTP profile is applied, search is done in HTTP payload only (not headers) in each segment. Otherwise, the whole TCP segment is searched and this is when you can replace HTTP Headers!  
+Compatible with HTTP Profile Chunking  
 
 #### Parameters
 
-Source: What to look for in the content
-
+Source: What to look for in the content  
 Target: What to replace the content with
 
 #### Replace Multiple Sets of Strings
 
-Leave ‘source’ in profile blank
+Leave ‘source’ in profile blank  
+Use a unique delimiter in the ‘target’ field and a space between the source/target pairs.  
+Don’t put < > unless you want to literally. Note the space "" in between the consecutive @ symbols!  
 
-Use a unique delimiter in the ‘target’ field and a space between the source/target pairs.
-
-Don’t put < > unless you want to literally.
-
-**@**<search string1>**@**<replacement string1>**@** **@**<search string2>**@**<replacement string2>**@**
+**@**\<search string1>**@**\<replacement string1>**@** **@**\<search string2>**@**\<replacement string2>**@**
 
 Note: The first character in the field defines the delimiter bounding each field for this replacement and must not appear anywhere else in the target string. In certain versions, the delimiter can be a period (.), asterisk (\*), forward slash (/), dash (-), colon (:), underscore (\_), question mark (?), equals (=), at (@), comma (,), or ampersand (&) character.
 
@@ -89,36 +81,24 @@ when HTTP_RESPONSE {
 
 ### HTTP
 
-[Choosing appropriate profiles for HTTP traffic](https://support.f5.com/csp/article/K4707?sr=46615374)
-
-[Overview of HTTP Chunking](https://support.f5.com/csp/article/K5379)
-
-[K14775: Configuring an HTTP profile to rewrite URLs so that redirects from an HTTP server specify the HTTPS protocol (10.x, 11.x, and 12.x)](https://support.f5.com/csp/article/K14775)
+[Choosing appropriate profiles for HTTP traffic](https://support.f5.com/csp/article/K4707?sr=46615374)  
+[Overview of HTTP Chunking](https://support.f5.com/csp/article/K5379)  
+[K14775: Configuring an HTTP profile to rewrite URLs so that redirects from an HTTP server specify the HTTPS protocol (10.x, 11.x, and 12.x)](https://support.f5.com/csp/article/K14775)  
 
 **Drawbacks** - Uses CPU, more memory utilized for compression/caching
 
 #### Options
 
 - Request Header Insert
-
 - Request Header Erase
-
 - Insert X-Forwarded-For
-
 - Accept XFF - Distrust or trust XFF header from client to use in statistics for AVR
-
 - Fallback host, Fallback on error codes
-
 - Redirect Rewrite
-
 - Server Header Name
-
 - Cookie encryption
-
 - Protocol enforcement - Header size, count, Pipelining
-
 - Strict Transport Security (HSTS)
-
   - Protect against stripping attacks by downgrading to HTTP. Force all content in a page to use HTTPS. The F5 inserts a header in the response to the client.
 
 #### Redirect Rewrite Options
@@ -133,32 +113,27 @@ If the F5 does not do this, one of the following will happen:
 - Request goes to HTTP VIP and HTTP pool member and causes failure
 - Request goes to HTTP VIP and server, which gets redirected to HTTPs and causes redirect loop
 
-Matching
+##### Matching
 
-Only rewrite courtesy redirects to HTTPS
-
-Courtesy redirects = Sent by server, the F5 adds / to specify a directory if original resource isn’t found.
-
+Only rewrite courtesy redirects to HTTPS  
+Courtesy redirects = Sent by server, the F5 adds / to specify a directory if original resource isn’t found.  
 - http://f5.com/stuff → https://f5.com/stuff/
 
-Nodes - Change the redirect containing the node’s IP to the VIP
-
-All - Rewrites all HTTP 301, 302, 303, 305, or 307 redirects to HTTPS
+**Nodes** - Change the redirect containing the node’s IP to the VIP  
+**All** - Rewrites all HTTP 301, 302, 303, 305, or 307 redirects to HTTPS  
 
 ### HTTP Compression
 
-Profiles > Services > HTTP Compression
-
-Good for WAN clients with slow internet and/or high latency
+Profiles > Services > HTTP Compression  
+Good for WAN clients with slow internet and/or high latency  
 
 Reads **Accept-encoding** from client, removes and sends request to server  
 Inserts **Content-Encoding** header in response from Server, and specifies clients preferred method, **gzip** or **deflate**
 
 **Compression Levels gzip**
 
-1 - 9, highest is more compression. Anything more than 1 will degrade performance in some way
-
-Depending on load, gzip compression level will automatically go down.
+1 - 9, highest is more compression. Anything more than 1 will degrade performance in some way  
+Depending on load, gzip compression level will automatically go down.  
 
 ### Web Acceleration (Cache)
 
@@ -191,13 +166,13 @@ Cannot cache - HEAD, PUT, DELETE, TRACE, CONNECT by default
 
 Objects that are cached continue to be served even if the pool member is offline, until the object expires. This is by design. Create an iRule if you want this changed.
 
-#### Show and Delete Entries
+### Caching Commands - Show and Delete Entries
 
-**show ltm profile ramcache** <profile_name> **\[ host** <vip_address:port> **max-response** <how_many_entries_to_display> **]**
+**show ltm profile ramcache** <profile_name> **max-response** <how_many_entries_to_display>  
+**show ltm profile ramcache** <profile_name> **host** <vip_address:port>  
+**delete ltm profile ramcache** <profile_name> **host** <vip_address:port> **uri /<object_name>**  
+**delete ltm profile ramcache** <profile_name> - Deletes all entries  
 
-**delete ltm profile ramcache** <profile_name> **\[ host** <vip_address:port> **uri /**<object_name> **]**
-
-**delete ltm profile ramcache** <profile_name> \*\*\*\*- Deletes all entries
 
 ### XML
 
@@ -402,7 +377,7 @@ Supported directories that can be increased:
 
 Verify free space - **list sys disk**
 
-Increase space - **modify sys disk directory /var new-size** <desired value in KB>
+Increase space - **modify sys disk directory /var new-size** \<desired value in KB>
 
 Verify - **show sys disk directory**
 
@@ -430,7 +405,7 @@ Check or restart **httpd** and **tomcat**
 
 ### Daemons
 
-**restart sys service <name>**
+**restart sys service \<name>**
 
 The **mcpd** daemon is the Master Control Program. Allows two-way communication between userland (applications outside the kernel) processes and TMM processes.
 
@@ -538,7 +513,7 @@ Remove serial cable if necessary or disable it - **modify sys db failover.usetty
 Update Master Key on the new device to what the old device had, so that the UCS loads
 
 - Retrieve key from failed device - **f5mku -K**
-- Replace master key on new unit **f5mku -r <key>**
+- Replace master key on new unit **f5mku -r \<key>**
 
 ### Reload Configuration
 
@@ -577,17 +552,17 @@ SCF files are intended to help configure additional BIG-IP systems; SCFs are not
 
 Save the running configuration to an SCF
 
-- **save sys config file** <SCF_filename> **\[passphrase** <passphrase>]
+- **save sys config file** \<SCF_filename> **[ passphrase ]** [\<passphrase>]
 
 Specify a custom name for the TAR file when saving the configuration to an unencrypted SCF:
 
-- **save sys config file** <SCF_filename> **tar-file** <TAR-FILE_filename>
+- **save sys config file** \<SCF_filename> **tar-file** \<TAR-FILE_filename>
 
 Note: When you use the tar-file option, the actual file does not have .tar file extension by default, unless specified. Additionally, you cannot specify the passphrase option when you use the tar-file option.
 
 The SCF file and the TAR file are saved to the **/var/local/scf/** directory.
 
-Files referenced \[keys, external monitor files and external data group files] in config are saved in **/var/local/scf/<name>.tar**
+Files referenced \[keys, external monitor files and external data group files] in config are saved in **/var/local/scf/\<name>.tar**
 
 #### Loading a SCF
 
@@ -597,11 +572,11 @@ You cannot load an SCF onto another software version
 
 To install an SCF:
 
-- **load sys config file <SCF_filename> \[passphrase <passphrase>]**
+- **load sys config file** \<SCF_filename> **[ passphrase ]** \[\<passphrase>]
 
 To load the unencrypted configuration with a TAR file that has a custom name:
 
-- **load sys config file** <SCF_filename> **tar-file** <TAR-FILE_filename>
+- **load sys config file** \<SCF_filename> **tar-file** \<TAR-FILE_filename>
 
 ### Diff SCF files
 
@@ -623,15 +598,11 @@ root@(bigip1)(cfg-sync Standalone)(Active)(/Common)(tmos)# **load sys ucs test.u
 
 Options:
 
-**no-license**         This option mostly is for RMA use. It loads full configuration from a UCS file except the license file.
-
-**no-platform-check**  Bypass platform check.
-
-**passphrase**         Passphrase for (un)encrypting UCS.
-
-**platform-migrate**   Don't load or modify some objects specific to a particular device.
-
-**reset-trust**        Reset device and trust domain certificates and keys when loading a UCS.
+**no-license**         This option mostly is for RMA use. It loads full configuration from a UCS file except the license file.  
+**no-platform-check**  Bypass platform check.  
+**passphrase**         Passphrase for (un)encrypting UCS.  
+**platform-migrate**   Don't load or modify some objects specific to a particular device.  
+**reset-trust**        Reset device and trust domain certificates and keys when loading a UCS.  
 
 ### Restore without passphrase
 
@@ -660,7 +631,7 @@ Dependencies
 - **mke2fs - Creates Linux ext2 file system**
 - **extlinux - Lightweight bootloader that starts computers with the Linux kernel**
 
-Unmount, plug into BIG-IP and reboot: **umount /mnt/<directory>**
+Unmount, plug into BIG-IP and reboot: **umount /mnt/\<directory>**
 
 You will be in MOS and prompted to perform an **automatic** **clean** **install**, just hit **\[Enter]**
 
@@ -678,7 +649,7 @@ The server providing the image must be on the same network as the management por
 
 ## - 1.04b - Identify the TMSH sys software install options required to install a new version
 
-**install sys software** { **hotfix** \| **image** } <filename> (**create-volume**)  **volume** <HDx.x>
+**install sys software** { **hotfix** \| **image** } \<filename> (**create-volume**)  **volume** \<HDx.x>
 
 ## - 1.04c - Identify the steps required to upgrade the LTM device such as: license renewal, validation of upgrade path, review release notes, etc.
 
@@ -695,7 +666,7 @@ Make sure there’s enough space on the hard drive. Use “df -h” - 50GB requi
 
 #### Verify image
 
-- **md5sum** /shared/images/<name>.iso
+- **md5sum** /shared/images/\<name>.iso
 
 #### List available images for installation
 
@@ -705,11 +676,11 @@ System > Software Management > Image | Hotfix List
 
 #### Install to inactive volume
 
-**install sys software** { **hotfix** \| **image** } <iso> \[**create-volume**]  **volume** <HDx.x>
+**install sys software** { **hotfix** \| **image** } \<iso> \[**create-volume**]  **volume** \<HDx.x>
 
 **GUI -** System > Software Management > Image | Hotfix List > Install > HDx.x
 
-Delete volume: **delete sys software volume** HD1.<x>
+Delete volume: **delete sys software volume** HD1.\<x>
 
 #### Reactivate the license (Traffic impacting)
 
@@ -777,28 +748,28 @@ Failover to secondary - run sys failover standby
 
 Upgrade primary / standby
 
-Objective 1.06 Describe the benefits of custom alerting within an LTM environment
+## Objective 1.06 Describe the benefits of custom alerting within an LTM environment
 
 ## - 1.06a - Describe how to specify the OIDs for alerting
 
-alert <name> “<message>” {  
-snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999>**”  
+alert \<name> “\<message>” {  
+snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.**\<300 - 999>**”  
 }
 
 ## - 1.06b - Explain how to log different levels of local traffic message logs
 
-TMSH - **modify sys db <name>.level value <log-level-string>**
+TMSH - **modify sys db \<name>.level value \<log-level-string>**
 
 GUI - System > Logs > Configuration > Options
 
 The severity level is in between the colons
 
-Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:80 monitor status forced down.
+`Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:80 monitor status forced down.`
 
 ### Modify Linux host syslog levels
 
 - **list sys syslog all-properties**
-- **modify sys syslog <function>-from <function>-to <level>**
+- **modify sys syslog \<function>-from \<function>-to \<level>**
 - **modify sys syslog daemon-from warning daemon-to emerg**
 
 ## - 1.06c - Explain how to trigger custom alerts for testing purposes
@@ -810,7 +781,7 @@ Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:8
 2. Grep for that alert for the full logging info-
 
    1. **cd /etc/alertd/**
-   2. **grep <alert name> \*.h**
+   2. **grep \<alert name>.\*h**
 
 3. Find Log Info
 
@@ -820,9 +791,9 @@ Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:8
    4. Alert code: 01070640
    5. Descriptive Message: "Node %s address %s monitor status %s."
 
-Use **logger** to generate an alert - **logger -p local0.notice “**01070640:5: Node 10.128.20.20 monitor status down.”
+Use **logger** to generate an alert - **logger -p local0.notice “01070640:5: Node 10.128.20.20 monitor status down.”**
 
-Objective 1.07 Describe how to set up custom alerting for an LTM device
+## Objective 1.07 Describe how to set up custom alerting for an LTM device
 
 ## - 1.07a - List and describe custom alerts: SNMP, email and Remote Syslog
 
@@ -832,7 +803,7 @@ System > Logs > Configuration > Remote Logging
 
 ### SNMP
 
-Place custom MIB files in **/config/snmp/<name>.tcl**
+Place custom MIB files in **/config/snmp/\<name>.tcl**
 
 Default MIBs under **/usr/share/snmp/mibs**
 
@@ -850,9 +821,9 @@ System > SNMP > Traps > Configuration
 1. Create backup of **/config/user_alert.conf**
 2. Open and add new SNMP traps in proper format
 
-alert <name> “<message>” {  
-snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999**>”  
-}
+    alert \<name> “\<message>” {  
+    snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.\<**300 - 999**>”  
+    }
 
 3. Message -  A syslog message that will match and send the trap. Can use literal or regular expressions. For regex, put parentheses around the expression - (.\*) for example.
 4. 300 - 999 - A unique OID, don’t use ones that are in F5-BIGIP-COMMON-MIB.txt file
@@ -860,28 +831,25 @@ snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999**>”
 
 ### Email SNMP traps
 
-**ssmtp** is the process for emailing
+**ssmtp** is the process for emailing  
 
-**modify sys outbound-smtp mailhub** <mail-server:port>
+**modify sys outbound-smtp mailhub** \<mail-server:port>  
 
-**/config/user_alert.conf**
+**/config/user_alert.conf**  
 
-alert <name> “<message>” {  
-snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<**300 - 999**>”,
-
-email toaddress="dg-network@config.com, noc@config.com"  
-fromaddress="root" ←- The FQDN will be the hostname  
-body="There’s an alert!"
-
-}
-
+    alert <name> “<message>” {  
+    snmptrap OID=”.1.3.6.1.4.1.3375.2.4.0.<300 - 999>”,
+    email toaddress="dg-network@config.com, noc@config.com"  
+    fromaddress="root" ←- The FQDN will be the hostname  
+    body="There’s an alert!"
+    }
 Save file and restore permissions -  **chmod 444**
 
 Restart alertd and snmpd - **restart sys service alertd, restart sys service snmpd**
 
 **Test Email**
 
-**echo “**ssmtp test mail**” | mail -vs “**Test email for SOL13180**”** myemail@mydomain.com
+**echo “**ssmtp test mail**” | mail -vs “**Test email for SOL13180**”** destinationemail@mydomain.com
 
 ## - 1.07b - Identify the location of custom alert configuration files
 
@@ -911,9 +879,9 @@ Debug (7)
 
 **E**very **A**lley **C**at **E**ats **W**atery **N**oodles **I**n **D**oors
 
-Section 2 - Identify and Resolve Application Issues
+## Section 2 - Identify and Resolve Application Issues
 
-Objective 2.01 Determine which iRule to use to resolve an application issue
+## Objective 2.01 Determine which iRule to use to resolve an application issue
 
 ## - 2.01a - Determine which iRule events and commands to use
 
@@ -957,21 +925,21 @@ HTTP::request
 
 #### HTTP::header
 
-HTTP::header value <header-name> - Returns value from header name
+HTTP::header value \<header-name> - Returns value from header name
 
-HTTP::header values <header-name> - Returns list of values from header name.
+HTTP::header values \<header-name> - Returns list of values from header name.
 
 HTTP::header names
 
-HTTP::header exists <header-name>
+HTTP::header exists \<header-name>
 
-HTTP::header insert \["lws"] \[\[list] <header1-name> <header1-value> <header2-name> <header2-value> ] - ‘“lws”’, the system adds linear white space to long header values.
+HTTP::header insert \["lws"] \[\[list] \<header1-name> \<header1-value> \<header2-name> \<header2-value> ] - ‘“lws”’, the system adds linear white space to long header values.
 
 HTTP::header is_redirect
 
-HTTP::header replace <header-name> \[<new-header-value>]
+HTTP::header replace \<header-name> \[\<new-header-value>]
 
-HTTP::header remove <header-name>
+HTTP::header remove \<header-name>
 
 #### HTTP::uri
 
@@ -997,13 +965,11 @@ Once one Event in all iRules is processed, action is taken if matched
 
 HTTP::redirect takes precedence over pool command
 
-**<Insert iRules here that direct to pools or nodes based on URI, host header, or IP address that even do snat as well. Use switch, if, elseif, starts_with, contains>**
-
 ## - 2.02a - Interpret information in iRule logs to determine the iRule and iRule events where they occurred
 
 Logging in an iRule
 
-log local0.<level-optional> “log here!”
+log local0.\<level-optional> “log here!”
 
 Levels
 
@@ -1023,7 +989,7 @@ Error Message: 01220001:3: TCL error
 - Stops iRule processing and may send a TCP RST
 - Can happen if the wrong variable is unset at the end
 
-Objective 2.03 Given specific traffic and configuration containing a simple iRule determine the result of the iRule on the traffic
+## Objective 2.03 Given specific traffic and configuration containing a simple iRule determine the result of the iRule on the traffic
 
 [event](https://clouddocs.f5.com/api/irules/event.html)  
 [switch](https://clouddocs.f5.com/api/irules/switch.html)  
@@ -1308,9 +1274,9 @@ If the code received is not understood by the client, like 491 for example, a 40
 
 **_If-Match_**: Tells the server to respond if the ETags match
 
-**_If-Modified-Since_\*\***_:_\*\* Return the requested entity only if the resource was modified since <date/time>. Server will respond with “304 Not Modified” if it hasn’t been.
+**_If-Modified-Since:_** Return the requested entity only if the resource was modified since \<date/time>. Server will respond with “304 Not Modified” if it hasn’t been.
 
-**_If-None-Match_\*\***_:_** Respond only if the ETag does **_not_\*\* match.
+**_If-None-Match:_** Respond only if the ETag does **_not_** match.
 
 **_Content-Type:_** Media type and subtype
 
@@ -1343,45 +1309,22 @@ with me and just serve them the cached resource. This can cause duplicate entrie
 
 iRule commands to help with this issue:
 
-- **CACHE::userkey <keystring> - Creates a user-defined caching group. Overrides _Vary_ header.**
+- **CACHE::userkey \<keystring> - Creates a user-defined caching group. Overrides _Vary_ header.**
 - **CACHE::useragent - Can specify a group of _User-Agents_ to serve cached content to for the same request**
 - **CACHE::acceptencoding - Can specify a group of _Accept-Encoding_ headers \_\_to serve cached content to for the same request, like gzip and deflate would be the same cached entry instead of separate (duplicate)**
 
 You can also use those commands even if the _Vary_ header isn’t present.
 
-### Caching Commands - Show and Delete Entries
-
-**show ltm profile ramcache** <profile_name> **max-response** <how_many_entries_to_display>
-
-**show ltm profile ramcache** <profile_name> **host** <vip_address:port>
-
-**delete ltm profile ramcache** <profile_name> **host** <vip_address:port> **uri /<object_name>**
-
-**delete ltm profile ramcache** <profile_name> \*\*\*\*- Deletes all entries
 
 ## - 2.06c - Explain HTTP methods (GET, POST, etc.)
 
 ### HTTP Methods
 
 **GET:** Proxy servers can intercept this and serve the data for you via caching. Conditions can be sent that require certain things, like _If-Modified-Since_ or _If-Match_. The server will only reply if those conditions are
+then met. This is called a _conditional_ GET. You can also request certain parts of a large file with a _partial_ GET, which will have the _Range_ header inserted.  
+**HEAD:** Used to check if the resource is what is wanted, replies with headers only  
+**POST:** Used to submit data from the client. The query string is sent in the body of the submission of POST, instead of the header like GET does. The ‘? is not included  
 
-then met. This is called a _conditional_ GET. You can also request certain parts of a large file with a _partial_ GET, which will have the _Range_ header inserted.
-
-**HEAD:** Used to check if the resource is what is wanted, replies with headers only
-
-**POST:** Used to submit data from the client. The query string is sent in the body of the submission of POST, instead of the header like GET does. The ‘? is not included
-
-**_OPTIONS (New in HTTP/1.1):_** _Requests what communication options are available for a URI or specify an asterisk \* if about the server itself._
-
-**_PUT:_** _Specifies to copy a file to a server. Usually FTP is used so this isn’t common. The difference with this and POST, is that POST specified the program to process the request, while this specifies the URI to_
-
-_where the store the file._
-
-**_DELETE:_** _Requests that the specified resource be deleted_
-
-**_TRACE:_** _Requests a copy of the client’s request for diagnostic purposes._
-
-**_Idempotent Methods:_** _Requests that have the same result no matter how many times they are issued. Usually GET and HEAD._
 
 ## - 2.06d - Explain how to decode POST data.
 
@@ -1447,21 +1390,21 @@ C>S TCP FIN
 ```
 Enable SSL debug in /var/log/ltm -  **modify sys db log.ssl.level value debug** (Default is Warning)
 
-~~Objective 2.07 Given a set of headers or traces, determine a solution to an HTTP/HTTPS application problem~~
+## ~~Objective 2.07 Given a set of headers or traces, determine a solution to an HTTP/HTTPS application problem~~
 
-~~- 2.07a - Investigate the cause of a specific response code~~
+## ~~- 2.07a - Investigate the cause of a specific response code~~
 
-~~- 2.07b - Investigate the cause of an SSL Handshake failure~~
+## ~~- 2.07b - Investigate the cause of an SSL Handshake failure~~
 
-~~- 2.07c - Predict the browser caching behavior when application data is received (headers and HTML)~~
+## ~~- 2.07c - Predict the browser caching behavior when application data is received (headers and HTML)~~
 
-~~Objective 2.08 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine the root cause of an HTTP/HTTPS application problem~~
+## ~~Objective 2.08 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine the root cause of an HTTP/HTTPS application problem~~
 
-~~- 2.08a - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration~~
+## ~~- 2.08a - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration~~
 
 ## Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem
 
-~~- 2.09a - Investigate the cause of an SSL Handshake failure~~
+## ~~- 2.09a - Investigate the cause of an SSL Handshake failure~~
 
 ## - 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration
 
@@ -1510,11 +1453,11 @@ Override Connection Limit: Pool member limits overridden. Virtual Server ones ar
 
 ##### Insert (Default) 
 
-**BIGipServer<pool_name>** cookie is inserted. The server port and address are encoded. Unable to maintain persistence across virtual servers (HTTP/HTTPS) if pool member ports are different.
+**BIGipServer\<pool_name>** cookie is inserted. The server port and address are encoded. Unable to maintain persistence across virtual servers (HTTP/HTTPS) if pool member ports are different.
 
 ##### Rewrite
 
-Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer<pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).
+Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer\<pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).
 
 Use over passive mode whenever possible
 
@@ -1694,9 +1637,8 @@ Can only configure these options from this menu
 
 [K16446: The BIG-IP system now allows a Performance (Layer 4) virtual server to have an associated HTTP profile](https://support.f5.com/csp/article/K16446)
 
-A reset is sent immediately before 3 way handshake when the pool members are unavailable
-
-Able to assign HTTP profile and read HTTP with iRules or gather statistics with AVR
+A reset is sent immediately before 3 way handshake when the pool members are unavailable  
+Able to assign HTTP profile and read HTTP with iRules or gather statistics with AVR  
 
 Assigned to the following VIP Types
 
@@ -1761,7 +1703,7 @@ Request Header Insert
 
 XFF Insert
 
-Objective 2.10 Given a scenario, determine which protocol analyzer tool and its options are required to resolve an application issue
+## Objective 2.10 Given a scenario, determine which protocol analyzer tool and its options are required to resolve an application issue
 
 HTTPWatch
 
@@ -1806,7 +1748,7 @@ Flags
 - If you don’t specify one, it defaults to eth0 (mgmt)
 - Use 0.0 (loopback) to capture traffic in all route-domains and VLANs
 - Specifying VLAN disables hardware checksum L4 UDP/TCP, and calculates it in software
-- :p - Follow and capture traffic through the entire flow - SNAT and OneConnect included. Only works correctly if using ‘src host <x.x.x.x.>’ and ‘dst host <x.x.x.x>’ filters. If you use ‘host <x.x.x.x>’ it will capture everything.
+- :p - Follow and capture traffic through the entire flow - SNAT and OneConnect included. Only works correctly if using ‘src host \<x.x.x.x.>’ and ‘dst host \<x.x.x.x>’ filters. If you use ‘host \<x.x.x.x>’ it will capture everything.
 - :nnn - Low, Medium, High details from TMM
 
 \-n - Disable name resolution
@@ -1851,7 +1793,7 @@ and | or | not
 
 #### Filters
 
-**src | dst \[ net | host | <ip> ]**
+**src | dst \[ net | host | \<ip> ]**
 
 #### Output
 
@@ -1923,7 +1865,7 @@ tcpdump won’t show 3 way handshake on the server-side and will show multiple H
 2. Capture traffic with tcpdump
 3. Create pre-master secret (symmetric key)
 
-**ssldump -r <capture-file.pcap> -k <private-key.key> -M <pre-master-secret-log>**
+**ssldump -r \<capture-file.pcap> -k \<private-key.key> -M \<pre-master-secret-log>**
 
 The output of the pre-master-secret log file can now be loaded into Wireshark. (Edit > Preferences > Protocols > SSL > PMS key log filename.
 
@@ -1956,11 +1898,11 @@ ICMP destination unreachable - can be multiple things, like the destination host
 
 **show net rst-cause**
 
-db variable **tm.rstcause.log value enable** - Displays “RST sent from <source> to <destination> and the reason in logs
+db variable **tm.rstcause.log value enable** - Displays “RST sent from \<source> to \<destination> and the reason in logs
 
 db variable **tm.rstcause.pkt value enable** - Displays RST cause in TCP payload
 
-- Can use **tcpdump -i <int>:nn** to display the cause without this set.
+- Can use **tcpdump -i \<int>:nn** to display the cause without this set.
 
 Reaping - RST when high-water mark is reached and no new connections are allowed
 
@@ -2024,7 +1966,7 @@ Creates separate TMM processes per CPU to share the load across all.
 
 Demotion - iRule with Global variable, **set::** or **$::** demotes CMP to single.
 
-**show ltm virtual <vs-name>**
+**show ltm virtual \<vs-name>**
 
 - CMP - **enabled/disabled**
 - CMP Mode - **all-cpus**, **single, none**, **disabled**
@@ -2045,7 +1987,7 @@ nc -v 10.128.10.10 443
 telnet 10.128.10.10 443
 openssl s_client -connect 10.128.10.10:443
 ```
-Objective 2.15 Given a monitor issue, determine an appropriate solution
+## Objective 2.15 Given a monitor issue, determine an appropriate solution
 
 ## - 2.15a - Determine appropriate monitor and monitor timing based on application and server limitations
 
@@ -2186,7 +2128,7 @@ Logs in, downloads file to /var/tmp
 
 Any output from an external monitor to **stdout** will result in a member being Available. If the script fails, do not write failed status to **stdout**
 
-Writing to stdout - ‘**echo** <string>’
+Writing to stdout - ‘**echo** \<string>’
 
 ## - 2.15b - Describe how to modify monitor settings to resolve monitor problems
 
@@ -2348,9 +2290,9 @@ remote    refid        st t when poll reach delay  offset       jitter
 
 01260008:3: SSL transaction (TPS) rate limit reached
 
-Objective 3.02 Identify the appropriate command to use to determine the cause of an LTM device problem
+## Objective 3.02 Identify the appropriate command to use to determine the cause of an LTM device problem
 
-You can use **run util <command>** from TMSH if you don’t feel like going down to bash
+You can use **run util \<command>** from TMSH if you don’t feel like going down to bash
 
 **run util tcpdump -i 1.1 host 1.1.1.1**
 
@@ -2414,9 +2356,9 @@ Use command **eud_info** to see version installed
 
 Download .im file to /var/tmp
 
-Install it - **im** <file_name>.im
+Install it - **im** \<file_name>.im
 
-Loopback mount the downloaded file - **mkdir** **/tmp/eud; mount** **-o ro,loop** <file_name>.im **/tmp/eud**
+Loopback mount the downloaded file - **mkdir** **/tmp/eud; mount** **-o ro,loop** \<file_name>.im **/tmp/eud**
 
 Insert flash drive into BIG-IP
 
@@ -2426,9 +2368,9 @@ Run mkdisk and follow prompts to install EUD onto flash drive - **cd /tmp/eud; .
 
 [K16951: Overview of SSL hardware acceleration fail-safe](https://support.f5.com/csp/article/K16951)
 
-crit tmm\[6789]: 01010025:2: Device error: cn0 device requires hard reset; trying soft reset
+`crit tmm[6789]: 01010025:2: Device error: cn0 device requires hard reset; trying soft reset`
 
-crit tmm2\[6789]: 01010025:2: Device error: cn2 PCI write master retry timeout
+`crit tmm2[6789]: 01010025:2: Device error: cn2 PCI write master retry timeout`
 
 ### Hard Drive Issues
 
@@ -2595,7 +2537,7 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 [K10337613: Idle Enforcer Functionality](https://support.f5.com/csp/article/K10337613)
 
-**show sys proc-info \[ <process-name> ]** - Shows individual processes CPU usage  
+**show sys proc-info \[ \<process-name> ]** - Shows individual processes CPU usage  
 **show sys tmm-info** - Show TMM CPU usage per process/core  
 **show sys cpu** - System CPU is an aggregation of TMM and Control Plane CPU usage.  
 **show sys performance**  
@@ -2620,7 +2562,7 @@ Adaptive reaping is activated from Dos Attacks, RAM Cache, Memory leaks
 
 **df -h** - Display partitions and size/usage
 
-**du <directory> -h** - Display size of files, -h = human readable sizes in K or G, automatically recursive into directories!
+**du \<directory> -h** - Display size of files, -h = human readable sizes in K or G, automatically recursive into directories!
 
 **lvscan** - Display storage per partition. Some are shared, like log, share, etc.
 
@@ -2669,7 +2611,7 @@ HTTP cache storage is shared among all profiles of the same name. Consolidate pr
 
 ## - 3.02c - Identify connectivity problems based on the log files
 
-**modify sys db** **tm.rstcause.log value enable** - Displays “RST sent from <source> to <destination> and the reason in logs
+**modify sys db** **tm.rstcause.log value enable** - Displays “RST sent from \<source> to \<destination> and the reason in logs
 
 Everything else is self explanatory or I am not aware of any log entries that indicate a connectivity problem. SSL errors logging was not set to warning in 11.5.
 
