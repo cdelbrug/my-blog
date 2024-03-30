@@ -1,6 +1,7 @@
 ---
 title: "F5 301b Study Guide"
 date: 2023-04-30T20:14:22+08:00
+lastmod: 2024-03-17T23:15:00-05:00
 ---
 
 # Introduction
@@ -255,7 +256,7 @@ Congestion Control: Use Woodside if some clients are wireless
 
 TCP Window Size, AKA Send Window:
 
-_Send Window_**:** Amount of data that can be sent and be outstanding/unacknowledged. A 16-bit field (2^16 = 65535)
+Send Window -  Amount of data that can be sent and be outstanding/unacknowledged. A 16-bit field (2^16 = 65535)
 
 - This can be increased by using the scale factor in the Options field during the handshake, value 0 to 14.
 - Take the unscaled Window, multiply it by 2^(0-14)

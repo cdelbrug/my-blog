@@ -10,6 +10,7 @@ dateFormat = "01-02-2006"
 languageCode = "en"
 # language name ["English", "简体中文", "Français", "Polski", ...]
 languageName = "English"
+enableGitInfo = true
 
 # Author config
 [author]
@@ -168,3 +169,4 @@ languageName = "English"
   [markup.highlight]
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
+
