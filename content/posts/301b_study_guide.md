@@ -2955,7 +2955,7 @@ Traffic groups host these LTM objects for failover - VIPs, SNATs, NATs, Folders,
 [K13667: BIG-IP device group members must run the same major, minor or maintenance software version](https://support.f5.com/csp/article/K13667)  
 [K75975904: Troubleshooting network failover](https://support.f5.com/csp/article/K75975904)  
 [K72087447: Error Message: HA Connection with peer \[address:port\] for traffic-group /Common/\[traffic-group_name\] lost. (11.x - 13.x)](https://support.f5.com/csp/article/K72087447)  
-[K37457128: Error Message: info sod\[<PID>\]: 010c007b:6: Deleted unicast failover address <IP address> port <port> for device /<partition>/<hostname>.](https://support.f5.com/csp/article/K37457128)  
+[K37457128: Error Message: info sod\[\<PID\>\]: 010c007b:6: Deleted unicast failover address \<IP address\> port \<port\> for device /\<partition\>/\<hostname\>.](https://support.f5.com/csp/article/K37457128)  
 [K29449945: Error Message: 010c008b:5: Unable to send to unreachable unicast address <IP_address> port <port_number>](https://support.f5.com/csp/article/K29449945)  
 [K17362757: Error Message: 010c0083:4: No failover status messages received for <timeout> seconds, from device <device> (<IP_address>)](https://support.f5.com/csp/article/K17362757)  
 

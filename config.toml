@@ -60,9 +60,26 @@ enableGitInfo = true
     # FixIt 0.2.15 | CHANGED Comment config
       [params.page.comment]
         enable = true
+        [params.page.comment.giscus]
+          enable = true
+          repo = "cdelbrug/my-blog"
+          repoId = "R_kgDOJdR-hA"
+          category = "Announcements"
+          categoryId = "DIC_kwDOJdR-hM4CeXIg"
+          mapping = "pathname"
+          strict = "0" # FixIt NEW | 0.2.18
+          term = ""
+          reactionsEnabled = "1"
+          emitMetadata = "0"
+          inputPosition = "bottom" # ["top", "bottom"]
+          lightTheme = "light"
+          darkTheme = "dark"
+          lazyLoad = true
+        [params.page.comment.commento]
+          enable = false
         # Facebook comment config (https://developers.facebook.com/docs/plugins/comments)
         [params.page.comment.facebook]
-          enable = true
+          enable = false
           width = "100%"
           numPosts = 10
           appId = "3442645359360226"
