@@ -31,16 +31,52 @@ enableGitInfo = true
     rss = 10
     [params.page]
       pageStyle = "normal"
-    [params.page.toc]
-      # whether to enable the table of the contents
-      enable = true
-      # FixIt 0.2.9 | NEW whether to keep the static table of the contents in front of the post
-      keepStatic = false
-      # whether to make the table of the contents in the sidebar automatically collapsed
-      auto = true
-      # FixIt 0.2.13 | NEW position of TOC ["left", "right"]
-      position = "right"
-    # Home page profile
+      [params.page.share]
+        enable = true
+        Twitter = true
+        Facebook = true
+        Linkedin = true
+        Whatsapp = false
+        Pinterest = false
+        Tumblr = false
+        HackerNews = false
+        Reddit = false
+        VK = false
+        Buffer = false
+        Xing = false
+        Line = false
+        Instapaper = false
+        Pocket = false
+        Flipboard = false
+        Weibo = false
+        Myspace = false
+        Blogger = false
+        Baidu = false
+        Odnoklassniki = false
+        Evernote = false
+        Skype = false
+        Trello = false
+        Mix = false
+    # FixIt 0.2.15 | CHANGED Comment config
+      [params.page.comment]
+        enable = true
+        # Facebook comment config (https://developers.facebook.com/docs/plugins/comments)
+        [params.page.comment.facebook]
+          enable = true
+          width = "100%"
+          numPosts = 10
+          appId = "3442645359360226"
+          languageCode = "en_US"
+      [params.page.toc]
+        # whether to enable the table of the contents
+        enable = true
+        # FixIt 0.2.9 | NEW whether to keep the static table of the contents in front of the post
+        keepStatic = false
+        # whether to make the table of the contents in the sidebar automatically collapsed
+        auto = true
+        # FixIt 0.2.13 | NEW position of TOC ["left", "right"]
+        position = "right"
+      # Home page profile
     [params.cookieconsent]
       enable = false
       # text strings used for Cookie consent banner
