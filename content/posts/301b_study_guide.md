@@ -8,15 +8,40 @@ lastmod: 2024-03-17T23:15:00-05:00
 
 Hey all,
 
-This is the study guide I've been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.
+This is the study guide I've been building since I started studying for this exam way back in 2017. I've renewed it 4 times now so I have a pretty good grasp of what is going to be on it and what study materials to use. Hopefully it can help fill any gaps you may have. I've sourced the material from solution articles, experience, and manuals.
 
-Blocks of text that are italicized I do not think are going to be on the test but it's nice to have contexual information
+### About the Exam
 
-The official blueprint has several duplicate objectives in it for some reason (someone should proof read that thing lol). I went through and crossed out these.
+The test itself is very challenging. It requires quick thinking, as there are 80 questions to answer in 90 minutes! The thing that makes it the most difficult, is the amount of data that they present you, especially on troubleshooting questions. My advice is to skip all of that data, and read the question and answers first. Eliminate the irrelevant questions or questions with invalid syntax. Then, validate the other answers with the data they give you to determine the correct answer. This will save you a lot of time.  
 
-The test itself is very challenging. It requires quick thinking, as there are 80 questions to answer in 90 minutes! The thing that makes it the most difficult, is the amount of data that they present you, especially on troubleshooting questions. My advice is to skip all of that data, and read the question and answers first. Eliminate the irrelevant questions or questions with invalid syntax. Then, validate the other answers with the data they give you to determine the correct answer. This will save you a lot of time.
+Blocks of text that are italicized I do not think are going to be on the test but it's good to know.  
+{{< line_break >}} 
+They revised the blueprint a year or so ago. From what I can tell, they only removed some objectives and rearranged them. I prefer the original as they give more info.  
+
+I suggest reviewing them, here are all of the objectives I have posted on my site.  
+- [F5 301b v1 Objectives](/posts/301b_v1_objectives)  
+- [F5 301b v1.1 Objectives](/posts/301b_v1_1_objectives)  
+- [F5 301b v2 Objectives](/posts/301b_v2_objectives)  
+
+{{< line_break >}}
+As far as I know, they have not modified the test since it's inception. I could be wrong of course. They removed the version it is based on from their exam details page. I believe it is still based on version 11.5. However, they may have removed some specific quirks about 11.5 from the exam.
 {{< line_break >}}
 {{< line_break >}}
+
+As I said earlier, I sourced some of this from actual manuals. Some of these are hard to find nowadays because they are so old, but are still relevant because of the tests age. Here's a zip of all of them:
+[f5_manuals.zip](https://drive.google.com/file/d/11tM2sjitL__M0Nm1Ic1vm2ehtn4kDkMv/view?usp=sharing)  
+
+Contents:
+- BIG-IP_Analytics__Implementations.pdf
+- BIG-IP_Data_Center_Firewall_Configuration_Guide.pdf
+- BIG-IP_Device_Service_Clustering__Administration.pdf
+- BIG-IP_Local_Traffic_Manager__Concepts 11_2.pdf
+- BIG-IP_Local_Traffic_Manager__Concepts 11_5.pdf
+- BIG-IP_Systems__Upgrading_11.x_Software.pdf
+- BIG-IP_TMOS__Concepts.pdf
+- BIG-IP_TMOS__Routing_Administration.pdf
+- External_Monitoring_of_BIG-IP_Systems__Implementations.pdf
+- vCMP® for VIPRION® Systems_ Administration.pdf
 
 ## Section 1 - Maintain Application and LTM Device Health
 ## Objective 1.01 Given a scenario, determine the appropriate profile setting modifications
@@ -104,7 +129,7 @@ when HTTP_RESPONSE {
 
 #### Redirect Rewrite Options
 
-The F5 will see an HTTP redirect from a server on a 443 VIP and change it to HTTPS.
+The F5 will see an HTTP redirect from a server on a 443 VIP/80 pool and change it to HTTPS.
 
 Great for SSL offload unaware servers that need to send some redirects.
 
@@ -312,7 +337,7 @@ Types
 
 **Clone Pool (Server)**
 
-**Rewrite Profile** - Content Rewrite profile for HTML web application rewrites [K99872325: Modifying HTML tag attributes using an HTML profile](https://support.f5.com/csp/article/K99872325)
+**Rewrite Profile** - Content Rewrite profile for HTML code rewrites [K99872325: Modifying HTML tag attributes using an HTML profile](https://support.f5.com/csp/article/K99872325)
 
 ## - 1.02a - Evaluate which iRules can be replaced with a profile or policy setting
 
@@ -470,7 +495,7 @@ For ext2/ext3/ext4 filesystems
 
 [Article: K73827442 - Forcing a file system check on the next system reboot (12.x - 15.x)](https://support.f5.com/csp/article/K73827442)
 
-[Article: K60432403 - Recovering from a failed device start due to file system errors](https://support.f5.com/csp/article/K60432403)
+[Article: K60432403 - Recovering from a failed device start due to file system errors](https://support.f5.com/csp/article/K60432403) - Dead link
 
 [F5 upgrade error DevCentral](https://www.devcentral.f5.com/s/question/0D51T00006wzaNH/f5-upgrade-error)
 
@@ -501,9 +526,7 @@ Give root password for maintenance
 (or type Control-D to continue)
 ```
 
-**CTRL + D**
-
-\*login\*
+Login with root
 
 **fsck -y** Automatically attempt to fix any filesystem corruption errors automagically.
 
@@ -765,7 +788,7 @@ GUI - System > Logs > Configuration > Options
 
 The severity level is in between the colons
 
-`Jul 22 07:38:28 nusiaalbipve02 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:80 monitor status forced down.`
+`Jul 22 07:38:28 bigip1 mcpd\[1844]: 01070638:5: Pool member 10.0.0.154:80 monitor status forced down.`
 
 ### Modify Linux host syslog levels
 
@@ -850,7 +873,7 @@ Restart alertd and snmpd - **restart sys service alertd, restart sys service snm
 
 **Test Email**
 
-**echo “**ssmtp test mail**” | mail -vs “**Test email for SOL13180**”** destinationemail@mydomain.com
+**echo “**ssmtp test mail**” | mail -vs “**Test email for SOL13180**”** youremail@mydomain.com
 
 ## - 1.07b - Identify the location of custom alert configuration files
 
@@ -997,49 +1020,27 @@ Error Message: 01220001:3: TCL error
 [return](https://clouddocs.f5.com/api/irules/return.html)  
 [class](https://clouddocs.f5.com/api/irules/class.html)  
 
-The \* in front of a URL will make it so only the URL with stuff in front of that asterisk will match. If there is nothing in front, then that entry won’t be matched. Example, \*default.com, make sure to add “default.com” to the rule.
-
+The * in front of a URL will make it so only the URL with stuff in front of that asterisk will match. If there is nothing in front, then that entry won’t be matched.   
+Example, *default.com, make sure to add “default.com” to the rule. 
 An asterisk afterwards works as ‘contains’
 
-glob - Allows the use of limited regex on URL/URI’s (\* or  ?) that is more performant
+glob - Allows the use of limited regex on URL/URI’s (* or  ?) that is more performant. Same as “string match”  
+The ‘-‘ hyphen is an OR statement  
+A “;” semicolon will let you have two commands on one line  
+return - Exit from current event in the current iRule.   
+event disable [all] - Stop going through the current event in all iRules, Stop going through all iRule events on this connection  
+\-- Stop option processing - useful if the item might start with a hyphen. Put before ‘-value’  
+“” Blank value  
+class - Allows querying of data-groups  
+class match - Sees if item matches in the data-group  
 
-The ‘-‘ hyphen is an OR statement
 
-A “;” semicolon will let you have two commands on one line
+Make use of the "equals", "contains", "starts_with", and "ends_with" iRule operators, or the glob matching mentioned above. They perform significantly faster, and do the exact same thing as regex.  
 
-- Will it only work if there’s one event in the iRule?
+Use ‘switch’ instead of multiple ‘if’ lines, unless you need more than one condition.  
+switch “-exact” is the default if no arguments are specified  
+The switch section can contain a ‘default’ action labeled as such, like forwarding to a pool or dropping the packet if there are no matches.  
 
-return - Exit from current event in the _current_ iRule.
-
-event disable \[all] - Stop going through the current event in all iRules, Stop going through all iRule events on this connection
-
-\-- = Stop option processing - useful if the item might start with a hyphen. Put before ‘-value’
-
-“” = Blank value
-
-The "switch -glob" and "string match" commands use a "glob style" matching that is a small subset of regular expressions, but allows for wildcards and sets of strings.
-
-Make use of the "equals", "contains", "starts_with", and "ends_with" iRule operators, or the glob matching mentioned above.  They perform significantly faster, and do the exact same thing as regex. Regular expressions are very CPU intensive and should only be used when there are no other options
-
-Use ‘switch’ instead of multiple ‘if’ lines, unless you need more than one condition.
-
-switch “-exact” is the default if no arguments are specified
-
-switch -glob - Supports small subset of regex (same as ‘string match’)
-
-The switch section can contain a ‘default’ action labeled as such, like forwarding to a pool or dropping the packet if there are no matches.
-
-**string match** ?-nocase? _pattern string_
-
-- See if pattern matches string; return 1 if it does, 0 if it does not. If -nocase is specified, then the pattern attempts to match against the string in a case insensitive manner. For the two strings to match, their contents must be identical except that the following special sequences may appear in pattern:
-
-\* - Matches any sequence of characters in string, including a null string.
-
-? - Matches any single character in string
-
-class - Allows querying of data-groups
-
-class match - Sees if item matches in the data-group
 
 ### Example iRules
 
@@ -1389,6 +1390,27 @@ period of waiting
 
 C>S TCP FIN
 ```
+##### Server rejects client certificate (expired) 
+```
+C>SV3.3 Handshake
+ClientHello
+Version 3.3
+TLS_<ciphers>
+
+S>CV3.3 ServerHello
+Certificate
+Certificate request
+ServerHelloDone
+
+C>SV3.3 Certificate
+ClientKeyExchange
+CertificateVerify
+
+S>CV3.3 Alert
+level fatal
+value handshake_failure or certificate_expired(45)?
+
+```
 Enable SSL debug in /var/log/ltm -  **modify sys db log.ssl.level value debug** (Default is Warning)
 
 ## ~~Objective 2.07 Given a set of headers or traces, determine a solution to an HTTP/HTTPS application problem~~
@@ -1458,7 +1480,11 @@ Override Connection Limit: Pool member limits overridden. Virtual Server ones ar
 
 ##### Rewrite
 
-Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer\<pool_name>**. Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).
+Intercepts **Set-Cookie** header named **BIGipCookie** from the server and puts in there **BIGipServer\<pool_name>**. 
+
+`Set-Cookie: BIGipCookie=0000000000…  `
+
+Cookie field needs to be blank with 120 x 0’s, or 75 for backwards compatibility (has caveats).  
 
 Use over passive mode whenever possible
 
@@ -2043,8 +2069,8 @@ The appropriate monitor should be TCP, or HTTP for most apps. ICMP should not be
   - ~~The Interval set will be used when its down~~
 
 ### Pools
-
 [K47726919: FQDN ephemeral nodes on the BIG-IP system do not repopulate after configuration load](https://support.f5.com/csp/article/K47726919)
+![Pool Member Statuses](/images/pool-status.png "Pool Member Statuses")  
 
 #### Options
 
@@ -2175,11 +2201,13 @@ Section 3 - Identify and Resolve LTM Device Issues
 
 Objective 3.01 Interpret log file messages and/or command line output to identify LTM device issues
 
-### LCD Messages
+### Indicator LCD
 
 [Manual Chapter: The 4000 Series Platform](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/b4000-platform/2.html#c_reuse_led_about)
 
-#### Alert lights
+![4000 Series LCD Panel](/images/4000-lcd.png "4000 Series LCD Panel")
+
+#### Alarm LED
 
 |                 |           |
 | --------------- | --------- |
@@ -2189,18 +2217,17 @@ Objective 3.01 Interpret log file messages and/or command line output to identif
 | Blinking yellow | Error     |
 | Solid yellow    | Warning   |
 
-Status LED
-
-- Solid Green - Active
-- Solid yellow - Standby
-
-### Alert conditions
 
 **Blinking red** - PSU, Bad HDD
 
 **Solid red** - License, DDoS, CPU, Chassis
 
 **Warning** - Unit going standby/active
+
+#### Status LED
+
+- Solid Green - Active
+- Solid yellow - Standby
 
 ## - 3.01a - Interpret log file messages to identify LTM device issues
 
@@ -2971,3 +2998,4 @@ Usually a **sod** message is a problem with Network Failover
 | 010c008b:5: Unable to send to unreachable unicast address 192.168.100.2 port 1026.                                                                                                             | No route found to network failover IP                                         |
 | 010c0083:4: No failover status messages received for 3.100 seconds, from device /Common/bigip2.f5.com (192.168.100.2) (unicast: -> 192.168.100.1).                                             | Connection lost over Network failover UDP 1026                                |
 | 01340002:3: HA Connection with peer 172.16.1.253:32768 for traffic-group /Common/traffic-group-1 lost.                                                                                         | Connection or persistence mirroring connection lost {{< line_break >}} Check port 1028 - 1043 TCP |
+| Mismatched provisioned modules                                        | 01260013:4: SSL Handshake failed for TCP <bigip1_configsync_ip>:4353 -> <bigip2_configsync_ip>:<random_port>{{< line_break >}}01260009:4: (null connflow): Connection error: ssl_basic_crypto_cb:694: **alert(20) Decryption error** |
