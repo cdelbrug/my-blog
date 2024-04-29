@@ -2713,17 +2713,23 @@ At least 3 devices in a device-group are required to use this mode.
 
 **Configure**
 
-Traffic Group > HA Load Factor - Manually specified number to indicate the amount of traffic load under the traffic-group. Default value 10, range 1 - 1000. The higher = more load. Configure on every device, does not sync.
-
-Device > HA Capacity - Manually specified to indicate how much the device can handle related to the other devices. Default is 0 (unlimited) which does not use HA Capacity to calculate a Load Score. The higher = more capacity
+traffic_g1 \> HA Load Factor - Manually specified number to indicate the amount of traffic load under the traffic-group. Default value 10, range 1 - 1000. The higher = more load. Configure on every device, does not sync.  
+bigip1 \> HA Capacity - Manually specified to indicate how much the device can handle related to the other devices. Default is 0 (unlimited) which does not use HA Capacity to calculate a Load Score. The higher = more capacity  
 
 **Load Score Calculation**
 
-The load score is calculated on a per device basis in the group. For a device’s score to be calculated, (the sum of all active traffic group’s load factors on that device + the traffic group’s load factors it is next active for / device capacity.)
+In order for a next-active device to be chosen for a single traffic group, (the sum of the local active traffic group’s load factors + remote candidate traffic group’s load factor / device capacity) must be run on all devices. The device with the lowest score is chosen as next-active. The tiebreaker is highest management IP  
 
-In order for a next-active device to be chosen for a single traffic group, (the sum of the local active traffic group’s load factors + remote candidate traffic group’s load factor / device capacity) must be run on all devices. The device with the lowest score is chosen as next-active. The tiebreaker is highest management IP
+The load score is calculated on a per device basis in the group. For a device’s score to be calculated, (the sum of all active traffic group’s HA load factors on that device + the traffic group’s HA load factors it is next active for / device HA capacity.)  
 
-**show cm device** - Displays HA Load Capacity, Mgmt IP, Current Load Factor, Next Active Device Load Factor
+Active traffic group HA Load Factor  
++Next-active traffic group HA Load Factor   
+—————-  
+= Load Score  
+
+
+**list cm device all-properties** - HA Capacity  
+**show cm traffic-group all-properties** - traffic groups on all devices, HA load factor, next active HA Load Factor 
 
 ### Failsafes
 
