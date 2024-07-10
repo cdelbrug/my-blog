@@ -3,8 +3,8 @@ title: "F5 301b v1.1 Objectives"
 date: 2024-04-29T20:14:22+08:00
 ---
 
-These were the official 11.5 objectives but modified by me. They have been cleaned up and moved where it makes sense.
-Crossed out means they are duplicates.  
+These were the official 11.5 objectives but modified by me. They have been cleaned up even removed in some cases.
+
 This objective list I prefer over the current ones that are official.  
 {{< line_break >}}
 \================================================================  
@@ -22,12 +22,6 @@ Objective 1.02 Given a subset of an LTM configuration or statistics, determine w
 - 1.03b - Identify unnecessary monitoring
 - 1.03c - Interpret configuration and performance statistics 
 - 1.03d - Explain the effect of removing functions from the LTM device configuration
-
-~~Objective 1.03 Given a set of LTM device statistics, determine which objects to remove or consolidate to simplify the LTM configuration~~
-- ~~1.03a - Identify redundant and/or unused objects~~
-- ~~1.03b - Identify unnecessary monitoring~~
-- ~~1.03c - Interpret configuration and performance statistics~~
-- ~~1.03d - Explain the effect of removing functions from the LTM device configuration~~
 
 Objective 1.04 Given a scenario, determine the appropriate upgrade and recovery steps required to restore functionality to LTM devices
 - 1.04a - Identify the appropriate methods for a clean install
@@ -48,11 +42,6 @@ Objective 1.06 Describe the benefits of custom alerting within an LTM environmen
 - 1.07a - List and describe custom alerts: SNMP, email and Remote Syslog
 - 1.07b - Identify the location of custom alert configuration files
 - 1.07c - Identify the available levels for local traffic logging
-
-~~Objective 1.07 Describe how to set up custom alerting for an LTM device~~
-- ~~1.07a - List and describe custom alerts: SNMP, email and Remote Syslog~~
-- ~~1.07b - Identify the location of custom alert configuration files~~
-- ~~1.07c - Identify the available levels for local traffic logging~~
 
 \================================================================  
 Section 2 - Identify and Resolve Application Issues  
@@ -87,16 +76,7 @@ Objective 2.06 Given a set of headers or traces, determine the root cause of an 
 - 2.07b - Investigate the cause of an SSL Handshake failure
 - 2.07c - Predict the browser caching behavior when application data is received (headers and HTML)
 
-~~Objective 2.07 Given a set of headers or traces, determine a solution to an HTTP/HTTPS application problem~~
-- ~~2.07a - Investigate the cause of a specific response code~~
-- ~~2.07b - Investigate the cause of an SSL Handshake failure~~
-- ~~2.07c - Predict the browser caching behavior when application data is received (headers and HTML)~~
-
-~~Objective 2.08 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine the root cause of an HTTP/HTTPS application problem~~
-- ~~2.08a - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration~~
-
 Objective 2.09 Given a direct trace, a trace through the LTM device, and other relevant information, compare the traces to determine a solution to an HTTP/HTTPS application problem
-- ~~2.09a - Investigate the cause of an SSL Handshake failure~~
 - 2.09b - Given a failed HTTP request and LTM configuration data determine if the connection is failing due to the LTM configuration
 
 Objective 2.10 Given a scenario, determine which protocol analyzer tool and its options are required to resolve an application issue
