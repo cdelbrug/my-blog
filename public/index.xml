@@ -4,17 +4,67 @@
     <link>https://routeyour.net/</link>
     <description>Route Your Network</description>
     <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>caleb.delbrugge@gmail.com (Caleb Delbrugge)</managingEditor>
-      <webMaster>caleb.delbrugge@gmail.com (Caleb Delbrugge)</webMaster><lastBuildDate>Sun, 30 Apr 2023 20:14:22 &#43;0800</lastBuildDate>
+      <webMaster>caleb.delbrugge@gmail.com (Caleb Delbrugge)</webMaster><lastBuildDate>Tue, 14 May 2024 19:14:22 &#43;0800</lastBuildDate>
       <atom:link href="https://routeyour.net/index.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>The Best S2S VPN Settings</title>
+  <link>https://routeyour.net/posts/the_best_s2s_vpn_settings/</link>
+  <pubDate>Tue, 14 May 2024 19:14:22 &#43;0800</pubDate>
+  <author>Caleb Delbrugge</author>
+  <guid>https://routeyour.net/posts/the_best_s2s_vpn_settings/</guid>
+  <description><![CDATA[Introduction When configuring a Site to Site VPN, you may be wondering what the best settings are such as:
+IKEv1 or v2 Encryption Integrity Lifetime PFS It&rsquo;s a good question, as I&rsquo;ve tried to figure that out myself. I stumbled upon this recommendation from NIST called &ldquo;Suite-B&rdquo; - and it seems to answer the question. There&rsquo;s an RFC for it below.
+RFC 6379 - Suite B Cryptographic Suites for IPsec]]></description>
+</item>
+<item>
+  <title>F5 301b v1 Objectives</title>
+  <link>https://routeyour.net/posts/301b_v1_objectives/</link>
+  <pubDate>Mon, 29 Apr 2024 20:14:22 &#43;0800</pubDate>
+  <author>Caleb Delbrugge</author>
+  <guid>https://routeyour.net/posts/301b_v1_objectives/</guid>
+  <description><![CDATA[As far as I know these are the original objectives first published for the exam.
+These are no longer official. They were found in the old study guide which can no longer be found.
+=================================================================
+Section 1 – Troubleshoot Basic Virtual Server Connectivity Issues
+=================================================================
+Objective - 1.01 - Given a scenario, determine the appropriate profile setting modifications
+1.01a – Determine the effect of changing profile settings on application traffic 1.]]></description>
+</item>
+<item>
+  <title>F5 301b v1.1 Objectives</title>
+  <link>https://routeyour.net/posts/301b_v1_1_objectives/</link>
+  <pubDate>Mon, 29 Apr 2024 20:14:22 &#43;0800</pubDate>
+  <author>Caleb Delbrugge</author>
+  <guid>https://routeyour.net/posts/301b_v1_1_objectives/</guid>
+  <description><![CDATA[These were the official 11.5 objectives but modified by me. They have been cleaned up even removed in some cases.
+This objective list I prefer over the current ones that are official.
+================================================================
+Section 1 - Maintain Application and LTM Device Health
+================================================================
+Objective 1.01 Given a scenario, determine the appropriate profile setting modifications.
+1.01a - Given a scenario of client or server side buffer issues, packet loss, or congestion, select the appropriate TCP or UDP profile to correct the issue 1.]]></description>
+</item>
+<item>
+  <title>F5 301b v2 Objectives</title>
+  <link>https://routeyour.net/posts/301b_v2_objectives/</link>
+  <pubDate>Mon, 29 Apr 2024 20:14:22 &#43;0800</pubDate>
+  <author>Caleb Delbrugge</author>
+  <guid>https://routeyour.net/posts/301b_v2_objectives/</guid>
+  <description><![CDATA[These are the official exam objectives. =================================================================
+Section 1 - Troubleshoot Basic Virtual Server Connectivity Issues
+=================================================================
+Objective - 1.01 - Given a scenario, determine the appropriate profile setting modifications
+1.01a - Given a scenario of client or server side buffer issues, packet loss, or congestion, select the appropriate TCP or UDP profile to correct the issue 1.01b - Given a scenario determine when an application would benefit from HTTP Compression and/or Web Acceleration profile Objective - 1.]]></description>
+</item>
+<item>
   <title>F5 301b Study Guide</title>
   <link>https://routeyour.net/posts/301b_study_guide/</link>
   <pubDate>Sun, 30 Apr 2023 20:14:22 &#43;0800</pubDate>
   <author>Caleb Delbrugge</author>
   <guid>https://routeyour.net/posts/301b_study_guide/</guid>
   <description><![CDATA[Introduction Hey all,
-This is the study guide I&rsquo;ve been building since I started studying for this exam way back in 2017. Hopefully it can help fill any gaps you may have. I&rsquo;ve sourced the material from solution articles, experience, and manuals.
-Section 1 - Maintain Application and LTM Device Health Objective 1.01 Given a scenario, determine the appropriate profile setting modifications SSL K13385: Overview of the Proxy SSL feature]]></description>
+This is the study guide I&rsquo;ve been building since I started studying for this exam way back in 2017. I&rsquo;ve renewed it 4 times now so I have a pretty good grasp of what is going to be on it and what study materials to use. Hopefully it can help fill any gaps you may have. I&rsquo;ve sourced the material from solution articles, experience, and manuals.
+About the Exam The test itself is very challenging.]]></description>
 </item>
 </channel>
 </rss>
