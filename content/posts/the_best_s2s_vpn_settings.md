@@ -1,8 +1,8 @@
 ---
-title: "The Best S2S VPN Settings"
+title: "The Best Site to Site VPN Settings"
 date: 2025-03-09T18:52:00-05:00
 ---
-
+:warning: Under Construction :warning:
 # Introduction
 
 When configuring a Site to Site VPN, you may be wondering what the best settings are such as:  

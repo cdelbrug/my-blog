@@ -1,6 +1,6 @@
 ---
 title: "F5 301b v1 Objectives"
-date: 2024-04-29T20:14:22+08:00
+date: 2023-04-26T20:14:22+08:00
 ---
 
 As far as I know these are the original objectives first published for the exam.  

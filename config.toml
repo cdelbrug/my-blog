@@ -11,6 +11,7 @@ languageCode = "en"
 # language name ["English", "简体中文", "Français", "Polski", ...]
 languageName = "English"
 enableGitInfo = true
+enableEmoji = true
 
 # Author config
 [author]
@@ -106,11 +107,11 @@ enableGitInfo = true
       # Gravatar Email for preferred avatar in home page
       gravatarEmail = ""
       # URL of avatar shown in home page
-      # avatarURL = "/images/me.jpg"
+      avatarURL = "/images/me.jpg"
       # LoveIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
       title = ""
       # subtitle shown in home page (HTML format is supported)
-      subtitle = "Sr. Network Security Engineer - F5-CTS LTM, GTM"
+      subtitle = "Senior Network Engineer at StoneX"
       # whether to use typeit animation for subtitle
       typeit = false
       # whether to show social links

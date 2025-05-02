@@ -1,6 +1,6 @@
 ---
 title: "F5 301b v2 Objectives"
-date: 2024-04-29T20:14:22+08:00
+date: 2024-04-28T20:14:22+08:00
 ---
 
 These are the official exam objectives.

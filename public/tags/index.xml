@@ -1,8 +1,11 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags - Tag - Route Your Network</title>
-    <link>https://routeyour.net/tags/</link>
-    <description>Tags - Tag - Route Your Network</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>caleb.delbrugge@gmail.com (Caleb Delbrugge)</managingEditor>
-      <webMaster>caleb.delbrugge@gmail.com (Caleb Delbrugge)</webMaster><atom:link href="https://routeyour.net/tags/" rel="self" type="application/rss+xml" /></channel>
+    <title>Tags on Route Your Network</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on Route Your Network</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
 </rss>
