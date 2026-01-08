@@ -2,6 +2,7 @@
 title: "F5 301b Study Guide"
 date: 2024-05-30T20:14:22+08:00
 lastmod: 2024-06-17T23:15:00-05:00
+author: "Caleb Delbrugge"
 ---
 
 # Introduction

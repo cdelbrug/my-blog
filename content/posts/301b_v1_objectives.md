@@ -1,6 +1,7 @@
 ---
 title: "F5 301b v1 Objectives"
 date: 2023-04-26T20:14:22+08:00
+author: "Caleb Delbrugge"
 ---
 
 As far as I know these are the original objectives first published for the exam.  

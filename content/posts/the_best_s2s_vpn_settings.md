@@ -1,8 +1,9 @@
 ---
 title: "The Best Site to Site VPN Settings"
-date: 2025-03-09T18:52:00-05:00
+date: 2026-01-07T19:19:00-05:00
+author: "Caleb Delbrugge"
 ---
-:warning: Under Construction :warning:
+
 # Introduction
 
 When configuring a Site to Site VPN, you may be wondering what the best settings are such as:  
@@ -136,4 +137,23 @@ interface tunnel <1-100>
 Now you need to decide if you will perform static or dynamic routing. If you are going to have any kind of redundancy, dynamic is recommended.
 
 #### Dynamic
+
+BGP is the standard for dynamic routing over VPN. The BGP peer will be the peer's tunnel interface IP.
+
 #### Static
+
+For static routes, you can just point the route to the peer's tunnel interface IP.
+
+### NAT
+
+#### Outbound
+
+NATs depend on what direction the traffic is going. Who is initiating the connection? If you only need to initiate connectivity to the peer's network, then you can just use an overload NAT. You'll want to use a public IP, one that you own. The quickest is to just use the IP address of your firewall's public interface. Using a public IP also prevents overlaps from happening on the remote side. If you have multiple VPNs in other datacenters for redundancy, then this also works out by preventing overlapping routes on the peer's end back to you.
+
+#### Inbound
+
+If the peer needs to connect to services on your end, then there's two options:
+1. Use a one-to-one IP NAT.
+2. Use PAT (Port Address Translation).
+
+If you have limited public IPs to use for one-to-one NATs, then PAT is a good choice. You specify multiple ports on the same IP address to translate to different IPs and ports on the backend.
