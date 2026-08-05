@@ -6,6 +6,42 @@
     <description>Recent content in Tags on Route Your Network</description>
     <generator>Hugo</generator>
     <language>en</language>
+    <lastBuildDate>Tue, 04 Aug 2026 21:57:46 -0500</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible</title>
+      <link>http://localhost:1313/tags/ansible/</link>
+      <pubDate>Tue, 04 Aug 2026 22:02:00 -0500</pubDate>
+      <guid>http://localhost:1313/tags/ansible/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>http://localhost:1313/tags/automation/</link>
+      <pubDate>Tue, 04 Aug 2026 22:02:00 -0500</pubDate>
+      <guid>http://localhost:1313/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bigip</title>
+      <link>http://localhost:1313/tags/bigip/</link>
+      <pubDate>Tue, 04 Aug 2026 22:02:00 -0500</pubDate>
+      <guid>http://localhost:1313/tags/bigip/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>F5</title>
+      <link>http://localhost:1313/tags/f5/</link>
+      <pubDate>Tue, 04 Aug 2026 22:02:00 -0500</pubDate>
+      <guid>http://localhost:1313/tags/f5/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Networking</title>
+      <link>http://localhost:1313/tags/networking/</link>
+      <pubDate>Tue, 04 Aug 2026 22:02:00 -0500</pubDate>
+      <guid>http://localhost:1313/tags/networking/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

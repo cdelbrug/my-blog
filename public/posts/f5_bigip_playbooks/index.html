@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Basic F5 BIG-IP Playbooks - Route Your Network</title><meta name="author" content="Caleb Delbrugge">
+<meta name="description" content="Provisioning F5 BIG-IP VIPs and GTM Wide IPs with Ansible"><meta name="keywords" content='ansible, f5, bigip, networking, automation'>
+  <meta itemprop="name" content="Basic F5 BIG-IP Playbooks">
+  <meta itemprop="description" content="Provisioning F5 BIG-IP VIPs and GTM Wide IPs with Ansible">
+  <meta itemprop="datePublished" content="2026-08-04T22:02:00-05:00">
+  <meta itemprop="dateModified" content="2026-08-04T21:57:46-05:00">
+  <meta itemprop="wordCount" content="530">
+  <meta itemprop="keywords" content="Ansible,F5,Bigip,Networking,Automation"><meta property="og:url" content="http://localhost:1313/posts/f5_bigip_playbooks/">
+  <meta property="og:site_name" content="Route Your Network">
+  <meta property="og:title" content="Basic F5 BIG-IP Playbooks">
+  <meta property="og:description" content="Provisioning F5 BIG-IP VIPs and GTM Wide IPs with Ansible">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-08-04T22:02:00-05:00">
+    <meta property="article:modified_time" content="2026-08-04T21:57:46-05:00">
+    <meta property="article:tag" content="Ansible">
+    <meta property="article:tag" content="F5">
+    <meta property="article:tag" content="Bigip">
+    <meta property="article:tag" content="Networking">
+    <meta property="article:tag" content="Automation">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Basic F5 BIG-IP Playbooks">
+  <meta name="twitter:description" content="Provisioning F5 BIG-IP VIPs and GTM Wide IPs with Ansible">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/f5_bigip_playbooks/" title="Basic F5 BIG-IP Playbooks - Route Your Network" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/the_best_s2s_vpn_settings/" title="The Best Site to Site VPN Settings" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Basic F5 BIG-IP Playbooks",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/f5_bigip_playbooks\/"
+    },"genre": "posts","keywords": "ansible, f5, bigip, networking, automation","wordcount":  530 ,
+    "url": "http:\/\/localhost:1313\/posts\/f5_bigip_playbooks\/","datePublished": "2026-08-04T22:02:00-05:00","dateModified": "2026-08-04T21:57:46-05:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Caleb Delbrugge"
+      },"description": "Provisioning F5 BIG-IP VIPs and GTM Wide IPs with Ansible"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Route Your Network"><span class="header-title-text">routeyour.net</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/">Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/">Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Route Your Network"><span class="header-title-text">routeyour.net</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/posts/">Posts</a></li><li class="menu-item"><a class="menu-link" href="/tags/">Tags</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Basic F5 BIG-IP Playbooks</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Caleb Delbrugge</span></span></div><div class="post-meta-line"><span title="published on 2026-08-04 22:02:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2026-08-04">2026-08-04</time></span>&nbsp;<span title="Updated on 2026-08-04 21:57:46"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden="true"></i><time datetime="2026-08-04">2026-08-04</time></span>&nbsp;<span title="530 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-it-does">What it does</a></li>
+    <li><a href="#the-building-blocks">The building blocks</a></li>
+    <li><a href="#gtm-primary-and-secondary-sites">GTM: primary and secondary sites</a></li>
+    <li><a href="#running-it">Running it</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>Back in the day, I wanted a way to provision new sites on the F5 as fast as possible. That meant combining VIPs and forwarding to pools based on Host header. This can be done with an iRule, but LTM policies are more effecient. I&rsquo;ve created basic playbooks to create new VIPs, and then another playbook to add sites to them later, including GTM if you have that as well.</p>
+<p><a href="https://github.com/cdelbrug/bigip-playbooks"target="_blank" rel="external nofollow noopener noreferrer"><code>bigip-playbooks</code></a></p>
+<h2 class="heading-element" id="what-it-does"><span>What it does</span>
+  <a href="#what-it-does" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>There are two entry-point playbooks, both driven by the <a href="https://docs.ansible.com/projects/ansible/latest/collections/f5networks/f5_modules/index.html"target="_blank" rel="external nofollow noopener noreferrer"><code>f5networks.f5_modules</code></a> collection:</p>
+<ul>
+<li><strong><code>playbooks/new-vip.yml</code></strong> — stands up a brand-new 80/443 virtual server pair: HTTP monitor, pool, LTM policies (draft → publish) for both ports, an HTTP-to-HTTPS redirect rule on port 80, a host-header forward rule on port 443, and the two virtual servers themselves.</li>
+<li><strong><code>playbooks/new-site.yml</code></strong> — adds one or more new sites to an <em>existing</em> VIP&rsquo;s LTM policy, and wires up the matching GTM configuration (monitor, pool, wide IP) so the site is reachable through global DNS load balancing too.</li>
+</ul>
+<p>Both playbooks work off the same shape of data: a list of sites, each describing a domain, a health check, pool members, and the naming pieces (VIP prefix, external interface, wide IP) needed to assemble consistent object names on the BIG-IP.</p>
+<h2 class="heading-element" id="the-building-blocks"><span>The building blocks</span>
+  <a href="#the-building-blocks" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>All the actual BIG-IP work lives in one reusable role, <code>roles/f5</code>, as a set of small, single-purpose task files under <code>roles/f5/tasks/</code>:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Task file</th>
+          <th>Module</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>ltm-monitor-http</code> / <code>ltm-monitor-https</code></td>
+          <td><code>bigip_monitor_http(s)</code></td>
+          <td>HTTP(S) health check with a Host header and expected response</td>
+      </tr>
+      <tr>
+          <td><code>ltm-pool</code></td>
+          <td><code>bigip_pool</code>, <code>bigip_pool_member</code></td>
+          <td>Pool creation and member registration</td>
+      </tr>
+      <tr>
+          <td><code>ltm-policy-draft</code> / <code>ltm-policy-publish</code></td>
+          <td><code>bigip_policy</code></td>
+          <td>Draft-then-publish LTM policy lifecycle</td>
+      </tr>
+      <tr>
+          <td><code>ltm-policy-forward-pool-rule</code></td>
+          <td><code>bigip_policy_rule</code></td>
+          <td>Host-header match → forward to pool</td>
+      </tr>
+      <tr>
+          <td><code>ltm-policy-redirect-rule</code></td>
+          <td><code>bigip_policy_rule</code></td>
+          <td>Plain HTTP → HTTPS redirect</td>
+      </tr>
+      <tr>
+          <td><code>ltm-vip-80</code> / <code>ltm-vip-443</code></td>
+          <td><code>bigip_virtual_server</code></td>
+          <td>The virtual servers themselves, with TCP/HTTP profiles, OneConnect, SSL, and persistence attached on 443</td>
+      </tr>
+      <tr>
+          <td><code>gtm-monitor</code> / <code>gtm-pool</code> / <code>gtm-wideip</code></td>
+          <td><code>bigip_gtm_*</code></td>
+          <td>GTM monitor, A-pool with NY4/CH1 ordered by which site is primary, and the wide IP tying it to the pool</td>
+      </tr>
+  </tbody>
+</table>
+<p>The playbooks call into these with <code>include_role</code> + <code>tasks_from</code>, looping over the site list.</p>
+<p>I made a standardized naming convention (<code>{{ domain }}-{{ protocol }}-MONITOR</code>, <code>{{ domain }}-{{ server_port }}-POOL</code>, <code>{{ vip_prefix }}-443-POLICY</code>, and so on) so the vars fill in all the names for you.</p>
+<h2 class="heading-element" id="gtm-primary-and-secondary-sites"><span>GTM: primary and secondary sites</span>
+  <a href="#gtm-primary-and-secondary-sites" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>The GTM pool logic is worth calling out. Instead of a single generic pool task, there are two nearly-identical <code>bigip_gtm_pool</code> tasks — one ordering members NY4-first, one CH1-first — gated by <code>when: item['primary_servers'] == 'ny4'</code> / <code>'ch1'</code>. That lets each site declare which data center should be preferred for <code>global-availability</code> load balancing, while keeping both data centers in the pool as a fallback.</p>
+<h2 class="heading-element" id="running-it"><span>Running it</span>
+  <a href="#running-it" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Credentials never live in the repo. They&rsquo;re passed at runtime:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ansible-playbook playbooks/new-vip.yml -e <span class="nv">username</span><span class="o">=</span>myuser -e <span class="nv">password</span><span class="o">=</span>mypassword</span></span></code></pre></div><p>or exported as <code>F5_USER</code> / <code>F5_PASSWORD</code> / <code>F5_VALIDATE_CERTS</code> if you uncomment the <code>environment:</code> block at the top of a playbook. Everything else — the domain, pool members, VIP address, SSL profile — is defined inline in each playbook&rsquo;s <code>vars.site_list</code> (or <code>vars.vip</code> for <code>new-vip.yml</code>), so a change is: edit the block, run the playbook, review the config on the BIG-IP.</p>
+<p>The full source is up on GitHub <a href="https://github.com/cdelbrug/bigip-playbooks"target="_blank" rel="external nofollow noopener noreferrer">bigip-playbooks</a> if you want to adapt the roles for your own BIG-IP estate.</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2026-08-04 21:57:46">Updated on 2026-08-04&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"><span><a href="vscode://file/D:%5cProjects%5cmy-blog%5ccontent%5cposts%5cf5_bigip_playbooks.md" title="Open in editor"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-vscode">Open in editor</a></span></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="Share on X" data-sharer="twitter" data-url="http://localhost:1313/posts/f5_bigip_playbooks/" data-title="Basic F5 BIG-IP Playbooks" data-hashtags="ansible,f5,bigip,networking,automation"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/f5_bigip_playbooks/" data-hashtag="ansible"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/posts/f5_bigip_playbooks/"><i class="fa-brands fa-linkedin fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/ansible/" class="post-tag" title="Tags - Ansible">Ansible</a><a href="/tags/f5/" class="post-tag" title="Tags - F5">F5</a><a href="/tags/bigip/" class="post-tag" title="Tags - Bigip">Bigip</a><a href="/tags/networking/" class="post-tag" title="Tags - Networking">Networking</a><a href="/tags/automation/" class="post-tag" title="Tags - Automation">Automation</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/the_best_s2s_vpn_settings/" class="post-nav-item" rel="prev" title="The Best Site to Site VPN Settings"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>The Best Site to Site VPN Settings</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.154.3"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.20"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"version":"v0.3.20"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

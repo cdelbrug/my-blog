@@ -1,6 +1,6 @@
 ---
 title: "Basic F5 BIG-IP Playbooks"
-date: 2026-08-04T21:53:00-06:00
+date: 2026-08-04T22:02:00-05:00
 author: "Caleb Delbrugge"
 description: "Provisioning F5 BIG-IP VIPs and GTM Wide IPs with Ansible"
 tags: ["ansible", "f5", "bigip", "networking", "automation"]
@@ -35,7 +35,7 @@ All the actual BIG-IP work lives in one reusable role, `roles/f5`, as a set of s
 
 The playbooks call into these with `include_role` + `tasks_from`, looping over the site list.
 
-One nice side effect of the shared naming convention (`{{ domain }}-{{ protocol }}-MONITOR`, `{{ domain }}-{{ server_port }}-POOL`, `{{ vip_prefix }}-443-POLICY`, and so on) is that `new-site.yml` and `new-vip.yml` can reference objects created by each other without any extra bookkeeping — the names are derived, not hand-tracked.
+I made a standardized naming convention (`{{ domain }}-{{ protocol }}-MONITOR`, `{{ domain }}-{{ server_port }}-POOL`, `{{ vip_prefix }}-443-POLICY`, and so on) so the vars fill in all the names for you.
 
 ## GTM: primary and secondary sites
 
