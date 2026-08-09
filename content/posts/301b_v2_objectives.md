@@ -2,6 +2,7 @@
 title: "F5 301b v2 Objectives"
 date: 2024-04-28T20:14:22+08:00
 author: "Caleb Delbrugge"
+tags: ["f5", "big-ip", "301b"]
 ---
 
 These are the official exam objectives.

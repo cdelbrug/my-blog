@@ -2,6 +2,7 @@
 title: "F5 301b v1.1 Objectives"
 date: 2024-04-27T20:14:22+08:00
 author: "Caleb Delbrugge"
+tags: ["f5", "big-ip", "301b"]
 ---
 
 These were the official 11.5 objectives but modified by me. They have been cleaned up even removed in some cases.

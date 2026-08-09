@@ -2,6 +2,7 @@
 title: "The Best Site to Site VPN Settings"
 date: 2026-01-07T19:19:00-05:00
 author: "Caleb Delbrugge"
+tags: ["vpn", "firewall", "palo-alto", "networking"]
 ---
 
 # Introduction
