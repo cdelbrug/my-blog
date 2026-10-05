@@ -4,6 +4,7 @@ date: 2026-08-16T16:00:00-05:00
 author: "Caleb Delbrugge"
 description: "Reviving a IaC demo from 2021"
 tags: ["ansible", "networking", "automation", "batfish"]
+draft: true
 ---
 
 # Reviving a 2021 NetDevOps Lab in 2026
